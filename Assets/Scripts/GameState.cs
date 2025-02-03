@@ -43,4 +43,8 @@ public class GameState
     {
         return currentLevel;
     }
+    public string GetCurrentLoadScene()
+    {
+        return currentLevel == 1 ? "Level1Scene" : "Level2Scene";
+    }
 }

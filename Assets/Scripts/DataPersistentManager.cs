@@ -43,7 +43,7 @@ public class DataPersistentManager : MonoBehaviour
     {
         GameState.Instance.CreateNewGame();
         SceneManager.sceneLoaded += OnSceneLoaded;
-        StartCoroutine(DisplayLoadingScreen("Level1"));
+        StartCoroutine(DisplayLoadingScreen("Level1Scene"));
         foreach (IDataPersistent dataPersistent in dataPersistentObjects)
         {
             dataPersistent.LoadData(GameState.Instance);
@@ -57,19 +57,12 @@ public class DataPersistentManager : MonoBehaviour
         if (gameState == null)
         {
             Debug.Log("No gameState");
-            NewGame();
+            // NewGame();
         }
 
-        GameState.Instance.SetGameState(gameState);
+        // GameState.Instance.SetGameState(gameState);
         SceneManager.sceneLoaded += OnSceneLoaded;
-        if (GameState.Instance.GetCurrentLevel() == 1)
-        {
-            LoadLevel("Level1");
-        }
-        else
-        {
-            LoadLevel("Level2");
-        }
+        LoadLevel(GameState.Instance.GetCurrentLoadScene());
     }
 
     public void LoadLevel(string sceneName)
@@ -109,7 +102,7 @@ public class DataPersistentManager : MonoBehaviour
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
         while (!async.isDone)
         {
-            EventManager.instance.TriggerLoadingActive();
+            // EventManager.instance.TriggerLoadingActive();
             yield return new WaitForSeconds(0.05f);
         }
     }
