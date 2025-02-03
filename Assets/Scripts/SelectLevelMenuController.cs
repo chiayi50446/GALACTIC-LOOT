@@ -10,13 +10,13 @@ public class SelectLevelMenuController : MenuController
         Debug.Log("Select Level1");
         GameState.Instance.SetCurrentLevel(1);
         levelInfoUI.SetActive(true);
-        transform.GetChild(0).gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
     public void SelectLevel2()
     {
         Debug.Log("Select Level2");
         GameState.Instance.SetCurrentLevel(2);
         levelInfoUI.SetActive(true);
-        transform.GetChild(0).gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

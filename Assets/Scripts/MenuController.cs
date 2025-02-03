@@ -6,7 +6,7 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     private GameObject startButton;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnEnable()
     {
         if (startButton != null)
         {
