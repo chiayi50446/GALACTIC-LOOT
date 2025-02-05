@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "GALACTIC-LOOT.sln"
+    "dotnet.defaultSolution": "GALACTIC LOOT.sln"
 }

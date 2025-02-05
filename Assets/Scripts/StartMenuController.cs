@@ -3,22 +3,22 @@ using UnityEngine;
 public class StartMenuController : MenuController
 {
     [SerializeField]
-    private GameObject selectCharacterUI;
+    private GameObject tutorialUI;
     [SerializeField]
     private GameObject selectLevelUI;
     public void StartGame()
     {
         Debug.Log("Start Game");
         GameState.Instance.SetCurrentLevel(1);
-        selectCharacterUI.SetActive(true);
-        transform.GetChild(0).gameObject.SetActive(false);
+        tutorialUI.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     public void ResumeGame()
     {
         Debug.Log("Resume Game");
         selectLevelUI.SetActive(true);
-        transform.GetChild(0).gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void ExitGame()
