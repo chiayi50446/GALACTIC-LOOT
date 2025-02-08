@@ -7,13 +7,17 @@ public class GameState
     private static GameState instance = null;
     [SerializeField]
     private int currentLevel;
+    [SerializeField]
+    private CharacterType Player1Type = CharacterType.none;
+    [SerializeField]
+    private CharacterType Player2Type = CharacterType.none;
 
     public static Dictionary<CharacterType, CharacterProperty> characters = new Dictionary<CharacterType, CharacterProperty>
     {
-        {CharacterType.type1, new CharacterProperty(){Attack = 2, Health=3, Communicate =0, CarryCapacity=3 }},
-        {CharacterType.type2, new CharacterProperty(){Attack = 1, Health=5, Communicate =0, CarryCapacity=3 }},
-        {CharacterType.type3, new CharacterProperty(){Attack = 1, Health=3, Communicate =1, CarryCapacity=3 }},
-        {CharacterType.type4, new CharacterProperty(){Attack = 1, Health=3, Communicate =0, CarryCapacity=5 }}
+        {CharacterType.type1, new CharacterProperty(){Attack = 2, Health=3, Charisma =0, Load=3 }},
+        {CharacterType.type2, new CharacterProperty(){Attack = 1, Health=5, Charisma =0, Load=3 }},
+        {CharacterType.type3, new CharacterProperty(){Attack = 1, Health=3, Charisma =1, Load=3 }},
+        {CharacterType.type4, new CharacterProperty(){Attack = 1, Health=3, Charisma =0, Load=5 }}
     };
 
     private GameState()
@@ -55,20 +59,39 @@ public class GameState
     {
         return currentLevel == 1 ? "Level1Scene" : "Level2Scene";
     }
+
+    public void SetPlayer1Type(CharacterType type)
+    {
+        Player1Type = type;
+    }
+    public CharacterType GetPlayer1Type()
+    {
+        return Player1Type;
+    }
+
+    public void SetPlayer2Type(CharacterType type)
+    {
+        Player2Type = type;
+    }
+    public CharacterType GetPlayer2Type()
+    {
+        return Player2Type;
+    }
 }
 
 public class CharacterProperty
 {
-    public int Attack { get; set; }
-    public int Health { get; set; }
-    public int Communicate { get; set; }
-    public int CarryCapacity { get; set; }
+    public float Attack { get; set; }
+    public float Health { get; set; }
+    public float Charisma { get; set; }
+    public float Load { get; set; }
 }
 
 public enum CharacterType
 {
-    type1,
-    type2,
-    type3,
-    type4
+    none = 0,
+    type1 = 1,
+    type2 = 2,
+    type3 = 3,
+    type4 = 4
 }

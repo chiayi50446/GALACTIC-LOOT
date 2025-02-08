@@ -17,26 +17,39 @@ public class TutorialController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (currentPanelIndex < 2)
-            {
-                panel[currentPanelIndex].SetActive(false);
-                currentPanelIndex++;
-                panel[currentPanelIndex].SetActive(true);
-            }
+            NextPage();
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (currentPanelIndex > 0)
-            {
-                panel[currentPanelIndex].SetActive(false);
-                currentPanelIndex--;
-                panel[currentPanelIndex].SetActive(true);
-            }
+            PrevPage();
         }
         if (Input.GetKeyDown(KeyCode.Return) && currentPanelIndex == 2)
         {
-            nextStep.SetActive(true);
-            gameObject.SetActive(false);
+            OK();
         }
+    }
+
+    public void NextPage()
+    {
+        if (currentPanelIndex < 2)
+        {
+            panel[currentPanelIndex].SetActive(false);
+            currentPanelIndex++;
+            panel[currentPanelIndex].SetActive(true);
+        }
+    }
+    public void PrevPage()
+    {
+        if (currentPanelIndex > 0)
+        {
+            panel[currentPanelIndex].SetActive(false);
+            currentPanelIndex--;
+            panel[currentPanelIndex].SetActive(true);
+        }
+    }
+    public void OK()
+    {
+        nextStep.SetActive(true);
+        gameObject.SetActive(false);
     }
 }

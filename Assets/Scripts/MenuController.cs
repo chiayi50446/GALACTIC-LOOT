@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class MenuController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject startButton;
+    protected GameObject startButton;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void OnEnable()
     {
