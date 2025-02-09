@@ -70,6 +70,7 @@ public class SelectCharacterController : MenuController
             Panel.gameObject.SetActive(false);// player2 panel close
             startButton.GetComponent<Button>().Select();
             CurrentType = CharacterType.type1;
+            ChangeCharacterInfo(CharacterType.type1);
         }
         else
         {
