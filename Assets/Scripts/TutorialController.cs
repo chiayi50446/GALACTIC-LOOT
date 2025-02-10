@@ -49,6 +49,9 @@ public class TutorialController : MonoBehaviour
     }
     public void OK()
     {
+        panel[currentPanelIndex].SetActive(false);
+        currentPanelIndex = 0;
+        panel[currentPanelIndex].SetActive(true);
         nextStep.SetActive(true);
         gameObject.SetActive(false);
     }

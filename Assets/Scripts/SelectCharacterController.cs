@@ -19,18 +19,16 @@ public class SelectCharacterController : MenuController
     private Transform Charisma;
     private Transform Load;
     private Transform Panel;
-    private Transform PlayerOK;
-    private Transform PlayerQuit;
     private GameObject OKButton;
     private CharacterType CurrentType = CharacterType.type1;
-    void Start()
+    void Awake()
     {
         OKButton = transform.GetChild(0).Find("OK").gameObject;
-        OKButton.GetComponent<Button>().interactable = false;
         EventManager.instance.SelectCharacterEvent += ChangeCharacterInfo;
-        SetCurrentSelectPlayer(Player1);
-        Panel.gameObject.SetActive(false);
-        SetCharacterData(GameState.characters[CurrentType]);
+    }
+    void OnEnable()
+    {
+        Init();
     }
 
     void Update()
@@ -53,11 +51,29 @@ public class SelectCharacterController : MenuController
         gameObject.SetActive(false);
     }
 
+    private void Init()
+    {
+        GameState.Instance.SetPlayer1Type(CharacterType.none);
+        GameState.Instance.SetPlayer2Type(CharacterType.none);
+
+        OKButton.GetComponent<Button>().interactable = false;
+        startButton.GetComponent<Button>().Select();
+
+        CurrentType = CharacterType.type1;
+
+        SetCurrentSelectPlayer(Player2);
+        SetCharacterData(CurrentType);
+        SetCurrentSelectPlayer(Player1);
+        SetCharacterData(CurrentType);
+
+        Player1.transform.Find("Panel").gameObject.SetActive(false);
+        Player2.transform.Find("Panel").gameObject.SetActive(true);
+    }
+
     private void ChangeCharacterInfo(CharacterType type)
     {
         CurrentType = type;
-        Avatar.gameObject.GetComponent<Image>().sprite = characterAva[(int)type - 1];
-        SetCharacterData(GameState.characters[type]);
+        SetCharacterData(type);
     }
 
     public void MakeSureCharacter()
@@ -80,8 +96,10 @@ public class SelectCharacterController : MenuController
         }
     }
 
-    private void SetCharacterData(CharacterProperty data)
+    private void SetCharacterData(CharacterType type)
     {
+        Avatar.gameObject.GetComponent<Image>().sprite = characterAva[(int)type - 1];
+        var data = GameState.characters[type];
         Attack.gameObject.GetComponent<BarController>().SetValue(data.Attack);
         Health.gameObject.GetComponent<BarController>().SetValue(data.Health);
         Charisma.gameObject.GetComponent<BarController>().SetValue(data.Charisma);
