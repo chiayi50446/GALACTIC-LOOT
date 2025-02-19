@@ -28,10 +28,10 @@ public class ChestController : ItemController, IDataPersistent
         if (!isOpen && isTrigger)
         {
             base.Update();
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
             {
                 isOpen = true;
-                // anim.SetBool("IsOpened", true);
+                anim.SetBool("Open", true);
                 // chestItem.SetActive(true);
                 // StartCoroutine(Helper.Delay(() => { chestItem.SetActive(false); }, 0.5f));
                 GetComponent<Collider2D>().enabled = false;
