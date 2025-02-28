@@ -65,6 +65,13 @@ public class DataPersistentManager : MonoBehaviour
         LoadLevel(GameState.Instance.GetCurrentLoadScene());
     }
 
+    public void EntryGame()
+    {
+        // gameState = GameState.Instance;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        LoadLevel(GameState.Instance.GetCurrentLoadScene());
+    }
+
     public void LoadLevel(string sceneName)
     {
         // 加載場景
@@ -78,7 +85,7 @@ public class DataPersistentManager : MonoBehaviour
         this.dataPersistentObjects = FindAllDataPersistentObjects();
         foreach (IDataPersistent dataPersistent in dataPersistentObjects)
         {
-            dataPersistent.LoadData(gameState);
+            dataPersistent.LoadData(GameState.Instance);
         }
     }
 

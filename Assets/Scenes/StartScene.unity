@@ -7709,7 +7709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barImage: {fileID: 1322892761}
-  maxValue: 5
+  maxValue: 3
 --- !u!1 &1000793863
 GameObject:
   m_ObjectHideFlags: 0
@@ -11663,7 +11663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barImage: {fileID: 224147033}
-  maxValue: 5
+  maxValue: 3
 --- !u!1 &1639993324
 GameObject:
   m_ObjectHideFlags: 0

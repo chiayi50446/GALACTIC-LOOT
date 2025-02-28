@@ -41,7 +41,7 @@ public class SelectCharacterController : MenuController
 
     public void OK()
     {
-        DataPersistentManager.instance.LoadGame();
+        DataPersistentManager.instance.EntryGame();
         gameObject.SetActive(false);
     }
 
@@ -99,7 +99,7 @@ public class SelectCharacterController : MenuController
     private void SetCharacterData(CharacterType type)
     {
         Avatar.gameObject.GetComponent<Image>().sprite = characterAva[(int)type - 1];
-        var data = GameState.characters[type];
+        var data = GameState.charactersData[type];
         Attack.gameObject.GetComponent<BarController>().SetValue(data.Attack);
         Health.gameObject.GetComponent<BarController>().SetValue(data.Health);
         Charisma.gameObject.GetComponent<BarController>().SetValue(data.Charisma);

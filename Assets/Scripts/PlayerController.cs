@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDataPersistent
 {
     public float movePower = 6f;
     public string playerPosition = "";
@@ -264,6 +264,23 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log(this.name + "cancel Freeze");
         isFreeze = false;
+    }
+
+    public void LoadData(GameState data)
+    {
+        if (playerPosition == "")
+        {
+            GetComponent<Animator>().runtimeAnimatorController = GameState.animatorController[data.GetPlayer1Type()];
+        }
+        else
+        {
+            GetComponent<Animator>().runtimeAnimatorController = GameState.animatorController[data.GetPlayer2Type()];
+        }
+    }
+
+    public void SaveData()
+    {
+        throw new System.NotImplementedException();
     }
 }
 public enum PlayerSide
