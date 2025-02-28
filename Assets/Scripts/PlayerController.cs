@@ -1,13 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public float movePower = 6f;
     public string playerPosition = "";
+    public GameObject bomb;
+    public GameObject bomb_hold_side;
+    public GameObject bomb_walk_side;
+    public GameObject gun_up;
+    public GameObject gun_side;
+    public GameObject gun_down;
+    public GameObject gun_hold_side;
+    public GameObject gun_walk_side;
     private Rigidbody2D rb;
     private Animator anim;
     private int direction = 1;
     private bool alive = true;
+    private bool holdingBomb = false;
+    private bool holdingGun = false;
+    private PlayerSide currentSide = PlayerSide.Down;
+    private Dictionary<PlayerSide, Vector2> bomb_Position = new Dictionary<PlayerSide, Vector2>(){
+        {PlayerSide.Up, new Vector2(0, 0.13f)},
+        {PlayerSide.Side, new Vector2(-0.45f, -0.41f)},
+        {PlayerSide.Down, new Vector2(0, -0.51f)}
+    };
 
     void Start()
     {
@@ -28,6 +45,25 @@ public class PlayerController : MonoBehaviour
         else
         {
             anim.SetBool("isMove", false);
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            holdingGun = false;
+            holdingBomb = true;
+            anim.SetInteger("Status", 1);
+            bomb.SetActive(holdingBomb);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            holdingGun = true;
+            holdingBomb = false;
+            anim.SetInteger("Status", 2);
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            holdingGun = false;
+            holdingBomb = false;
+            anim.SetInteger("Status", 0);
         }
     }
 
@@ -59,18 +95,23 @@ public class PlayerController : MonoBehaviour
                     }
                     anim.SetBool("isSide", true);
                     anim.SetBool("isUp", false);
+                    currentSide = PlayerSide.Side;
                 }
                 else if (moveDir.y > 0)
                 {
                     anim.SetBool("isUp", true);
                     anim.SetBool("isSide", false);
+                    currentSide = PlayerSide.Up;
                 }
                 else if (moveDir.y < 0)
                 {
                     anim.SetBool("isUp", false);
                     anim.SetBool("isSide", false);
+                    currentSide = PlayerSide.Down;
                 }
             }
+            SetBombPosition(isMoving);
+            SetGun(isMoving);
 
             float threshold = 0.01f;
             float moveX = Mathf.Abs(moveDir.x) < threshold ? 0 : moveDir.x;
@@ -84,6 +125,98 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = Vector2.zero;
             anim.SetBool("isMove", false);
+        }
+    }
+    void SetGun(bool isMoving)
+    {
+        if (!holdingGun)
+        {
+            gun_hold_side.SetActive(false);
+            gun_walk_side.SetActive(false);
+            gun_up.SetActive(false);
+            gun_side.SetActive(false);
+            gun_down.SetActive(false);
+        }
+        else
+        {
+            if (currentSide == PlayerSide.Up)
+            {
+                gun_up.SetActive(true);
+                gun_side.SetActive(false);
+                gun_down.SetActive(false);
+            }
+            else if (currentSide == PlayerSide.Down)
+            {
+                gun_up.SetActive(false);
+                gun_side.SetActive(false);
+                gun_down.SetActive(true);
+            }
+            else
+            {
+                gun_walk_side.SetActive(true);
+                gun_up.SetActive(false);
+                gun_side.SetActive(true);
+                gun_down.SetActive(false);
+            }
+            if (!isMoving)
+            {
+                if (currentSide == PlayerSide.Side)
+                {
+                    gun_walk_side.SetActive(false);
+                    gun_hold_side.SetActive(true);
+                }
+                else
+                {
+                    gun_walk_side.SetActive(false);
+                    gun_hold_side.SetActive(false);
+                }
+            }
+        }
+    }
+
+    void SetBombPosition(bool isMoving)
+    {
+        if (!holdingBomb)
+        {
+            bomb_hold_side.SetActive(false);
+            bomb_walk_side.SetActive(false);
+            bomb.SetActive(false);
+        }
+        else
+        {
+            if (isMoving)
+            {
+                bomb_hold_side.SetActive(false);
+                if (currentSide == PlayerSide.Side)
+                {
+                    bomb_walk_side.SetActive(true);
+                }
+                else
+                {
+                    bomb_walk_side.SetActive(false);
+                }
+            }
+            else
+            {
+                bomb_walk_side.SetActive(false);
+                if (currentSide == PlayerSide.Side)
+                {
+                    bomb_hold_side.SetActive(true);
+                }
+                else
+                {
+                    bomb_hold_side.SetActive(false);
+                }
+            }
+            if (currentSide == PlayerSide.Up)
+            {
+                bomb.GetComponent<Renderer>().sortingOrder = -1;
+            }
+            else
+            {
+                bomb.GetComponent<Renderer>().sortingOrder = 1;
+            }
+            bomb.transform.localPosition = bomb_Position[currentSide];
         }
     }
 
@@ -175,4 +308,10 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(new Vector2(5f, 1f), ForceMode2D.Impulse);
         }
     }
+}
+public enum PlayerSide
+{
+    Up,
+    Side,
+    Down
 }
