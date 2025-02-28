@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
         {PlayerSide.Down, new Vector2(0, -0.51f)}
     };
 
+    private bool isFreeze = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -40,7 +42,6 @@ public class PlayerController : MonoBehaviour
         {
             Hurt();
             Attack();
-
         }
         else
         {
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDir, 0.5f, LayerMask.GetMask("Wall"));
 
-        if (hit.collider == null)
+        if (hit.collider == null && !isFreeze)
         {
             bool isMoving = moveDir.x != 0 || moveDir.y != 0;
             anim.SetBool("isMove", isMoving);
@@ -220,69 +221,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void _Run()
-    {
-
-        // anim.SetBool("isMove", false);
-        Vector2 moveDir = new Vector2(Input.GetAxisRaw("Horizontal" + playerPosition), Input.GetAxisRaw("Vertical" + playerPosition)).normalized;
-
-        // Make sure there no obstacle
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDir, 0.5f, LayerMask.GetMask("Wall"));
-
-        if (hit.collider == null)
-        {
-            if (moveDir.x != 0 || moveDir.y != 0)
-            {
-                anim.SetBool("isMove", true);
-            }
-            else
-            {
-
-                anim.SetBool("isMove", false);
-            }
-            //Deal with direction
-            if (moveDir.x != 0)
-            {
-                if (moveDir.x < 0 && direction != 1)
-                {
-                    direction = 1;
-                    Flip();
-                }
-                else if (moveDir.x > 0 && direction != -1)
-                {
-                    direction = -1;
-                    Flip();
-                }
-                anim.SetBool("isSide", true);
-                anim.SetBool("isUp", false);
-
-
-            }
-            else if (moveDir.y > 0)
-            {
-                anim.SetBool("isUp", true);
-                anim.SetBool("isSide", false);
-            }
-            else if (moveDir.y < 0)
-            {
-                anim.SetBool("isUp", false);
-                anim.SetBool("isSide", false);
-
-            }
-            float threshold = 0.1f;
-            float moveX = Mathf.Abs(moveDir.x) < threshold ? 0 : moveDir.x;
-            float moveY = Mathf.Abs(moveDir.y) < threshold ? 0 : moveDir.y;
-            anim.SetFloat("MoveX", moveX);
-            anim.SetFloat("MoveY", moveY);
-            rb.linearVelocity = moveDir * movePower;
-        }
-        else
-        {
-            rb.linearVelocity = Vector2.zero;
-            anim.SetBool("isMove", false);
-        }
-    }
-
     void Flip()
     {
         Vector3 newScale = transform.localScale;
@@ -307,6 +245,25 @@ public class PlayerController : MonoBehaviour
             else
                 rb.AddForce(new Vector2(5f, 1f), ForceMode2D.Impulse);
         }
+    }
+
+    public void SetFreeze()
+    {
+        Debug.Log(this.name + "Freeze");
+        isFreeze = true;
+        anim.SetBool("isUp", false);
+        anim.SetBool("isSide", false);
+    }
+
+    public bool getFreeze()
+    {
+        return isFreeze;
+    }
+
+    public void CancelFreeze()
+    {
+        Debug.Log(this.name + "cancel Freeze");
+        isFreeze = false;
     }
 }
 public enum PlayerSide
