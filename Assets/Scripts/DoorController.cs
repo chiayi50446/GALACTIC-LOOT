@@ -26,8 +26,8 @@ public class DoorController : MonoBehaviour
     };
     public Vector3[][] nextPlayer1Position = {
         new Vector3[]{ //Map1
-            new Vector3(0,0,0),
-            new Vector3(0,0,0),
+            new Vector3(21f,52f,0),
+            new Vector3(58f,48f,0),
             },
         new Vector3[]{ //Map2
             new Vector3(10f, 15f, 0)
@@ -35,8 +35,8 @@ public class DoorController : MonoBehaviour
     };
     public Vector3[][] nextPlayer2Position = {
         new Vector3[]{ //Map1
-            new Vector3(0,0,0),
-            new Vector3(0,0,0),
+            new Vector3(19f,52f,0),
+            new Vector3(56f,48f,0),
             },
         new Vector3[]{ //Map2
             new Vector3(8.5f, 15f, 0)
@@ -45,8 +45,8 @@ public class DoorController : MonoBehaviour
 
     public Vector3[][] exitPoint = {
         new Vector3[]{ //Map1
-            new Vector3(9.5f, 57.5f, -10f),
-            new Vector3(56.5f, 53.5f, -10f)
+            new Vector3(-7f, 3.5f, 0),
+            new Vector3(14.5f, 61.5f, -10f)
             },
         new Vector3[]{ //Map2
             new Vector3(0.45f, 6f, 0)
