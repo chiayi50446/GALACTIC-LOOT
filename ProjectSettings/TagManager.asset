@@ -29,7 +29,7 @@ TagManager:
   - Layer 1
   - Wall
   - Object
-  - 
+  - Player
   - 
   - 
   - 
@@ -50,6 +50,9 @@ TagManager:
     locked: 0
   - name: Object
     uniqueID: 4189426099
+    locked: 0
+  - name: Player
+    uniqueID: 1258595893
     locked: 0
   m_RenderingLayers:
   - Default
