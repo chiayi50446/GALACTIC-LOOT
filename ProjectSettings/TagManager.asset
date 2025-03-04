@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Hint
+  - chestItem
   layers:
   - Default
   - TransparentFX

@@ -5,25 +5,27 @@ public class ItemController : MonoBehaviour
     private GameObject hint;
     // public AudioSource audioSource;
     public AudioClip effectSound;
-    protected bool isTrigger;
+    protected bool isTrigger1;
+    protected bool isTrigger2;
     // Start is called before the first frame update
     public virtual void Start()
     {
         hint = findChildByTag(this.transform, "Hint");
         hint.SetActive(false);
-        isTrigger = false;
+        isTrigger1 = false;
+        isTrigger2 = false;
     }
 
     // Update is called once per frame
     public virtual void Update()
     {
-        if (isTrigger)
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                hint.SetActive(false);
-            }
-        }
+        // if (isTrigger)
+        // {
+        //     if (Input.GetKeyDown(KeyCode.F))
+        //     {
+        //         hint.SetActive(false);
+        //     }
+        // }
     }
 
     public virtual void OnTriggerEnter2D(Collider2D other)
@@ -31,14 +33,19 @@ public class ItemController : MonoBehaviour
         if (other.tag == "Player")
         {
             hint.SetActive(true);
-            isTrigger = true;
+            if (other.gameObject.name == "Player1")
+                isTrigger1 = true;
+            else
+                isTrigger2 = true;
+
         }
     }
 
     protected void OnTriggerExit2D(Collider2D other)
     {
         hint.SetActive(false);
-        isTrigger = false;
+        isTrigger1 = false;
+        isTrigger2 = false;
     }
 
     protected GameObject findChildByTag(Transform parent, string inputTag)

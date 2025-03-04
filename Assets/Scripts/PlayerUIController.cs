@@ -23,7 +23,10 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     {
         throw new System.NotImplementedException();
     }
-
+    void Awake()
+    {
+        EventManager.instance.UpdateInventory += UpdateItem;
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,5 +37,17 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     void Update()
     {
 
+    }
+
+    void UpdateItem(string itemName, int pNum)
+    {
+        if (pNum == PlayerNum)
+        {
+            var index = pNum == 1 ? GameState.Instance.GetPlayer1ItemLoad() : GameState.Instance.GetPlayer2ItemLoad();
+            var item = ItemList[index].transform.Find("Item");
+            item.gameObject.SetActive(true);
+            item.GetComponent<Image>().sprite = GameState.chestItem[itemName];
+            EventManager.instance.TriggerUpdateUserTakenItem(itemName, PlayerNum);
+        }
     }
 }

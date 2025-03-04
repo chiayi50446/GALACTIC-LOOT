@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
 
     void Start()
     {
+        EventManager.instance.UpdateUserTakenItem += UpdateTakenItem;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
@@ -73,9 +74,9 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         Vector2 moveDir = new Vector2(Input.GetAxisRaw("Horizontal" + playerPosition),
                                       Input.GetAxisRaw("Vertical" + playerPosition)).normalized;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDir, 0.5f, LayerMask.GetMask("Wall"));
+        // RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDir, 0.1f, LayerMask.GetMask("Wall"));
 
-        if (hit.collider == null && !isFreeze)
+        if (/*hit.collider == null &&*/ !isFreeze)
         {
             bool isMoving = moveDir.x != 0 || moveDir.y != 0;
             anim.SetBool("isMove", isMoving);
@@ -244,6 +245,25 @@ public class PlayerController : MonoBehaviour, IDataPersistent
                 rb.AddForce(new Vector2(-5f, 1f), ForceMode2D.Impulse);
             else
                 rb.AddForce(new Vector2(5f, 1f), ForceMode2D.Impulse);
+        }
+    }
+    void UpdateTakenItem(string itemName, int pNum)
+    {
+        if ((playerPosition == "" && pNum == 1) || (playerPosition == "2" && pNum == 2))
+        {
+            if (itemName == "Rifle")
+            {
+                holdingGun = true;
+                holdingBomb = false;
+                anim.SetInteger("Status", 2);
+            }
+            if (itemName == "Bomb")
+            {
+                holdingGun = false;
+                holdingBomb = true;
+                anim.SetInteger("Status", 1);
+                bomb.SetActive(holdingBomb);
+            }
         }
     }
 

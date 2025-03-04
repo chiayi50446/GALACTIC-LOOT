@@ -14,7 +14,7 @@ public class ChestController : ItemController, IDataPersistent
     {
         base.Start();
         isOpen = false;
-        // chestItem = findChildByTag(this.transform, "chestItem");
+        chestItem = findChildByTag(this.transform, "chestItem");
     }
 
     private void Awake()
@@ -25,16 +25,38 @@ public class ChestController : ItemController, IDataPersistent
     // Update is called once per frame
     public override void Update()
     {
-        if (!isOpen && isTrigger)
+        if (!isOpen)
         {
             base.Update();
-            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+            if (Input.GetKeyDown(KeyCode.RightControl) && isTrigger1)
             {
                 isOpen = true;
                 anim.SetBool("Open", true);
-                // chestItem.SetActive(true);
-                // StartCoroutine(Helper.Delay(() => { chestItem.SetActive(false); }, 0.5f));
+                StartCoroutine(Helper.Delay(() => { chestItem.SetActive(true); }, 0.8f));
+                StartCoroutine(Helper.Delay(() => { chestItem.SetActive(false); }, 1.3f));
                 GetComponent<Collider2D>().enabled = false;
+                StartCoroutine(Helper.Delay(() => { EventManager.instance.TriggerUpdateInventory(chestItem.transform.GetChild(0).name, 1); }, 1.3f));
+                // GameState.Instance.SetChestBoxName(name);
+                // audioSource.PlayOneShot(effectSound);
+                // if (tag == "gemChest")
+                // {
+                //     UpdateGemCount();
+                // }
+                // if (tag == "runeChest")
+                // {
+                //     UpdateRuneCount();
+                // }
+            }
+            if (Input.GetKeyDown(KeyCode.LeftControl) && isTrigger2)
+            {
+                isOpen = true;
+                anim.SetBool("Open", true);
+                StartCoroutine(Helper.Delay(() => { chestItem.SetActive(true); }, 0.8f));
+                StartCoroutine(Helper.Delay(() => { chestItem.SetActive(false); }, 1.3f));
+                GetComponent<Collider2D>().enabled = false;
+
+                StartCoroutine(Helper.Delay(() => { EventManager.instance.TriggerUpdateInventory(chestItem.transform.GetChild(0).name, 2); }, 1.3f));
+
                 // GameState.Instance.SetChestBoxName(name);
                 // audioSource.PlayOneShot(effectSound);
                 // if (tag == "gemChest")

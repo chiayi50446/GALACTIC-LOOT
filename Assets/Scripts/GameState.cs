@@ -11,6 +11,10 @@ public class GameState
     private CharacterType Player1Type = CharacterType.none;
     [SerializeField]
     private CharacterType Player2Type = CharacterType.none;
+    [SerializeField]
+    private int Player1ItemLoadIndex = -1;
+    [SerializeField]
+    private int Player2ItemLoadIndex = -1;
 
     public static Dictionary<CharacterType, CharacterProperty> charactersData = new Dictionary<CharacterType, CharacterProperty>
     {
@@ -22,6 +26,7 @@ public class GameState
     public static Dictionary<CharacterType, RuntimeAnimatorController> animatorController;
     public static Dictionary<CharacterType, Sprite> characterAvatar;
 
+    public static Dictionary<string, Sprite> chestItem;
     private GameState()
     {
         animatorController = new Dictionary<CharacterType, RuntimeAnimatorController>(){
@@ -36,6 +41,12 @@ public class GameState
             {CharacterType.type2, (Sprite)Resources.Load("Avatars/ava_2", typeof(Sprite))},
             {CharacterType.type3, (Sprite)Resources.Load("Avatars/ava_3", typeof(Sprite))},
             {CharacterType.type4, (Sprite)Resources.Load("Avatars/ava_4", typeof(Sprite))}
+        };
+        chestItem = new Dictionary<string, Sprite>()
+        {
+            {"Bomb", (Sprite)Resources.Load("ChestItems/Bomb", typeof(Sprite))},
+            {"Rifle", (Sprite)Resources.Load("ChestItems/Rifle", typeof(Sprite))},
+            {"WizardHat", (Sprite)Resources.Load("ChestItems/WizardHat", typeof(Sprite))}
         };
         currentLevel = 1;
     }
@@ -91,6 +102,34 @@ public class GameState
     public CharacterType GetPlayer2Type()
     {
         return Player2Type;
+    }
+    public bool IsPlayer1ItemFull()
+    {
+        var play1MaxLoad = charactersData[Player1Type].Load;
+        return Player1ItemLoadIndex == play1MaxLoad - 1;
+    }
+    public int GetPlayer1ItemLoad()
+    {
+        var play1MaxLoad = charactersData[Player1Type].Load;
+        if (Player1ItemLoadIndex < play1MaxLoad - 1)
+        {
+            Player1ItemLoadIndex++;
+        }
+        return Player1ItemLoadIndex;
+    }
+    public bool IsPlayer2ItemFull()
+    {
+        var play2MaxLoad = charactersData[Player2Type].Load;
+        return Player2ItemLoadIndex == play2MaxLoad - 1;
+    }
+    public int GetPlayer2ItemLoad()
+    {
+        var play2MaxLoad = charactersData[Player2Type].Load;
+        if (Player2ItemLoadIndex < play2MaxLoad - 1)
+        {
+            Player2ItemLoadIndex++;
+        }
+        return Player2ItemLoadIndex;
     }
 }
 
