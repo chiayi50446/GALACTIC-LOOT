@@ -23,7 +23,7 @@ public class EnemyVisionController : MonoBehaviour
         // UpdateMesh();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         UpdateMesh();
     }
@@ -47,20 +47,21 @@ public class EnemyVisionController : MonoBehaviour
         for (int i = 0; i <= segments; i++)
         {
             float angle = (-viewAngle / 2 + (viewAngle * i / segments) - rotate) * Mathf.Deg2Rad;
-            Vector3 direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
-            Vector3 endPoint = direction * viewDistance;
+            Vector3 directionPos = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
+            Vector3 endPoint = directionPos * viewDistance;
 
             // Check if vision blocks by wall and object or not
-            RaycastHit2D hitWall = Physics2D.Raycast(worldOrigin, direction, viewDistance, LayerMask.GetMask("Wall", "Object"));
+            RaycastHit2D hitWall = Physics2D.Raycast(worldOrigin, directionPos, viewDistance, LayerMask.GetMask("Wall", "Object"));
             if (hitWall.collider != null)
             {
                 endPoint = (Vector3)hitWall.point - worldOrigin;
             }
-            vertices[i + 1] = endPoint;
             Debug.DrawRay(worldOrigin, endPoint, Color.yellow);
+            if ((direction == "right")) endPoint.x *= -1;
+            vertices[i + 1] = new Vector3(endPoint.x, endPoint.y, 0.01f); //確保渲染時z軸固定 避免顯示層級錯誤
 
             // Check if hit players or not
-            RaycastHit2D hitPlayer = Physics2D.Raycast(worldOrigin, direction, viewDistance, LayerMask.GetMask("Player"));
+            RaycastHit2D hitPlayer = Physics2D.Raycast(worldOrigin, directionPos, viewDistance, LayerMask.GetMask("Player"));
             if (hitPlayer.collider != null)
             {
                 Debug.Log("Hit: " + hitPlayer.collider.name);

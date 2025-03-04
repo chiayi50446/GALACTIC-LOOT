@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PatrolEnemyAnimator
+  m_Controller: {fileID: 9100000, guid: d33e4390d7966aa4196f7d7880be84fc, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d1f6c84afa67ee24da3e728ec4f996f0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 05a6ce6ba0fcd2e4db1644173e2fd0df, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 818116b099020b1489d6c450b279dcfd, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0f5676c03983dcf4fad9db20cde3fa15, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 0f587abf239df2f46a3b1b5a0591dd0d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 983124c99ccdc944cbbb36c1c05d680b, type: 2}

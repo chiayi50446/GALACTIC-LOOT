@@ -76,9 +76,11 @@ public class PlayerController : MonoBehaviour, IDataPersistent
 
         // RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDir, 0.1f, LayerMask.GetMask("Wall"));
 
+        bool isMoving = moveDir.x != 0 || moveDir.y != 0;
+        SetBombPosition(isMoving);
+        SetGun(isMoving);
         if (/*hit.collider == null &&*/ !isFreeze)
         {
-            bool isMoving = moveDir.x != 0 || moveDir.y != 0;
             anim.SetBool("isMove", isMoving);
 
             if (isMoving) // 只有在移動時才更新方向
@@ -112,8 +114,6 @@ public class PlayerController : MonoBehaviour, IDataPersistent
                     currentSide = PlayerSide.Down;
                 }
             }
-            SetBombPosition(isMoving);
-            SetGun(isMoving);
 
             float threshold = 0.01f;
             float moveX = Mathf.Abs(moveDir.x) < threshold ? 0 : moveDir.x;
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
     }
     void UpdateTakenItem(string itemName, int pNum)
     {
-        if ((playerPosition == "" && pNum == 1) || (playerPosition == "2" && pNum == 2))
+        if (pNum.ToString().Equals(playerPosition))
         {
             if (itemName == "Rifle")
             {
@@ -273,6 +273,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         isFreeze = true;
         anim.SetBool("isUp", false);
         anim.SetBool("isSide", false);
+        currentSide = PlayerSide.Down;
     }
 
     public bool getFreeze()
@@ -288,7 +289,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
 
     public void LoadData(GameState data)
     {
-        if (playerPosition == "")
+        if (playerPosition == "1")
         {
             GetComponent<Animator>().runtimeAnimatorController = GameState.animatorController[data.GetPlayer1Type()];
         }

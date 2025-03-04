@@ -24,22 +24,24 @@ public class DoorController : MonoBehaviour
             new Vector3(0f, 20f, -10f)
             }
     };
+
     public Vector3[][] nextPlayer1Position = {
-        new Vector3[]{ //Map1
-            new Vector3(21f,52f,0),
-            new Vector3(58f,48f,0),
-            },
-        new Vector3[]{ //Map2
-            new Vector3(10f, 15f, 0)
-            }
-    };
-    public Vector3[][] nextPlayer2Position = {
         new Vector3[]{ //Map1
             new Vector3(19f,52f,0),
             new Vector3(56f,48f,0),
             },
         new Vector3[]{ //Map2
             new Vector3(8.5f, 15f, 0)
+            }
+    };
+
+    public Vector3[][] nextPlayer2Position = {
+        new Vector3[]{ //Map1
+            new Vector3(21f,52f,0),
+            new Vector3(58f,48f,0),
+            },
+        new Vector3[]{ //Map2
+            new Vector3(10f, 15f, 0)
             }
     };
 
@@ -68,7 +70,7 @@ public class DoorController : MonoBehaviour
 
     void Update()
     {
-        play1MoveY = Input.GetAxisRaw("Vertical");
+        play1MoveY = Input.GetAxisRaw("Vertical1");
         play2MoveY = Input.GetAxisRaw("Vertical2");
         if (player1Enter)
         {

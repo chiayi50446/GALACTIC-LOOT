@@ -28,7 +28,7 @@ public class ChestController : ItemController, IDataPersistent
         if (!isOpen)
         {
             base.Update();
-            if (Input.GetKeyDown(KeyCode.RightControl) && isTrigger1)
+            if (Input.GetKeyDown(KeyCode.LeftControl) && isTrigger1)
             {
                 isOpen = true;
                 anim.SetBool("Open", true);
@@ -47,7 +47,7 @@ public class ChestController : ItemController, IDataPersistent
                 //     UpdateRuneCount();
                 // }
             }
-            if (Input.GetKeyDown(KeyCode.LeftControl) && isTrigger2)
+            if (Input.GetKeyDown(KeyCode.RightControl) && isTrigger2)
             {
                 isOpen = true;
                 anim.SetBool("Open", true);
