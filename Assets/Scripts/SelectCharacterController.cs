@@ -24,7 +24,7 @@ public class SelectCharacterController : MenuController
     void Awake()
     {
         OKButton = transform.GetChild(0).Find("OK").gameObject;
-        EventManager.instance.SelectCharacterEvent += ChangeCharacterInfo;
+        EventManager.Instance.SelectCharacterEvent += ChangeCharacterInfo;
     }
     void OnEnable()
     {

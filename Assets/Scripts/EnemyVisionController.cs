@@ -8,6 +8,8 @@ public class EnemyVisionController : MonoBehaviour
     [SerializeField] private int segments = 10;
     [SerializeField] private string direction = "down";
     private Mesh mesh;
+    private bool isHittingPlayer1;
+    private bool isHittingPlayer2;
     private Dictionary<string, float> directionRotate = new Dictionary<string, float>
     {
         {"up", 270},
@@ -16,10 +18,26 @@ public class EnemyVisionController : MonoBehaviour
         {"right", 0},
     };
 
+    private Dictionary<float, float> viewDistanceData = new Dictionary<float, float>
+    {
+        {0f, 4f},
+        {1f, 4f},
+        {2f, 5f},
+        {3f, 5f},
+    };
+
+    void Awake()
+    {
+
+        EventManager.Instance.UpdateVision += UpdateViewDistance;
+    }
     void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+        isHittingPlayer1 = false;
+        isHittingPlayer2 = false;
+        UpdateViewDistance();
         // UpdateMesh();
     }
 
@@ -43,6 +61,9 @@ public class EnemyVisionController : MonoBehaviour
         vertices[0] = localOrigin;
         float rotate = directionRotate[direction];
 
+        bool hitPlayer1 = false;
+        bool hitPlayer2 = false;
+
         // caculate vertices
         for (int i = 0; i <= segments; i++)
         {
@@ -64,8 +85,38 @@ public class EnemyVisionController : MonoBehaviour
             RaycastHit2D hitPlayer = Physics2D.Raycast(worldOrigin, directionPos, viewDistance, LayerMask.GetMask("Player"));
             if (hitPlayer.collider != null)
             {
-                Debug.Log("Hit: " + hitPlayer.collider.name);
+                if (hitPlayer.collider.name == "Player1")
+                {
+                    hitPlayer1 = true;
+                }
+                if (hitPlayer.collider.name == "Player2")
+                {
+                    hitPlayer2 = true;
+                }
             }
+        }
+
+        if (hitPlayer1 && !isHittingPlayer1)
+        {
+            isHittingPlayer1 = true;
+            UpdateAlertnessLevel();
+            Debug.Log("Hit player1");
+        }
+        if (!hitPlayer1 && isHittingPlayer1)
+        {
+            isHittingPlayer1 = false;
+            Debug.Log("Hit leave player1");
+        }
+        if (hitPlayer2 && !isHittingPlayer2)
+        {
+            isHittingPlayer2 = true;
+            UpdateAlertnessLevel();
+            Debug.Log("Hit player2");
+        }
+        if (!hitPlayer2 && isHittingPlayer2)
+        {
+            isHittingPlayer2 = false;
+            Debug.Log("Hit leave player2");
         }
 
         // draw triangles
@@ -82,5 +133,16 @@ public class EnemyVisionController : MonoBehaviour
 
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
+    }
+
+    private void UpdateAlertnessLevel()
+    {
+        EventManager.Instance.TriggerUpdateAlertnessLevel();
+    }
+
+    private void UpdateViewDistance()
+    {
+        float newAlertnessLevel = GameState.Instance.GetAlertnessLevel();
+        viewDistance = viewDistanceData[newAlertnessLevel];
     }
 }

@@ -1748,6 +1748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barImage: {fileID: 1748841373}
   maxValue: 1
+  initValue: 1
 --- !u!1 &178588012
 GameObject:
   m_ObjectHideFlags: 0
@@ -5917,6 +5918,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barImage: {fileID: 1421412082}
   maxValue: 5
+  initValue: 5
 --- !u!1 &730793130
 GameObject:
   m_ObjectHideFlags: 0
@@ -6993,6 +6995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barImage: {fileID: 936748411}
   maxValue: 2
+  initValue: 2
 --- !u!1 &879968886
 GameObject:
   m_ObjectHideFlags: 0
@@ -7710,6 +7713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barImage: {fileID: 1322892761}
   maxValue: 3
+  initValue: 3
 --- !u!1 &1000793863
 GameObject:
   m_ObjectHideFlags: 0
@@ -8904,6 +8908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barImage: {fileID: 1108605078}
   maxValue: 5
+  initValue: 5
 --- !u!1 &1209886246
 GameObject:
   m_ObjectHideFlags: 0
@@ -11664,6 +11669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barImage: {fileID: 224147033}
   maxValue: 3
+  initValue: 3
 --- !u!1 &1639993324
 GameObject:
   m_ObjectHideFlags: 0
@@ -11953,6 +11959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barImage: {fileID: 1728888341}
   maxValue: 2
+  initValue: 2
 --- !u!1 &1681740236
 GameObject:
   m_ObjectHideFlags: 0
@@ -13746,6 +13753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barImage: {fileID: 1830352239}
   maxValue: 1
+  initValue: 1
 --- !u!1 &2032778982
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-    public static EventManager instance;
+    public static EventManager Instance;
     public event Action LoadingActiveEvent;
     public event Action<CharacterType> SelectCharacterEvent;
     public event Action<string, int> UpdateInventory;
     public event Action<string, int> UpdateUserTakenItem;
+    public event Action UpdateAlertnessLevel;
+    public event Action UpdateVision;
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (Instance == null)
+            Instance = this;
     }
 
     public void TriggerLoadingActive()
@@ -35,5 +37,15 @@ public class EventManager : MonoBehaviour
     public void SelectCharacterActive(CharacterType type)
     {
         SelectCharacterEvent?.Invoke(type);
+    }
+
+    public void TriggerUpdateAlertnessLevel()
+    {
+        UpdateAlertnessLevel?.Invoke();
+    }
+
+    public void TriggerUpdateVision()
+    {
+        UpdateVision?.Invoke();
     }
 }

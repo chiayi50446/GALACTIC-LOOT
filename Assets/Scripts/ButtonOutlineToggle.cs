@@ -19,7 +19,7 @@ public class ButtonOutlineToggle : MonoBehaviour, ISelectHandler, IDeselectHandl
 
     public void OnSelect(BaseEventData eventData)
     {
-        EventManager.instance.SelectCharacterActive(type);
+        EventManager.Instance.SelectCharacterActive(type);
         if (outline != null)
         {
             outline.enabled = true; // 選擇時顯示

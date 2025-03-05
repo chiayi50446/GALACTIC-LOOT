@@ -26,7 +26,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     }
     void Awake()
     {
-        EventManager.instance.UpdateInventory += UpdateItem;
+        EventManager.Instance.UpdateInventory += UpdateItem;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -56,7 +56,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     {
         if (index == PlayerSelectItem)
         {
-            EventManager.instance.TriggerUpdateUserTakenItem(itemName, PlayerNum);
+            EventManager.Instance.TriggerUpdateUserTakenItem(itemName, PlayerNum);
         }
     }
 }

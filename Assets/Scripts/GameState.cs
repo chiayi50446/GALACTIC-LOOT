@@ -16,6 +16,7 @@ public class GameState
     [SerializeField]
     private int Player2ItemLoadIndex = -1;
     private bool IsCollectItemGet = false;
+    [SerializeField] private static float currentAlertnessLevel;
 
     public static Dictionary<CharacterType, CharacterProperty> charactersData = new Dictionary<CharacterType, CharacterProperty>
     {
@@ -26,8 +27,8 @@ public class GameState
     };
     public static Dictionary<CharacterType, RuntimeAnimatorController> animatorController;
     public static Dictionary<CharacterType, Sprite> characterAvatar;
-
     public static Dictionary<string, Sprite> chestItem;
+
     private GameState()
     {
         animatorController = new Dictionary<CharacterType, RuntimeAnimatorController>(){
@@ -50,6 +51,7 @@ public class GameState
             {"WizardHat", (Sprite)Resources.Load("ChestItems/WizardHat", typeof(Sprite))}
         };
         currentLevel = 1;
+        currentAlertnessLevel = 0;
     }
 
     public static GameState Instance
@@ -146,6 +148,16 @@ public class GameState
     public bool GetIsCollectItemGet()
     {
         return IsCollectItemGet;
+    }
+
+    public void SetAlertnessLevel(float newAlertnessLevel)
+    {
+        currentAlertnessLevel = newAlertnessLevel;
+    }
+
+    public float GetAlertnessLevel()
+    {
+        return currentAlertnessLevel;
     }
 }
 

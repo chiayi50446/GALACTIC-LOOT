@@ -45,7 +45,7 @@ public class ChestController : ItemController, IDataPersistent
                     if (!GameState.Instance.IsPlayerItemFull(1))
                     {
                         GetComponent<Collider2D>().enabled = false;
-                        StartCoroutine(Helper.Delay(() => { EventManager.instance.TriggerUpdateInventory(itemName, 1); }, 1.3f));
+                        StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerUpdateInventory(itemName, 1); }, 1.3f));
                     }
                     else
                     {
@@ -81,7 +81,7 @@ public class ChestController : ItemController, IDataPersistent
                     if (!GameState.Instance.IsPlayerItemFull(2))
                     {
                         GetComponent<Collider2D>().enabled = false;
-                        StartCoroutine(Helper.Delay(() => { EventManager.instance.TriggerUpdateInventory(itemName, 2); }, 1.3f));
+                        StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerUpdateInventory(itemName, 2); }, 1.3f));
                     }
                     else
                     {

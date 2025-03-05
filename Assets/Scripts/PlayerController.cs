@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
 
     void Start()
     {
-        EventManager.instance.UpdateUserTakenItem += UpdateTakenItem;
+        EventManager.Instance.UpdateUserTakenItem += UpdateTakenItem;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
