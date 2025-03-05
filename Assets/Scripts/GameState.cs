@@ -15,6 +15,7 @@ public class GameState
     private int Player1ItemLoadIndex = -1;
     [SerializeField]
     private int Player2ItemLoadIndex = -1;
+    private bool IsCollectItemGet = false;
 
     public static Dictionary<CharacterType, CharacterProperty> charactersData = new Dictionary<CharacterType, CharacterProperty>
     {
@@ -103,33 +104,48 @@ public class GameState
     {
         return Player2Type;
     }
-    public bool IsPlayer1ItemFull()
+    public bool IsPlayerItemFull(int playerNum)
     {
-        var play1MaxLoad = charactersData[Player1Type].Load;
-        return Player1ItemLoadIndex == play1MaxLoad - 1;
-    }
-    public int GetPlayer1ItemLoad()
-    {
-        var play1MaxLoad = charactersData[Player1Type].Load;
-        if (Player1ItemLoadIndex < play1MaxLoad - 1)
+        if (playerNum == 1)
         {
-            Player1ItemLoadIndex++;
+            var play1MaxLoad = charactersData[Player1Type].Load;
+            return Player1ItemLoadIndex == play1MaxLoad - 1;
         }
-        return Player1ItemLoadIndex;
-    }
-    public bool IsPlayer2ItemFull()
-    {
-        var play2MaxLoad = charactersData[Player2Type].Load;
-        return Player2ItemLoadIndex == play2MaxLoad - 1;
-    }
-    public int GetPlayer2ItemLoad()
-    {
-        var play2MaxLoad = charactersData[Player2Type].Load;
-        if (Player2ItemLoadIndex < play2MaxLoad - 1)
+        else
         {
-            Player2ItemLoadIndex++;
+            var play2MaxLoad = charactersData[Player2Type].Load;
+            return Player2ItemLoadIndex == play2MaxLoad - 1;
         }
-        return Player2ItemLoadIndex;
+    }
+    public int GetPlayerItemLoad(int playerNum)
+    {
+        if (playerNum == 1)
+        {
+            var play1MaxLoad = charactersData[Player1Type].Load;
+            if (Player1ItemLoadIndex < play1MaxLoad - 1)
+            {
+                Player1ItemLoadIndex++;
+            }
+            return Player1ItemLoadIndex;
+        }
+        else
+        {
+            var play2MaxLoad = charactersData[Player2Type].Load;
+            if (Player2ItemLoadIndex < play2MaxLoad - 1)
+            {
+                Player2ItemLoadIndex++;
+            }
+            return Player2ItemLoadIndex;
+        }
+    }
+
+    public void SetIsCollectItemGet()
+    {
+        IsCollectItemGet = true;
+    }
+    public bool GetIsCollectItemGet()
+    {
+        return IsCollectItemGet;
     }
 }
 

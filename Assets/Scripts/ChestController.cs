@@ -28,14 +28,31 @@ public class ChestController : ItemController, IDataPersistent
         if (!isOpen)
         {
             base.Update();
+            var itemName = chestItem.transform.GetChild(0).name;
             if (Input.GetKeyDown(KeyCode.LeftControl) && isTrigger1)
             {
                 isOpen = true;
                 anim.SetBool("Open", true);
                 StartCoroutine(Helper.Delay(() => { chestItem.SetActive(true); }, 0.8f));
                 StartCoroutine(Helper.Delay(() => { chestItem.SetActive(false); }, 1.3f));
-                GetComponent<Collider2D>().enabled = false;
-                StartCoroutine(Helper.Delay(() => { EventManager.instance.TriggerUpdateInventory(chestItem.transform.GetChild(0).name, 1); }, 1.3f));
+                if (itemName == "Beer")
+                {
+                    GetComponent<Collider2D>().enabled = false;
+                    GameState.Instance.SetIsCollectItemGet();
+                }
+                else
+                {
+                    if (!GameState.Instance.IsPlayerItemFull(1))
+                    {
+                        GetComponent<Collider2D>().enabled = false;
+                        StartCoroutine(Helper.Delay(() => { EventManager.instance.TriggerUpdateInventory(itemName, 1); }, 1.3f));
+                    }
+                    else
+                    {
+                        isOpen = false;
+                        StartCoroutine(Helper.Delay(() => { anim.SetBool("Open", false); }, 1.3f));
+                    }
+                }
                 // GameState.Instance.SetChestBoxName(name);
                 // audioSource.PlayOneShot(effectSound);
                 // if (tag == "gemChest")
@@ -53,9 +70,26 @@ public class ChestController : ItemController, IDataPersistent
                 anim.SetBool("Open", true);
                 StartCoroutine(Helper.Delay(() => { chestItem.SetActive(true); }, 0.8f));
                 StartCoroutine(Helper.Delay(() => { chestItem.SetActive(false); }, 1.3f));
-                GetComponent<Collider2D>().enabled = false;
 
-                StartCoroutine(Helper.Delay(() => { EventManager.instance.TriggerUpdateInventory(chestItem.transform.GetChild(0).name, 2); }, 1.3f));
+                if (itemName == "Beer")
+                {
+                    GetComponent<Collider2D>().enabled = false;
+                    GameState.Instance.SetIsCollectItemGet();
+                }
+                else
+                {
+                    if (!GameState.Instance.IsPlayerItemFull(2))
+                    {
+                        GetComponent<Collider2D>().enabled = false;
+                        StartCoroutine(Helper.Delay(() => { EventManager.instance.TriggerUpdateInventory(itemName, 2); }, 1.3f));
+                    }
+                    else
+                    {
+                        isOpen = false;
+                        StartCoroutine(Helper.Delay(() => { anim.SetBool("Open", false); }, 1.3f));
+                    }
+                }
+
 
                 // GameState.Instance.SetChestBoxName(name);
                 // audioSource.PlayOneShot(effectSound);
