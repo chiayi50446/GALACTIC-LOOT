@@ -22,6 +22,9 @@ public class BulletController : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject); // 銷毀子彈
+        if (enemyLayer != (enemyLayer | (1 << collision.gameObject.layer)))
+        {
+            Destroy(gameObject);
+        }
     }
 }
