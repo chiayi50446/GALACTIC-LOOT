@@ -13,17 +13,47 @@ public class PlayerController : MonoBehaviour, IDataPersistent
     public GameObject gun_down;
     public GameObject gun_hold_side;
     public GameObject gun_walk_side;
+    public GameObject flash;
+    public GameObject bomb_explosion;
+    public GameObject bulletPrefab; // bullet Prefab
     private Rigidbody2D rb;
     private Animator anim;
     private int direction = 1;
     private bool alive = true;
     private bool holdingBomb = false;
     private bool holdingGun = false;
+    public float attackRate = 0.5f;
+    private float nextAttackTime = 0f;
     private PlayerSide currentSide = PlayerSide.Down;
     private Dictionary<PlayerSide, Vector2> bomb_Position = new Dictionary<PlayerSide, Vector2>(){
         {PlayerSide.Up, new Vector2(0, 0.13f)},
         {PlayerSide.Side, new Vector2(-0.45f, -0.41f)},
         {PlayerSide.Down, new Vector2(0, -0.51f)}
+    };
+    private Dictionary<PlayerSide, Vector2> flash_Position = new Dictionary<PlayerSide, Vector2>(){
+        {PlayerSide.Up, new Vector2(0, 0.6f)},
+        {PlayerSide.Side, new Vector2(-0.9f, -0.5f)},
+        {PlayerSide.Down, new Vector2(0, -1.25f)}
+    };
+    private Dictionary<PlayerSide, Vector2> flash_Position_rifle = new Dictionary<PlayerSide, Vector2>(){
+        {PlayerSide.Up, new Vector2(0, 1.5f)},
+        {PlayerSide.Side, new Vector2(-1.8f, -0.43f)},
+        {PlayerSide.Down, new Vector2(0, -2f)}
+    };
+    private Dictionary<PlayerSide, int> flash_Rotation = new Dictionary<PlayerSide, int>(){
+        {PlayerSide.Up, -90},
+        {PlayerSide.Side, 0},
+        {PlayerSide.Down, 90}
+    };
+    private Dictionary<PlayerSide, int> flash_Order = new Dictionary<PlayerSide, int>(){
+        {PlayerSide.Up, -2},
+        {PlayerSide.Side, 3},
+        {PlayerSide.Down, 2}
+    };
+    private Dictionary<PlayerSide, Vector3> bomb_explosion_Position = new Dictionary<PlayerSide, Vector3>(){
+        {PlayerSide.Up, new Vector3(0, 2f, 0)},
+        {PlayerSide.Side, new Vector3(2f, -0.5f, 0)},
+        {PlayerSide.Down, new Vector3(0, -2f, 0)}
     };
 
     private bool isFreeze = false;
@@ -55,12 +85,12 @@ public class PlayerController : MonoBehaviour, IDataPersistent
             anim.SetInteger("Status", 1);
             bomb.SetActive(holdingBomb);
         }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            holdingGun = true;
-            holdingBomb = false;
-            anim.SetInteger("Status", 2);
-        }
+        // if (Input.GetKeyDown(KeyCode.F))
+        // {
+        //     holdingGun = true;
+        //     holdingBomb = false;
+        //     anim.SetInteger("Status", 2);
+        // }
         if (Input.GetKeyDown(KeyCode.G))
         {
             holdingGun = false;
@@ -231,10 +261,70 @@ public class PlayerController : MonoBehaviour, IDataPersistent
 
     void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.F) && Time.time >= nextAttackTime)
         {
-            anim.SetTrigger("attack");
+            if (holdingBomb)
+            {
+                anim.SetTrigger("IsThrow");
+                anim.SetInteger("Status", 0);
+                SetBombExplosionPosition();
+                StartCoroutine(Helper.Delay(ThrowBomb, 1f));
+            }
+            else if (holdingGun)
+            {
+                flash.transform.localPosition = flash_Position_rifle[currentSide];
+                flash.transform.localRotation = Quaternion.Euler(0, 0, flash_Rotation[currentSide]);
+                flash.GetComponent<Renderer>().sortingOrder = flash_Order[currentSide];
+                flash.SetActive(true);
+
+                GameObject bullet = Instantiate(bulletPrefab, flash.transform.position, flash.transform.rotation);
+                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+
+                switch (currentSide)
+                {
+                    case PlayerSide.Up:
+                        rb.linearVelocity = new Vector2(0, 10);
+                        break;
+                    case PlayerSide.Down:
+                        rb.linearVelocity = new Vector2(0, -10);
+                        break;
+                    case PlayerSide.Side:
+                        rb.linearVelocity = new Vector2(10, 0) * (-direction);
+                        break;
+                    default:
+                        break;
+                }
+                StartCoroutine(Helper.Delay(() => { flash.SetActive(false); }, 0.2f));
+            }
+            else
+            {
+                flash.transform.localPosition = flash_Position[currentSide];
+                flash.transform.localRotation = Quaternion.Euler(0, 0, flash_Rotation[currentSide]);
+                flash.GetComponent<Renderer>().sortingOrder = flash_Order[currentSide];
+                flash.SetActive(true);
+                StartCoroutine(Helper.Delay(() => { flash.SetActive(false); }, 0.2f));
+            }
+            nextAttackTime = Time.time + attackRate;
         }
+    }
+
+    void ThrowBomb()
+    {
+        bomb.GetComponent<BombController>().IsThrowing = false;
+        holdingBomb = false;
+        bomb_explosion.SetActive(true);
+        StartCoroutine(Helper.Delay(() => { bomb_explosion.SetActive(false); }, 1.5f));
+    }
+
+    void SetBombExplosionPosition()
+    {
+        var positionChange = new Vector3(bomb_explosion_Position[currentSide].x * direction * (-1), bomb_explosion_Position[currentSide].y, 0);
+        var endPosition = transform.position + positionChange;
+        bomb.GetComponent<BombController>().startPoint = bomb.transform.position;
+        bomb.GetComponent<BombController>().targetPoint = endPosition;
+        bomb.GetComponent<BombController>().controlPoint = bomb.transform.position + new Vector3(0, 2f, 0);
+        StartCoroutine(Helper.Delay(() => { bomb.GetComponent<BombController>().IsThrowing = true; }, 0.4f));
+        bomb_explosion.transform.position = endPosition;
     }
     void Hurt()
     {
