@@ -15,7 +15,9 @@ public class BossController : MonoBehaviour
     [SerializeField] private List<GameObject> playerList = new List<GameObject>();
     [SerializeField] private Collider2D attackCollider;
     [SerializeField] private Animator anim;
+    [SerializeField] private float distanceThreshold = 5f;
     private bool isWalk;
+    private bool isLeft;
     private Vector3 destination;
     private GameObject currentTarget;
     private float speed = 5f;
@@ -34,31 +36,59 @@ public class BossController : MonoBehaviour
     {
         state = BossStates.Idle;
         attackCollider.enabled = false;
+        isLeft = true;
     }
 
     void Update()
     {
         if (state == BossStates.Chasing && currentTarget != null)
         {
-            if (!isWalk)
-                anim.SetBool("isWalk", true);
-            destination = (currentTarget.transform.position - transform.position).normalized;
-            Vector3 temp = transform.position + destination * speed * Time.deltaTime;
-            if (temp.x > 64f) temp.x = 64f;
-            if (temp.x < 43.5f) temp.x = 43.5f;
-            if (temp.y > 61f) temp.y = 61f;
-            if (temp.y < 50.5f) temp.y = 50.5f;
-            transform.position = temp;
+            if (!isWalk) anim.SetBool("isWalk", true);
+            if (Vector3.Distance(currentTarget.transform.position, transform.position) < distanceThreshold)
+            {
+                StartAttack();
+            }
+            else
+            {
+                if (currentTarget.transform.position.x > transform.position.x)
+                {
+                    if (isLeft)
+                    {
+                        Flip();
+                        isLeft = false;
+                    }
+                }
+                else
+                {
+                    if (!isLeft)
+                    {
+                        Flip();
+                        isLeft = true;
+                    }
+                }
+                destination = (currentTarget.transform.position - transform.position).normalized;
+                Vector3 temp = transform.position + destination * speed * Time.deltaTime;
+                if (temp.x > 64f) temp.x = 64f;
+                if (temp.x < 43.5f) temp.x = 43.5f;
+                if (temp.y > 61f) temp.y = 61f;
+                if (temp.y < 50.5f) temp.y = 50.5f;
+                transform.position = temp;
+            }
         }
+    }
+
+    private void RandomTarget()
+    {
+        if (playerList.Count == 0) return;
+        currentTarget = selectTarget();
     }
 
     private void StartAttack()
     {
-        if (playerList.Count == 0) return;
-
-        currentTarget = selectTarget();
         state = BossStates.Attacking;
         anim.Play("Attack");
+        anim.SetBool("isWalk", false);
+        isWalk = false;
         Invoke(nameof(EnableAttackCollider), 0.4f);
         Debug.Log($"Boss attacks {currentTarget.name}");
 
@@ -68,28 +98,48 @@ public class BossController : MonoBehaviour
     private void ResetState()
     {
         state = BossStates.Chasing;
+        selectTarget(true);
     }
 
-    private GameObject selectTarget()
+    private GameObject selectTarget(bool notCurrent = false)
     {
-        int choice = Random.Range(0, playerList.Count);
-        return playerList[choice];
+        if (playerList.Count == 0) return null;
+
+        if (notCurrent)
+        {
+            GameObject newTarget;
+            do
+            {
+                newTarget = playerList[Random.Range(0, playerList.Count)];
+            } while (newTarget == currentTarget);
+            return newTarget;
+        }
+
+        return playerList[Random.Range(0, playerList.Count)];
     }
 
     private void ActiveBoss()
     {
-        InvokeRepeating(nameof(StartAttack), 2f, 5f); // 每 5 秒選擇目標攻擊
+        state = BossStates.Chasing;
+        InvokeRepeating(nameof(RandomTarget), 2f, 5f);
     }
 
 
     public void EnableAttackCollider()
     {
         attackCollider.enabled = true;
-        Invoke(nameof(DisableAttackCollider), 0.5f); // 0.5 秒後自動關閉
+        Invoke(nameof(DisableAttackCollider), 0.5f);
     }
 
     void DisableAttackCollider()
     {
         attackCollider.enabled = false;
+    }
+
+    void Flip()
+    {
+        Vector3 newScale = transform.localScale;
+        newScale.x *= -1;
+        transform.localScale = newScale;
     }
 }
