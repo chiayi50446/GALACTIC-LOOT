@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -313,7 +314,11 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         bomb.GetComponent<BombController>().IsThrowing = false;
         holdingBomb = false;
         bomb_explosion.SetActive(true);
-        StartCoroutine(Helper.Delay(() => { bomb_explosion.SetActive(false); }, 1.5f));
+        StartCoroutine(Helper.Delay(() =>
+        {
+            bomb_explosion.SetActive(false);
+            EventManager.Instance.TriggerRemoveInventory(Int32.Parse(playerPosition));
+        }, 1.5f));
     }
 
     void SetBombExplosionPosition()

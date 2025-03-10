@@ -27,6 +27,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     void Awake()
     {
         EventManager.Instance.UpdateInventory += UpdateItem;
+        EventManager.Instance.RemoveInventory += RemoveItem;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,6 +50,39 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
             item.gameObject.SetActive(true);
             item.GetComponent<Image>().sprite = GameState.chestItem[itemName];
             ChangeItem(itemName, index);
+        }
+    }
+
+    void RemoveItem(int pNum)
+    {
+        if (pNum == PlayerNum)
+        {
+            //Remove Current item
+            GameState.Instance.ReducePlayerItemLoad(pNum);
+            GameState.Instance.SetPlayerSelectItem(pNum, 0);
+            var index = GameState.Instance.GetPlayerSelectItem(pNum);
+            var item = ItemList[index].transform.Find("Item");
+            item.gameObject.SetActive(false);
+
+            //Move the other items
+            for (int i = 0; i < ItemList.Length; i++)
+            {
+                item = ItemList[i].transform.Find("Item");
+                if (!item.gameObject.activeSelf && i < ItemList.Length - 1)
+                {
+                    var nextItem = ItemList[i + 1].transform.Find("Item");
+                    if (nextItem.gameObject.activeSelf)
+                    {
+                        item.gameObject.SetActive(true);
+                        item.GetComponent<Image>().sprite = nextItem.GetComponent<Image>().sprite;
+                        nextItem.gameObject.SetActive(false);
+                        if (i == 0)
+                        {
+                            ChangeItem(item.GetComponent<Image>().sprite.name, 0);
+                        }
+                    }
+                }
+            }
         }
     }
 

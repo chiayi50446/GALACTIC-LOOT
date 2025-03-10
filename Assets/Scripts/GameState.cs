@@ -15,6 +15,10 @@ public class GameState
     private int Player1ItemLoadIndex = -1;
     [SerializeField]
     private int Player2ItemLoadIndex = -1;
+    [SerializeField]
+    private int Player1SelectItemIndex = 0;
+    [SerializeField]
+    private int Player2SelectItemIndex = 0;
     private bool IsCollectItemGet = false;
     [SerializeField] private static float currentAlertnessLevel;
 
@@ -138,6 +142,39 @@ public class GameState
                 Player2ItemLoadIndex++;
             }
             return Player2ItemLoadIndex;
+        }
+    }
+    public void ReducePlayerItemLoad(int playerNum)
+    {
+        if (playerNum == 1)
+        {
+            Player1ItemLoadIndex--;
+        }
+        else
+        {
+            Player2ItemLoadIndex--;
+        }
+    }
+    public void SetPlayerSelectItem(int playerNum, int index)
+    {
+        if (playerNum == 1)
+        {
+            Player1SelectItemIndex = index;
+        }
+        else
+        {
+            Player1SelectItemIndex = index;
+        }
+    }
+    public int GetPlayerSelectItem(int playerNum)
+    {
+        if (playerNum == 1)
+        {
+            return Player1SelectItemIndex;
+        }
+        else
+        {
+            return Player2SelectItemIndex;
         }
     }
 

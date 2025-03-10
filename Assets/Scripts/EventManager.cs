@@ -9,6 +9,7 @@ public class EventManager : MonoBehaviour
     public event Action LoadingActiveEvent;
     public event Action<CharacterType> SelectCharacterEvent;
     public event Action<string, int> UpdateInventory;
+    public event Action<int> RemoveInventory;
     public event Action<string, int> UpdateUserTakenItem;
     public event Action UpdateAlertnessLevel;
     public event Action UpdateVision;
@@ -28,6 +29,11 @@ public class EventManager : MonoBehaviour
     public void TriggerUpdateInventory(string itemName, int playerNum)
     {
         UpdateInventory?.Invoke(itemName, playerNum);
+    }
+
+    public void TriggerRemoveInventory(int playerNum)
+    {
+        RemoveInventory?.Invoke(playerNum);
     }
 
     public void TriggerUpdateUserTakenItem(string itemName, int playerNum)
