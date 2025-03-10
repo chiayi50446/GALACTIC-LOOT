@@ -28,8 +28,12 @@ public class EnemyVisionController : MonoBehaviour
 
     void Awake()
     {
-
         EventManager.Instance.UpdateVision += UpdateViewDistance;
+    }
+
+    void OnDisable()
+    {
+        EventManager.Instance.UpdateVision -= UpdateViewDistance;
     }
     void Start()
     {

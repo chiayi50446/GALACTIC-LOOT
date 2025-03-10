@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossController : MonoBehaviour
@@ -12,47 +13,42 @@ public class BossController : MonoBehaviour
 
     [SerializeField] private BossStates state;
     [SerializeField] private List<GameObject> playerList = new List<GameObject>();
-    private Animator anim;
-    private bool isStartAttack;
+    [SerializeField] private Collider2D attackCollider;
+    [SerializeField] private Animator anim;
+    private bool isWalk;
     private Vector3 destination;
     private GameObject currentTarget;
+    private float speed = 5f;
+
+    void OnEnable()
+    {
+        EventManager.Instance.ActiveBoss += ActiveBoss;
+    }
+
+    void OnDisable()
+    {
+        EventManager.Instance.ActiveBoss -= ActiveBoss;
+    }
 
     void Start()
     {
-        anim = GetComponent<Animator>();
         state = BossStates.Idle;
-        InvokeRepeating(nameof(StartAttack), 2f, 5f); // 每 5 秒選擇目標攻擊
+        attackCollider.enabled = false;
     }
 
     void Update()
     {
-        // switch (state)
-        // {
-        //     case BossStates.Idle:
-        //         break;
-        //     case BossStates.Chasing:
-        //         destination = selectTarget().transform.position;
-        //         break;
-        //     default:
-        //         Debug.LogError("State not configured", this);
-        //         break;
-        // }
         if (state == BossStates.Chasing && currentTarget != null)
         {
-            destination = currentTarget.transform.position;
-            // 這裡可以加上移動的邏輯，讓 Boss 追蹤目標
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (!isStartAttack)
-        {
-            state = BossStates.Idle;
-        }
-        else
-        {
-            state = BossStates.Chasing;
+            if (!isWalk)
+                anim.SetBool("isWalk", true);
+            destination = (currentTarget.transform.position - transform.position).normalized;
+            Vector3 temp = transform.position + destination * speed * Time.deltaTime;
+            if (temp.x > 64f) temp.x = 64f;
+            if (temp.x < 43.5f) temp.x = 43.5f;
+            if (temp.y > 61f) temp.y = 61f;
+            if (temp.y < 50.5f) temp.y = 50.5f;
+            transform.position = temp;
         }
     }
 
@@ -62,10 +58,10 @@ public class BossController : MonoBehaviour
 
         currentTarget = selectTarget();
         state = BossStates.Attacking;
-        anim.Play("Attack"); // 觸發攻擊動畫
+        anim.Play("Attack");
+        Invoke(nameof(EnableAttackCollider), 0.4f);
         Debug.Log($"Boss attacks {currentTarget.name}");
 
-        // 等待一段時間後回到 Idle 或 Chasing
         Invoke(nameof(ResetState), 1.5f);
     }
 
@@ -78,5 +74,22 @@ public class BossController : MonoBehaviour
     {
         int choice = Random.Range(0, playerList.Count);
         return playerList[choice];
+    }
+
+    private void ActiveBoss()
+    {
+        InvokeRepeating(nameof(StartAttack), 2f, 5f); // 每 5 秒選擇目標攻擊
+    }
+
+
+    public void EnableAttackCollider()
+    {
+        attackCollider.enabled = true;
+        Invoke(nameof(DisableAttackCollider), 0.5f); // 0.5 秒後自動關閉
+    }
+
+    void DisableAttackCollider()
+    {
+        attackCollider.enabled = false;
     }
 }

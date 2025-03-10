@@ -12,6 +12,7 @@ public class EventManager : MonoBehaviour
     public event Action<string, int> UpdateUserTakenItem;
     public event Action UpdateAlertnessLevel;
     public event Action UpdateVision;
+    public event Action ActiveBoss;
 
     private void Awake()
     {
@@ -47,5 +48,10 @@ public class EventManager : MonoBehaviour
     public void TriggerUpdateVision()
     {
         UpdateVision?.Invoke();
+    }
+
+    public void TriggerActiveBoss()
+    {
+        ActiveBoss?.Invoke();
     }
 }

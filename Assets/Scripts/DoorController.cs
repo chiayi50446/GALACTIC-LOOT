@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
@@ -121,6 +122,12 @@ public class DoorController : MonoBehaviour
         yield return StartCoroutine(Fade(0));
         player1Controller.CancelFreeze();
         player2Controller.CancelFreeze();
+
+
+        if (roomIndex == nextCameraPosition[mapIndex - 1].Count())
+        {
+            EventManager.Instance.TriggerActiveBoss();
+        }
     }
 
     private IEnumerator Fade(float targetAlpha)
