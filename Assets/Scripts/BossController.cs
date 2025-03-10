@@ -16,11 +16,13 @@ public class BossController : MonoBehaviour
     [SerializeField] private Collider2D attackCollider;
     [SerializeField] private Animator anim;
     [SerializeField] private float distanceThreshold = 5f;
+    [SerializeField] private float attackRate = 2f;
     private bool isWalk;
     private bool isLeft;
     private Vector3 destination;
     private GameObject currentTarget;
     private float speed = 5f;
+    private float nextAttackTime;
 
     void OnEnable()
     {
@@ -37,6 +39,7 @@ public class BossController : MonoBehaviour
         state = BossStates.Idle;
         attackCollider.enabled = false;
         isLeft = true;
+        nextAttackTime = 0f;
     }
 
     void Update()
@@ -46,7 +49,10 @@ public class BossController : MonoBehaviour
             if (!isWalk) anim.SetBool("isWalk", true);
             if (Vector3.Distance(currentTarget.transform.position, transform.position) < distanceThreshold)
             {
-                StartAttack();
+                if (Time.time > nextAttackTime)
+                {
+                    StartAttack();
+                }
             }
             else
             {
@@ -68,23 +74,18 @@ public class BossController : MonoBehaviour
                 }
                 destination = (currentTarget.transform.position - transform.position).normalized;
                 Vector3 temp = transform.position + destination * speed * Time.deltaTime;
-                if (temp.x > 64f) temp.x = 64f;
+                if (temp.x > 70f) temp.x = 70f;
                 if (temp.x < 43.5f) temp.x = 43.5f;
                 if (temp.y > 61f) temp.y = 61f;
-                if (temp.y < 50.5f) temp.y = 50.5f;
+                if (temp.y < 45f) temp.y = 45f;
                 transform.position = temp;
             }
         }
     }
 
-    private void RandomTarget()
-    {
-        if (playerList.Count == 0) return;
-        currentTarget = selectTarget();
-    }
-
     private void StartAttack()
     {
+        nextAttackTime = Time.time + attackRate;
         state = BossStates.Attacking;
         anim.Play("Attack");
         anim.SetBool("isWalk", false);
@@ -92,48 +93,47 @@ public class BossController : MonoBehaviour
         Invoke(nameof(EnableAttackCollider), 0.4f);
         Debug.Log($"Boss attacks {currentTarget.name}");
 
-        Invoke(nameof(ResetState), 1.5f);
+        Invoke(nameof(ResetState), 0.9f);
     }
 
     private void ResetState()
     {
-        state = BossStates.Chasing;
         selectTarget(true);
+        state = BossStates.Chasing;
     }
 
-    private GameObject selectTarget(bool notCurrent = false)
+    private void selectTarget(bool notCurrent)
     {
-        if (playerList.Count == 0) return null;
+        if (playerList.Count == 0) return;
 
-        if (notCurrent)
+        GameObject newTarget;
+        do
         {
-            GameObject newTarget;
-            do
-            {
-                newTarget = playerList[Random.Range(0, playerList.Count)];
-            } while (newTarget == currentTarget);
-            return newTarget;
-        }
-
-        return playerList[Random.Range(0, playerList.Count)];
+            newTarget = playerList[Random.Range(0, playerList.Count)];
+        } while (newTarget == currentTarget);
+        currentTarget = newTarget;
     }
 
     private void ActiveBoss()
     {
         state = BossStates.Chasing;
-        InvokeRepeating(nameof(RandomTarget), 2f, 5f);
+        selectTarget(false);
     }
 
 
     public void EnableAttackCollider()
     {
+        if (attackCollider == null) return;
         attackCollider.enabled = true;
         Invoke(nameof(DisableAttackCollider), 0.5f);
     }
 
     void DisableAttackCollider()
     {
-        attackCollider.enabled = false;
+        if (attackCollider != null)
+        {
+            attackCollider.enabled = false;
+        }
     }
 
     void Flip()
