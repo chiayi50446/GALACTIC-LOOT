@@ -26187,7 +26187,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 609406308895504931, guid: 0cf323a9572c404e8967837546721593,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 730515127}
   m_SourcePrefab: {fileID: 100100000, guid: 0cf323a9572c404e8967837546721593, type: 3}
 --- !u!1 &730515126 stripped
 GameObject:
@@ -26195,6 +26199,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 730515125}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &730515127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730515126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daefec00be4b1784d9266bc473a6a306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionRadius: 1.5
+  explosionDelay: 1.2
+  explosionDamage: 3
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 16777216
 --- !u!1 &751553785
 GameObject:
   m_ObjectHideFlags: 0
@@ -40414,6 +40436,7 @@ MonoBehaviour:
   - {fileID: 1750933895}
   attackCollider: {fileID: 774568780}
   anim: {fileID: 6936480}
+  distanceThreshold: 5
 --- !u!61 &1893940563
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ public class BulletController : MonoBehaviour
 {
     public float speed = 10f; // 子彈速度
     public float lifeTime = 1f; // 子彈存活時間
+    public int damage = 2;
     public LayerMask enemyLayer;
 
 

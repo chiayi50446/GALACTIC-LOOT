@@ -52,9 +52,9 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         {PlayerSide.Down, 2}
     };
     private Dictionary<PlayerSide, Vector3> bomb_explosion_Position = new Dictionary<PlayerSide, Vector3>(){
-        {PlayerSide.Up, new Vector3(0, 2f, 0)},
-        {PlayerSide.Side, new Vector3(2f, -0.5f, 0)},
-        {PlayerSide.Down, new Vector3(0, -2f, 0)}
+        {PlayerSide.Up, new Vector3(0, 3f, 0)},
+        {PlayerSide.Side, new Vector3(3f, -0.5f, 0)},
+        {PlayerSide.Down, new Vector3(0, -3f, 0)}
     };
 
     private bool isFreeze = false;
