@@ -43,7 +43,7 @@ public class DataPersistentManager : MonoBehaviour
     public void NewGame()
     {
         GameState.Instance.CreateNewGame();
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        // SceneManager.sceneLoaded += OnSceneLoaded;
         StartCoroutine(DisplayLoadingScreen("Level1Scene"));
         foreach (IDataPersistent dataPersistent in dataPersistentObjects)
         {
@@ -62,14 +62,14 @@ public class DataPersistentManager : MonoBehaviour
         }
 
         // GameState.Instance.SetGameState(gameState);
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        // SceneManager.sceneLoaded += OnSceneLoaded;
         LoadLevel(GameState.Instance.GetCurrentLoadScene());
     }
 
     public void EntryGame()
     {
         // gameState = GameState.Instance;
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        // SceneManager.sceneLoaded += OnSceneLoaded;
         LoadLevel(GameState.Instance.GetCurrentLoadScene());
     }
 

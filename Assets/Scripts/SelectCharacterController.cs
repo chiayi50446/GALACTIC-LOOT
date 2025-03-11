@@ -31,6 +31,11 @@ public class SelectCharacterController : MenuController
         Init();
     }
 
+    void OnDestroy()
+    {
+        EventManager.Instance.SelectCharacterEvent -= ChangeCharacterInfo;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))

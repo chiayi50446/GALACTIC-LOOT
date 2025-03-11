@@ -70,6 +70,11 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         anim = GetComponent<Animator>();
     }
 
+    void OnDestroy()
+    {
+        EventManager.Instance.UpdateUserTakenItem -= UpdateTakenItem;
+    }
+
     private void Update()
     {
         Run();

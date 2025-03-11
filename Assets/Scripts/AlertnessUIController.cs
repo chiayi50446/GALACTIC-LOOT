@@ -8,6 +8,11 @@ public class AlertnessUIController : MonoBehaviour
         EventManager.Instance.UpdateAlertnessLevel += UpdateAlertnessLevel;
     }
 
+    void OnDestroy()
+    {
+        EventManager.Instance.UpdateAlertnessLevel -= UpdateAlertnessLevel;
+    }
+
     void Start()
     {
         alertnessBar = GetComponentInChildren<BarController>();

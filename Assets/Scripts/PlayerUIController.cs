@@ -29,16 +29,11 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
         EventManager.Instance.UpdateInventory += UpdateItem;
         EventManager.Instance.RemoveInventory += RemoveItem;
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    void OnDestroy()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        EventManager.Instance.UpdateInventory -= UpdateItem;
+        EventManager.Instance.RemoveInventory -= RemoveItem;
     }
 
     void UpdateItem(string itemName, int pNum)
