@@ -32,6 +32,7 @@ public class DataPersistentManager : MonoBehaviour
             Debug.Log("error");
         }
         instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnDestroy()
@@ -96,6 +97,11 @@ public class DataPersistentManager : MonoBehaviour
             dataPersistent.SaveData();
         }
         fileHandler.Save(GameState.Instance);
+    }
+
+    public void EndGame()
+    {
+        SceneManager.LoadSceneAsync("GameOverScene");
     }
 
     List<IDataPersistent> FindAllDataPersistentObjects()

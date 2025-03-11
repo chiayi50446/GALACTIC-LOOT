@@ -20,6 +20,11 @@ public class HealthSystem : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+
+            if (CompareTag("Boss"))
+            {
+                DataPersistentManager.instance.EndGame();
+            }
         }
     }
 }
