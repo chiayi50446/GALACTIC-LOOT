@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
     void Start()
     {
         EventManager.Instance.UpdateUserTakenItem += UpdateTakenItem;
+        EventManager.Instance.ActivePlayerHealth += OpenHealthUI;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
     void OnDestroy()
     {
         EventManager.Instance.UpdateUserTakenItem -= UpdateTakenItem;
+        EventManager.Instance.ActivePlayerHealth -= OpenHealthUI;
     }
 
     private void Update()
@@ -392,6 +394,13 @@ public class PlayerController : MonoBehaviour, IDataPersistent
     {
         Debug.Log(this.name + "cancel Freeze");
         isFreeze = false;
+    }
+
+    void OpenHealthUI()
+    {
+        var healthBarCanvas = transform.Find("HealthBarCanvas").gameObject;
+        healthBarCanvas.SetActive(true);
+        healthBarCanvas.GetComponent<BarController>().SetMaxAndInitValue(GameState.charactersData[playerType].Health);
     }
 
     public void LoadData(GameState data)

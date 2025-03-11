@@ -14,6 +14,8 @@ public class EventManager : MonoBehaviour
     public event Action UpdateAlertnessLevel;
     public event Action UpdateVision;
     public event Action ActiveBoss;
+    public event Action ActiveBossHealth;
+    public event Action ActivePlayerHealth;
 
     private void Awake()
     {
@@ -59,5 +61,15 @@ public class EventManager : MonoBehaviour
     public void TriggerActiveBoss()
     {
         ActiveBoss?.Invoke();
+    }
+
+    public void TriggerActiveBossHealthUI()
+    {
+        ActiveBossHealth?.Invoke();
+    }
+
+    public void TriggerActivePlayerHealthUI()
+    {
+        ActivePlayerHealth?.Invoke();
     }
 }

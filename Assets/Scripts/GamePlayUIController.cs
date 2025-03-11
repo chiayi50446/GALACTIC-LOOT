@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class AlertnessUIController : MonoBehaviour
+public class GamePlayUIController : MonoBehaviour
 {
     private BarController alertnessBar;
     void Awake()
     {
         EventManager.Instance.UpdateAlertnessLevel += UpdateAlertnessLevel;
+        EventManager.Instance.ActiveBossHealth += OpenBossRoomUI;
     }
 
     void OnDestroy()
     {
         EventManager.Instance.UpdateAlertnessLevel -= UpdateAlertnessLevel;
+        EventManager.Instance.ActiveBossHealth -= OpenBossRoomUI;
     }
 
     void Start()
@@ -32,5 +34,11 @@ public class AlertnessUIController : MonoBehaviour
         alertnessBar.SetValue(nowAlertnessLevel + 1);
         GameState.Instance.SetAlertnessLevel(nowAlertnessLevel + 1);
         EventManager.Instance.TriggerUpdateVision();
+    }
+
+    void OpenBossRoomUI()
+    {
+        gameObject.transform.GetChild(0).Find("AlertnessLevel").gameObject.SetActive(false);
+        gameObject.transform.GetChild(0).Find("BossHealth").gameObject.SetActive(true);
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
+    [SerializeField] private GameObject healthBar;
     private int health;
     void Start()
     {
@@ -17,6 +18,7 @@ public class HealthSystem : MonoBehaviour
     public void TakeDamege(int attackPoint)
     {
         health -= attackPoint;
+        healthBar.GetComponent<BarController>().SetValue(health);
         if (health <= 0)
         {
             Destroy(gameObject);

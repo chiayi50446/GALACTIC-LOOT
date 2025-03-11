@@ -127,6 +127,8 @@ public class DoorController : MonoBehaviour
         if (roomIndex == nextCameraPosition[mapIndex - 1].Count())
         {
             EventManager.Instance.TriggerActiveBoss();
+            EventManager.Instance.TriggerActiveBossHealthUI();
+            EventManager.Instance.TriggerActivePlayerHealthUI();
         }
     }
 

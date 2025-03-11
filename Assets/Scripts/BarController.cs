@@ -15,6 +15,12 @@ public class BarController : MonoBehaviour
         UpdateBar();  // 更新 Bar
     }
 
+    public void SetMaxAndInitValue(float max)
+    {
+        maxValue = max;
+        initValue = max;
+    }
+
     public float GetValue()
     {
         return currentValue;
