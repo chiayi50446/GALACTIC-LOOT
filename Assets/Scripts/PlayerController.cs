@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
     public float attackRate = 0.5f;
     private float nextAttackTime = 0f;
     private PlayerSide currentSide = PlayerSide.Down;
+    private CharacterType playerType;
     private Dictionary<PlayerSide, Vector2> bomb_Position = new Dictionary<PlayerSide, Vector2>(){
         {PlayerSide.Up, new Vector2(0, 0.13f)},
         {PlayerSide.Side, new Vector2(-0.45f, -0.41f)},
@@ -58,7 +59,10 @@ public class PlayerController : MonoBehaviour, IDataPersistent
     };
 
     private bool isFreeze = false;
-
+    void Awake()
+    {
+        playerType = GameState.Instance.GetPlayerType(Int32.Parse(playerPosition));
+    }
     void Start()
     {
         EventManager.Instance.UpdateUserTakenItem += UpdateTakenItem;
@@ -277,6 +281,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
                 flash.transform.localRotation = Quaternion.Euler(0, 0, flash_Rotation[currentSide]);
                 flash.GetComponent<Renderer>().sortingOrder = flash_Order[currentSide];
                 flash.SetActive(true);
+                flash.GetComponent<PunchController>().isUsingGun = true;
 
                 GameObject bullet = Instantiate(bulletPrefab, flash.transform.position, flash.transform.rotation);
                 Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -303,6 +308,8 @@ public class PlayerController : MonoBehaviour, IDataPersistent
                 flash.transform.localRotation = Quaternion.Euler(0, 0, flash_Rotation[currentSide]);
                 flash.GetComponent<Renderer>().sortingOrder = flash_Order[currentSide];
                 flash.SetActive(true);
+                flash.GetComponent<PunchController>().isUsingGun = false;
+                flash.GetComponent<PunchController>().damage = GameState.charactersData[playerType].Attack;
                 StartCoroutine(Helper.Delay(() => { flash.SetActive(false); }, 0.2f));
             }
             nextAttackTime = Time.time + attackRate;
@@ -384,14 +391,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
 
     public void LoadData(GameState data)
     {
-        if (playerPosition == "1")
-        {
-            GetComponent<Animator>().runtimeAnimatorController = GameState.animatorController[data.GetPlayer1Type()];
-        }
-        else
-        {
-            GetComponent<Animator>().runtimeAnimatorController = GameState.animatorController[data.GetPlayer2Type()];
-        }
+        GetComponent<Animator>().runtimeAnimatorController = GameState.animatorController[playerType];
     }
 
     public void SaveData()

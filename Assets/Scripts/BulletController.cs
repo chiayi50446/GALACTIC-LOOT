@@ -3,7 +3,7 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     public float speed = 10f; // 子彈速度
-    public float lifeTime = 1f; // 子彈存活時間
+    public float lifeTime = 0.5f; // 子彈存活時間
     public int damage = 2;
     public LayerMask enemyLayer;
 
@@ -17,7 +17,11 @@ public class BulletController : MonoBehaviour
     {
         if (enemyLayer == (enemyLayer | (1 << other.gameObject.layer))) // 如果碰到敵人
         {
-            Destroy(other.gameObject); // 銷毀敵人
+            var healthSystem = other.GetComponent<HealthSystem>();
+            if (healthSystem != null)
+            {
+                healthSystem.TakeDamege(damage);
+            }
             Destroy(gameObject); // 銷毀子彈
         }
     }

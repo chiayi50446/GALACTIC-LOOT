@@ -78,7 +78,7 @@ public class SelectCharacterController : MenuController
 
     public void MakeSureCharacter()
     {
-        if (GameState.Instance.GetPlayer1Type() == CharacterType.none)
+        if (GameState.Instance.GetPlayerType(1) == CharacterType.none)
         {
             GameState.Instance.SetPlayer1Type(CurrentType);
             Panel.gameObject.SetActive(true); // player1 panel open

@@ -24,7 +24,12 @@ public class ExplosionBombController : MonoBehaviour
 
         foreach (Collider2D enemy in enemies)
         {
-            Destroy(enemy.gameObject);
+            var healthSystem = enemy.gameObject.GetComponent<HealthSystem>();
+            if (healthSystem != null)
+            {
+                healthSystem.TakeDamege(explosionDamage);
+            }
+            // Destroy(enemy.gameObject);
         }
 
     }

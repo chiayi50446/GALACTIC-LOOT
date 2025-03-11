@@ -21,6 +21,7 @@ public class GameState
     private int Player2SelectItemIndex = 0;
     private bool IsCollectItemGet = false;
     [SerializeField] private static float currentAlertnessLevel;
+    public int[] BossHealth = new[] { 5, 10 };
 
     public static Dictionary<CharacterType, CharacterProperty> charactersData = new Dictionary<CharacterType, CharacterProperty>
     {
@@ -97,19 +98,25 @@ public class GameState
     {
         Player1Type = type;
     }
-    public CharacterType GetPlayer1Type()
+    // public CharacterType GetPlayer1Type()
+    // {
+    //     return Player1Type;
+    // }
+    public CharacterType GetPlayerType(int pNum)
     {
-        return Player1Type;
+        if (pNum == 1)
+            return Player1Type;
+        else
+            return Player2Type;
     }
-
     public void SetPlayer2Type(CharacterType type)
     {
         Player2Type = type;
     }
-    public CharacterType GetPlayer2Type()
-    {
-        return Player2Type;
-    }
+    // public CharacterType GetPlayer2Type()
+    // {
+    //     return Player2Type;
+    // }
     public bool IsPlayerItemFull(int playerNum)
     {
         if (playerNum == 1)
@@ -200,10 +207,10 @@ public class GameState
 
 public class CharacterProperty
 {
-    public float Attack { get; set; }
-    public float Health { get; set; }
-    public float Charisma { get; set; }
-    public float Load { get; set; }
+    public int Attack { get; set; }
+    public int Health { get; set; }
+    public int Charisma { get; set; }
+    public int Load { get; set; }
 }
 
 public enum CharacterType

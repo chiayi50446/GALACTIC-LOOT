@@ -10,7 +10,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
 
     public void LoadData(GameState data)
     {
-        var playerType = PlayerNum == 1 ? data.GetPlayer1Type() : data.GetPlayer2Type();
+        var playerType = data.GetPlayerType(PlayerNum);
         Avatar.GetComponent<Image>().sprite = GameState.characterAvatar[playerType];
         var characterProperty = GameState.charactersData[playerType];
         if (characterProperty.Load == 3)

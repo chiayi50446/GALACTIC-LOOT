@@ -189,6 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   lifeTime: 3
+  damage: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 16777216
