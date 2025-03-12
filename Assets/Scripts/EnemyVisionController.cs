@@ -7,6 +7,7 @@ public class EnemyVisionController : MonoBehaviour
     [SerializeField] private float viewAngle = 90f;
     [SerializeField] private int segments = 10;
     [SerializeField] private string direction = "down";
+    [SerializeField] private EnemyType type = EnemyType.stationary;
     private Mesh mesh;
     private bool isHittingPlayer1;
     private bool isHittingPlayer2;
@@ -103,24 +104,28 @@ public class EnemyVisionController : MonoBehaviour
         if (hitPlayer1 && !isHittingPlayer1)
         {
             isHittingPlayer1 = true;
+            GameState.Instance.SetLastAlertPlayerType(1);
+            GameState.Instance.SetLastAlertEnemyType(type);
             UpdateAlertnessLevel();
-            Debug.Log("Hit player1");
+            // Debug.Log("Hit player1");
         }
         if (!hitPlayer1 && isHittingPlayer1)
         {
             isHittingPlayer1 = false;
-            Debug.Log("Hit leave player1");
+            // Debug.Log("Hit leave player1");
         }
         if (hitPlayer2 && !isHittingPlayer2)
         {
             isHittingPlayer2 = true;
+            GameState.Instance.SetLastAlertPlayerType(2);
+            GameState.Instance.SetLastAlertEnemyType(type);
             UpdateAlertnessLevel();
-            Debug.Log("Hit player2");
+            // Debug.Log("Hit player2");
         }
         if (!hitPlayer2 && isHittingPlayer2)
         {
             isHittingPlayer2 = false;
-            Debug.Log("Hit leave player2");
+            // Debug.Log("Hit leave player2");
         }
 
         // draw triangles
@@ -141,6 +146,8 @@ public class EnemyVisionController : MonoBehaviour
 
     private void UpdateAlertnessLevel()
     {
+        float newAlertnessLevel = GameState.Instance.GetAlertnessLevel();
+        GameState.Instance.SetAlertnessLevel(newAlertnessLevel + 1);
         EventManager.Instance.TriggerUpdateAlertnessLevel();
     }
 

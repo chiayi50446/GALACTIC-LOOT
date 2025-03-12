@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolEnemyController : MonoBehaviour
+public class PatrolEnemyController : EnemyController
 {
     private string[] arrDirection = { "left", "down", "right", "up" };
     [SerializeField] private int nowDirection = 0;
@@ -69,12 +69,5 @@ public class PatrolEnemyController : MonoBehaviour
         }
         EnemyVisionController visionController = GetComponentInChildren<EnemyVisionController>();
         visionController.SetDirection(arrDirection[nowDirection]);
-    }
-
-    void Flip()
-    {
-        Vector3 newScale = transform.localScale;
-        newScale.x *= -1;
-        transform.localScale = newScale;
     }
 }

@@ -29,7 +29,7 @@ public class ChestController : ItemController, IDataPersistent
         {
             base.Update();
             var itemName = chestItem.transform.GetChild(0).name;
-            if (Input.GetKeyDown(KeyCode.LeftControl) && isTrigger1)
+            if (Input.GetKeyDown(KeyCode.E) && isTrigger1)
             {
                 isOpen = true;
                 anim.SetBool("Open", true);
@@ -64,7 +64,7 @@ public class ChestController : ItemController, IDataPersistent
                 //     UpdateRuneCount();
                 // }
             }
-            if (Input.GetKeyDown(KeyCode.RightControl) && isTrigger2)
+            if (Input.GetKeyDown(KeyCode.Keypad0) && isTrigger2)
             {
                 isOpen = true;
                 anim.SetBool("Open", true);

@@ -35,6 +35,7 @@ public class HealthSystem : MonoBehaviour
 
             if (CompareTag("Boss"))
             {
+                GameState.Instance.SetIsLevelClear(true);
                 DataPersistentManager.instance.EndGame();
             }
         }

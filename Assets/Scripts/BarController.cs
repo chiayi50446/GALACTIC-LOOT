@@ -45,7 +45,7 @@ public class BarController : MonoBehaviour
         float time = 0f;
         while (time < 0.5f) // 0.5 秒內變化
         {
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             barImage.fillAmount = Mathf.Lerp(startValue, targetValue, time / 0.5f);
             yield return null;
         }

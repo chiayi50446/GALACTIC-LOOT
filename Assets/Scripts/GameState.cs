@@ -33,6 +33,10 @@ public class GameState
     public static Dictionary<CharacterType, RuntimeAnimatorController> animatorController;
     public static Dictionary<CharacterType, Sprite> characterAvatar;
     public static Dictionary<string, Sprite> chestItem;
+    public static Dictionary<EnemyType, Sprite> enemyAvatar;
+    public EnemyType lastAlertEnemyType;
+    public CharacterType lastAlertPlayerType;
+    public bool isLevelClear;
 
     private GameState()
     {
@@ -49,6 +53,11 @@ public class GameState
             {CharacterType.type3, (Sprite)Resources.Load("Avatars/ava_3", typeof(Sprite))},
             {CharacterType.type4, (Sprite)Resources.Load("Avatars/ava_4", typeof(Sprite))}
         };
+        enemyAvatar = new Dictionary<EnemyType, Sprite>()
+        {
+            {EnemyType.stationary, (Sprite)Resources.Load("Avatars/guard_1", typeof(Sprite))},
+            {EnemyType.patrol, (Sprite)Resources.Load("Avatars/guard_2", typeof(Sprite))}
+        };
         chestItem = new Dictionary<string, Sprite>()
         {
             {"Bomb", (Sprite)Resources.Load("ChestItems/Bomb", typeof(Sprite))},
@@ -57,6 +66,7 @@ public class GameState
         };
         currentLevel = 1;
         currentAlertnessLevel = 0;
+        isLevelClear = false;
     }
 
     public static GameState Instance
@@ -196,12 +206,43 @@ public class GameState
 
     public void SetAlertnessLevel(float newAlertnessLevel)
     {
+        newAlertnessLevel = (newAlertnessLevel > 3) ? 3 : newAlertnessLevel;
         currentAlertnessLevel = newAlertnessLevel;
     }
 
     public float GetAlertnessLevel()
     {
         return currentAlertnessLevel;
+    }
+
+    public void SetLastAlertEnemyType(EnemyType type)
+    {
+        lastAlertEnemyType = type;
+    }
+
+    public EnemyType GetLastAlertEnemyType()
+    {
+        return lastAlertEnemyType;
+    }
+
+    public void SetLastAlertPlayerType(int playerNum)
+    {
+        lastAlertPlayerType = GetPlayerType(playerNum);
+    }
+
+    public CharacterType GetLastAlertPlayerType()
+    {
+        return lastAlertPlayerType;
+    }
+
+    public void SetIsLevelClear(bool isClear)
+    {
+        isLevelClear = isClear;
+    }
+
+    public bool GetIsLevelClear()
+    {
+        return isLevelClear;
     }
 }
 
@@ -220,4 +261,11 @@ public enum CharacterType
     type2 = 2,
     type3 = 3,
     type4 = 4
+}
+
+public enum EnemyType
+{
+    none = 0,
+    stationary = 1,
+    patrol = 2,
 }

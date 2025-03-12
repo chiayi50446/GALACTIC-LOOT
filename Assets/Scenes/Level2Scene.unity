@@ -10410,6 +10410,10 @@ MonoBehaviour:
   gun_down: {fileID: 1038268527}
   gun_hold_side: {fileID: 1300529670}
   gun_walk_side: {fileID: 313815600}
+  flash: {fileID: 0}
+  bomb_explosion: {fileID: 0}
+  bulletPrefab: {fileID: 0}
+  attackRate: 0.5
 --- !u!1 &1282285336
 GameObject:
   m_ObjectHideFlags: 0
@@ -10462,6 +10466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barImage: {fileID: 676298007}
   maxValue: 3
+  initValue: 100
 --- !u!1 &1292476653
 GameObject:
   m_ObjectHideFlags: 0
@@ -11912,6 +11917,10 @@ MonoBehaviour:
   gun_down: {fileID: 264061951}
   gun_hold_side: {fileID: 1863599162}
   gun_walk_side: {fileID: 2106732377}
+  flash: {fileID: 0}
+  bomb_explosion: {fileID: 0}
+  bulletPrefab: {fileID: 0}
+  attackRate: 0.5
 --- !u!60 &1934779240
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class StationaryEnemyController : MonoBehaviour
+public class StationaryEnemyController : EnemyController
 {
     private string[] arrDirection = { "left", "down", "right", "up" };
     [SerializeField] private int nowDirection = 0;
     private Animator anim;
-
     private bool isLeft;
 
     void Start()
@@ -42,12 +41,5 @@ public class StationaryEnemyController : MonoBehaviour
         }
         EnemyVisionController visionController = GetComponentInChildren<EnemyVisionController>();
         visionController.SetDirection(arrDirection[nowDirection]);
-    }
-
-    void Flip()
-    {
-        Vector3 newScale = transform.localScale;
-        newScale.x *= -1;
-        transform.localScale = newScale;
     }
 }

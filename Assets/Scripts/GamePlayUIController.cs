@@ -25,15 +25,13 @@ public class GamePlayUIController : MonoBehaviour
 
     private void UpdateAlertnessLevel()
     {
-        float nowAlertnessLevel = alertnessBar.GetValue();
-        if (nowAlertnessLevel == 3)
-        {
-            Debug.Log("Alertness Level = 3!!!");
-            return;
-        }
-        alertnessBar.SetValue(nowAlertnessLevel + 1);
-        GameState.Instance.SetAlertnessLevel(nowAlertnessLevel + 1);
+        float nowAlertnessLevel = GameState.Instance.GetAlertnessLevel();
+        alertnessBar.SetValue(nowAlertnessLevel);
         EventManager.Instance.TriggerUpdateVision();
+        if (nowAlertnessLevel >= 3)
+        {
+            EventManager.Instance.TriggerActiveNegotiationCheck();
+        }
     }
 
     void OpenBossRoomUI()
