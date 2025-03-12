@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         EventManager.Instance.ActivePlayerHealth += OpenHealthUI;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        GetComponent<HealthSystem>().SetHealth(GameState.charactersData[playerType].Health);
     }
 
     void OnDestroy()

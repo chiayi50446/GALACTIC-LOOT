@@ -18,10 +18,11 @@ public class HealthSystem : MonoBehaviour
         {
             health = 2;
         }
-        if (CompareTag("Boss"))
-        {
-            health = GameState.Instance.BossHealth[GameState.Instance.GetCurrentLevel() - 1];
-        }
+    }
+
+    public void SetHealth(int h)
+    {
+        health = h;
     }
     public void TakeDamege(int attackPoint)
     {

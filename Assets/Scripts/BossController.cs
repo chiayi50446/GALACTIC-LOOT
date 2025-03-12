@@ -40,6 +40,7 @@ public class BossController : MonoBehaviour
         attackCollider.enabled = false;
         isLeft = true;
         nextAttackTime = 0f;
+        GetComponent<HealthSystem>().SetHealth(GameState.Instance.BossHealth[GameState.Instance.GetCurrentLevel() - 1]);
     }
 
     void Update()

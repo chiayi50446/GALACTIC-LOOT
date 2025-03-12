@@ -5,5 +5,10 @@ public class BossWeaponController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Attack" + other.name);
+        var healthSystem = other.GetComponent<HealthSystem>();
+        if (healthSystem != null)
+        {
+            healthSystem.TakeDamege(1);
+        }
     }
 }
