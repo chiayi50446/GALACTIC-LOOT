@@ -6,7 +6,6 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     [SerializeField] private GameObject Avatar;
     [SerializeField] private GameObject[] ItemList;
     [SerializeField] private int PlayerNum;
-    private int PlayerSelectItem = 0;
 
     public void LoadData(GameState data)
     {
@@ -36,15 +35,20 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
         EventManager.Instance.RemoveInventory -= RemoveItem;
     }
 
+    void Update()
+    {
+        ChangeItem();
+    }
+
     void UpdateItem(string itemName, int pNum)
     {
         if (pNum == PlayerNum)
         {
-            var index = GameState.Instance.GetPlayerItemLoad(pNum);
+            var index = GameState.Instance.AddPlayerItemLoad(pNum);
             var item = ItemList[index].transform.Find("Item");
             item.gameObject.SetActive(true);
             item.GetComponent<Image>().sprite = GameState.chestItem[itemName];
-            ChangeItem(itemName, index);
+            ChangeItemShow(itemName, index);
         }
     }
 
@@ -73,7 +77,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
                         nextItem.gameObject.SetActive(false);
                         if (i == 0)
                         {
-                            ChangeItem(item.GetComponent<Image>().sprite.name, 0);
+                            ChangeItemShow(item.GetComponent<Image>().sprite.name, 0);
                         }
                     }
                 }
@@ -81,9 +85,24 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
         }
     }
 
-    void ChangeItem(string itemName, int index)
+
+    void ChangeItem()
     {
-        if (index == PlayerSelectItem)
+        if ((Input.GetKeyDown(KeyCode.C) && PlayerNum == 1) || (Input.GetKeyDown(KeyCode.N) && PlayerNum == 2))
+        {
+            var index = GameState.Instance.GetPlayerSelectItem(PlayerNum);
+            ItemList[index].transform.Find("select").gameObject.SetActive(false);
+            index = (index + 1) % (GameState.Instance.GetPlayerItemLoad(PlayerNum) + 1);
+            ItemList[index].transform.Find("select").gameObject.SetActive(true);
+            GameState.Instance.SetPlayerSelectItem(PlayerNum, index);
+            ChangeItemShow(ItemList[index].transform.Find("Item").GetComponent<Image>().sprite.name, index);
+        }
+    }
+
+
+    void ChangeItemShow(string itemName, int index)
+    {
+        if (index == GameState.Instance.GetPlayerSelectItem(PlayerNum))
         {
             EventManager.Instance.TriggerUpdateUserTakenItem(itemName, PlayerNum);
         }

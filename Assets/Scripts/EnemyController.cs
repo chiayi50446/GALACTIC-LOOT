@@ -7,6 +7,11 @@ public class EnemyController : MonoBehaviour
         Vector3 newScale = transform.localScale;
         newScale.x *= -1;
         transform.localScale = newScale;
+        Transform healthBarCanvas = transform.Find("HealthBarCanvas");
+        if (healthBarCanvas != null)
+        {
+            healthBarCanvas.localScale *= -1;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)

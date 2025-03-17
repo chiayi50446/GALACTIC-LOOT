@@ -64,7 +64,7 @@ public class ChestController : ItemController, IDataPersistent
                 //     UpdateRuneCount();
                 // }
             }
-            if (Input.GetKeyDown(KeyCode.Keypad0) && isTrigger2)
+            if (Input.GetKeyDown(KeyCode.U) && isTrigger2)
             {
                 isOpen = true;
                 anim.SetBool("Open", true);

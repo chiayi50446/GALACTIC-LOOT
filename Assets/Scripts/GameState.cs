@@ -104,14 +104,6 @@ public class GameState
         return currentLevel == 1 ? "Level1Scene" : "Level2Scene";
     }
 
-    public void SetPlayer1Type(CharacterType type)
-    {
-        Player1Type = type;
-    }
-    // public CharacterType GetPlayer1Type()
-    // {
-    //     return Player1Type;
-    // }
     public CharacterType GetPlayerType(int pNum)
     {
         if (pNum == 1)
@@ -119,14 +111,17 @@ public class GameState
         else
             return Player2Type;
     }
+
+    public void SetPlayer1Type(CharacterType type)
+    {
+        Player1Type = type;
+    }
+
     public void SetPlayer2Type(CharacterType type)
     {
         Player2Type = type;
     }
-    // public CharacterType GetPlayer2Type()
-    // {
-    //     return Player2Type;
-    // }
+
     public bool IsPlayerItemFull(int playerNum)
     {
         if (playerNum == 1)
@@ -140,7 +135,8 @@ public class GameState
             return Player2ItemLoadIndex == play2MaxLoad - 1;
         }
     }
-    public int GetPlayerItemLoad(int playerNum)
+
+    public int AddPlayerItemLoad(int playerNum)
     {
         if (playerNum == 1)
         {
@@ -161,6 +157,18 @@ public class GameState
             return Player2ItemLoadIndex;
         }
     }
+    public int GetPlayerItemLoad(int playerNum)
+    {
+        if (playerNum == 1)
+        {
+            return Player1ItemLoadIndex;
+        }
+        else
+        {
+            return Player2ItemLoadIndex;
+        }
+    }
+
     public void ReducePlayerItemLoad(int playerNum)
     {
         if (playerNum == 1)
@@ -172,6 +180,7 @@ public class GameState
             Player2ItemLoadIndex--;
         }
     }
+
     public void SetPlayerSelectItem(int playerNum, int index)
     {
         if (playerNum == 1)
@@ -183,6 +192,7 @@ public class GameState
             Player1SelectItemIndex = index;
         }
     }
+
     public int GetPlayerSelectItem(int playerNum)
     {
         if (playerNum == 1)

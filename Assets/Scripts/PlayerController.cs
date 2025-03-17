@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDataPersistent
@@ -270,11 +271,12 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         Vector3 newScale = transform.localScale;
         newScale.x *= -1; // 反轉 X 軸
         transform.localScale = newScale;
-    }
 
+        transform.Find("HealthBarCanvas").localScale *= -1;
+    }
     void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.F) && Time.time >= nextAttackTime)
+        if (Input.GetAxisRaw("Fire" + playerPosition) > 0 && Time.time >= nextAttackTime)
         {
             if (holdingBomb)
             {

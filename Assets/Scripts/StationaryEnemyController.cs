@@ -15,6 +15,11 @@ public class StationaryEnemyController : EnemyController
         isLeft = true;
     }
 
+    void OnDestroy()
+    {
+        CancelInvoke("Rotate");
+    }
+
     void Update()
     {
 
