@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DoorController : MonoBehaviour
 {
