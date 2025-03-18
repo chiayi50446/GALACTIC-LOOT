@@ -27,6 +27,10 @@ public class HealthSystem : MonoBehaviour
     {
         health = h;
     }
+    public int GetHealth()
+    {
+        return health;
+    }
     public void TakeDamege(int attackPoint)
     {
         StartCoroutine(FlashRed());

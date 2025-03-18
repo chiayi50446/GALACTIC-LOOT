@@ -111,7 +111,7 @@ public class BossController : MonoBehaviour
         do
         {
             newTarget = playerList[Random.Range(0, playerList.Count)];
-        } while (newTarget == currentTarget);
+        } while (newTarget == currentTarget && newTarget.GetComponent<HealthSystem>().GetHealth() == 0);
         currentTarget = newTarget;
     }
 
