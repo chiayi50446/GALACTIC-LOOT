@@ -6,7 +6,7 @@ public class GameState
 {
     private static GameState instance = null;
     [SerializeField]
-    private int currentLevel;
+    private Level currentLevel;
     [SerializeField]
     private CharacterType Player1Type = CharacterType.none;
     [SerializeField]
@@ -19,9 +19,13 @@ public class GameState
     private int Player1SelectItemIndex = 0;
     [SerializeField]
     private int Player2SelectItemIndex = 0;
-    private bool IsCollectItemGet = false;
+    private Dictionary<Level, bool> IsCollectItemGet;
     [SerializeField] private static float currentAlertnessLevel;
-    public int[] BossHealth = new[] { 5, 10 };
+    public Dictionary<Level, int> BossHealth = new Dictionary<Level, int>
+    {
+        {Level.Level1, 5},
+        {Level.Level2, 10},
+    };
 
     public static Dictionary<CharacterType, CharacterProperty> charactersData = new Dictionary<CharacterType, CharacterProperty>
     {
@@ -36,7 +40,13 @@ public class GameState
     public static Dictionary<EnemyType, Sprite> enemyAvatar;
     public EnemyType lastAlertEnemyType;
     public CharacterType lastAlertPlayerType;
-    public bool isLevelClear;
+    public Dictionary<Level, bool> isLevelClear;
+    public static Dictionary<Level, float> clearTargetTime = new Dictionary<Level, float>(){
+        {Level.Level1, 120},
+        {Level.Level2, 300},
+    };
+    private Dictionary<Level, float> clearLevelTime;
+    private Dictionary<Level, bool> isBothSurvive;
 
     private GameState()
     {
@@ -64,9 +74,26 @@ public class GameState
             {"Rifle", (Sprite)Resources.Load("ChestItems/Rifle", typeof(Sprite))},
             {"WizardHat", (Sprite)Resources.Load("ChestItems/WizardHat", typeof(Sprite))}
         };
-        currentLevel = 1;
+        IsCollectItemGet = new Dictionary<Level, bool>()
+        {
+            {Level.Level1, false},
+            {Level.Level2, false}
+        };
+        currentLevel = Level.Level1;
         currentAlertnessLevel = 0;
-        isLevelClear = false;
+        isLevelClear = new Dictionary<Level, bool>(){
+            {Level.Level1, false},
+            {Level.Level2, false}
+        };
+        clearLevelTime = new Dictionary<Level, float>(){
+            {Level.Level1, 0},
+            {Level.Level2, 0}
+        };
+        isBothSurvive = new Dictionary<Level, bool>()
+        {
+            {Level.Level1, true},
+            {Level.Level2, true},
+        };
     }
 
     public static GameState Instance
@@ -91,17 +118,17 @@ public class GameState
         instance = gameState;
     }
 
-    public void SetCurrentLevel(int level)
+    public void SetCurrentLevel(Level level)
     {
         currentLevel = level;
     }
-    public int GetCurrentLevel()
+    public Level GetCurrentLevel()
     {
         return currentLevel;
     }
     public string GetCurrentLoadScene()
     {
-        return currentLevel == 1 ? "Level1Scene" : "Level2Scene";
+        return currentLevel == Level.Level1 ? "Level1Scene" : "Level2Scene";
     }
 
     public CharacterType GetPlayerType(int pNum)
@@ -205,13 +232,13 @@ public class GameState
         }
     }
 
-    public void SetIsCollectItemGet()
+    public void SetIsCollectItemGet(Level level)
     {
-        IsCollectItemGet = true;
+        IsCollectItemGet[level] = true;
     }
-    public bool GetIsCollectItemGet()
+    public bool GetIsCollectItemGet(Level level)
     {
-        return IsCollectItemGet;
+        return IsCollectItemGet[level];
     }
 
     public void SetAlertnessLevel(float newAlertnessLevel)
@@ -245,14 +272,34 @@ public class GameState
         return lastAlertPlayerType;
     }
 
-    public void SetIsLevelClear(bool isClear)
+    public void SetIsLevelClear(Level level, bool isClear)
     {
-        isLevelClear = isClear;
+        isLevelClear[level] = isClear;
     }
 
-    public bool GetIsLevelClear()
+    public bool GetIsLevelClear(Level level)
     {
-        return isLevelClear;
+        return isLevelClear[level];
+    }
+
+    public void SetClearLevelTime(Level level, float usedTime)
+    {
+        clearLevelTime[level] = usedTime;
+    }
+
+    public float GetClearLevelTime(Level level)
+    {
+        return clearLevelTime[level];
+    }
+
+    public void SetIsBothSurvive(Level level, bool isSurvive)
+    {
+        isBothSurvive[level] = isSurvive;
+    }
+
+    public bool GetISBothSurvive(Level level)
+    {
+        return isBothSurvive[level];
     }
 }
 
@@ -275,7 +322,12 @@ public enum CharacterType
 
 public enum EnemyType
 {
-    none = 0,
     stationary = 1,
     patrol = 2,
+}
+
+public enum Level
+{
+    Level1 = 1,
+    Level2 = 2
 }

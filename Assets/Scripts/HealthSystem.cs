@@ -6,9 +6,12 @@ public class HealthSystem : MonoBehaviour
     private int health;
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
+    private Level currentLevel;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        currentLevel = GameState.Instance.GetCurrentLevel();
         if (spriteRenderer == null)
         {
             spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -35,8 +38,16 @@ public class HealthSystem : MonoBehaviour
 
             if (CompareTag("Boss"))
             {
-                GameState.Instance.SetIsLevelClear(true);
+                GameState.Instance.SetIsLevelClear(currentLevel, true);
+                EventManager.Instance.TriggerClearLevel();
                 DataPersistentManager.instance.EndGame();
+            }
+            if (CompareTag("Player"))
+            {
+                if (GameState.Instance.GetISBothSurvive(currentLevel))
+                {
+                    GameState.Instance.SetIsBothSurvive(currentLevel, false);
+                }
             }
         }
     }

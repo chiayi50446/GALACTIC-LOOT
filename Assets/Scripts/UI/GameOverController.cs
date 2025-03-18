@@ -10,18 +10,50 @@ public class GameOverController : MonoBehaviour
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private TMP_Text gameOverTitle;
     [SerializeField] private GameObject starList;
-    private bool isClear;
+    [SerializeField] private GameObject starUsedTime;
+    [SerializeField] private GameObject starCollect;
+    [SerializeField] private GameObject starSurvive;
+    [SerializeField] private TMP_Text timerTargetText;
+    [SerializeField] private TMP_Text timerText;
+    private Level currentLevel;
 
     void Start()
     {
         menuButton.onClick.AddListener(() => SceneManager.LoadScene("StartScene"));
         restartButton.onClick.AddListener(Restart);
-        isClear = GameState.Instance.GetIsLevelClear();
 
+        currentLevel = GameState.Instance.GetCurrentLevel();
+        bool isClear = GameState.Instance.GetIsLevelClear(currentLevel);
         if (isClear)
         {
             gameOverTitle.text = "Mission Completed";
+            starUsedTime.SetActive(false);
+            starCollect.SetActive(false);
+            starSurvive.SetActive(false);
             starList.SetActive(true);
+
+            float usedTime = GameState.Instance.GetClearLevelTime(currentLevel);
+            float targetTime = GameState.clearTargetTime[currentLevel];
+            if (usedTime <= targetTime)
+            {
+                starUsedTime.SetActive(true);
+            }
+            int usedMinutes = Mathf.FloorToInt(usedTime / 60);
+            int usedSeconds = Mathf.FloorToInt(usedTime % 60);
+            timerText.text = string.Format("{0:00}:{1:00}", usedMinutes, usedSeconds);
+
+            int targetMinutes = Mathf.FloorToInt(targetTime / 60);
+            int targetSeconds = Mathf.FloorToInt(targetTime % 60);
+            timerTargetText.text = string.Format("{0:00}:{1:00}", targetMinutes, targetSeconds);
+
+            if (GameState.Instance.GetIsCollectItemGet(currentLevel))
+            {
+                starCollect.SetActive(true);
+            }
+            if (GameState.Instance.GetISBothSurvive(currentLevel))
+            {
+                starSurvive.SetActive(true);
+            }
         }
         else
         {

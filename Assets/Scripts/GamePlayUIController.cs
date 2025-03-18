@@ -5,18 +5,22 @@ public class GamePlayUIController : MonoBehaviour
 {
     [SerializeField] private TMP_Text timerText;
     private BarController alertnessBar;
-    float usedTime;
+    private Level currentLevel;
+    private bool isStopRecordTime;
+    private float usedTime;
 
     void Awake()
     {
         EventManager.Instance.UpdateAlertnessLevel += UpdateAlertnessLevel;
         EventManager.Instance.ActiveBossHealth += OpenBossRoomUI;
+        EventManager.Instance.ClearLevel += RecordClearTime;
     }
 
     void OnDestroy()
     {
         EventManager.Instance.UpdateAlertnessLevel -= UpdateAlertnessLevel;
         EventManager.Instance.ActiveBossHealth -= OpenBossRoomUI;
+        EventManager.Instance.ClearLevel -= RecordClearTime;
     }
 
     void Start()
@@ -25,10 +29,12 @@ public class GamePlayUIController : MonoBehaviour
         alertnessBar.SetValue(0);
         GameState.Instance.SetAlertnessLevel(0);
         EventManager.Instance.TriggerUpdateVision();
+        currentLevel = GameState.Instance.GetCurrentLevel();
         usedTime = 0;
+        isStopRecordTime = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         UpdateTimer();
     }
@@ -52,9 +58,17 @@ public class GamePlayUIController : MonoBehaviour
 
     private void UpdateTimer()
     {
-        usedTime += Time.deltaTime;
-        int minutes = Mathf.FloorToInt(usedTime / 60);
-        int seconds = Mathf.FloorToInt(usedTime % 60);
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        if (!isStopRecordTime)
+        {
+            usedTime += Time.deltaTime;
+            int minutes = Mathf.FloorToInt(usedTime / 60);
+            int seconds = Mathf.FloorToInt(usedTime % 60);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+    }
+
+    private void RecordClearTime()
+    {
+        GameState.Instance.SetClearLevelTime(currentLevel, usedTime);
     }
 }

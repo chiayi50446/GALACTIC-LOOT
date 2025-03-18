@@ -14,6 +14,7 @@ public class DialogueController : MonoBehaviour
     private int dialogueIndex = 0;
     private int enemyDice;
     private int playerDice;
+    private Level currentLevel;
 
     private List<Dialogue> initialText = new List<Dialogue>(){
         new Dialogue(DialogueType.Enemy, "Who are you?\nYou shouldn't be here!"),
@@ -26,6 +27,7 @@ public class DialogueController : MonoBehaviour
     void Awake()
     {
         nextButton.onClick.AddListener(nextDialog);
+        currentLevel = GameState.Instance.GetCurrentLevel();
     }
     private void OnEnable()
     {
@@ -77,7 +79,7 @@ public class DialogueController : MonoBehaviour
         {
             if (enemyDice > playerDice)
             {
-                GameState.Instance.SetIsLevelClear(false);
+                GameState.Instance.SetIsLevelClear(currentLevel, false);
                 DataPersistentManager.instance.EndGame();
                 closeDialogue();
             }

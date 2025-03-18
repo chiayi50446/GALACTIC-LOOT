@@ -9,7 +9,7 @@ public class StartMenuController : MenuController
     public void StartGame()
     {
         Debug.Log("Start Game");
-        GameState.Instance.SetCurrentLevel(1);
+        GameState.Instance.SetCurrentLevel(Level.Level1);
         tutorialUI.SetActive(true);
         gameObject.SetActive(false);
     }

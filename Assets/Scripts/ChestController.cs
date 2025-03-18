@@ -7,6 +7,7 @@ public class ChestController : ItemController, IDataPersistent
     private Animator anim;
     private bool isOpen;
     private GameObject chestItem;
+    private Level currentLevel;
 
     [SerializeField]
     public Text displayText;
@@ -15,6 +16,7 @@ public class ChestController : ItemController, IDataPersistent
         base.Start();
         isOpen = false;
         chestItem = findChildByTag(this.transform, "chestItem");
+        currentLevel = GameState.Instance.GetCurrentLevel();
     }
 
     private void Awake()
@@ -38,7 +40,7 @@ public class ChestController : ItemController, IDataPersistent
                 if (itemName == "Beer")
                 {
                     GetComponent<Collider2D>().enabled = false;
-                    GameState.Instance.SetIsCollectItemGet();
+                    GameState.Instance.SetIsCollectItemGet(currentLevel);
                 }
                 else
                 {
@@ -74,7 +76,7 @@ public class ChestController : ItemController, IDataPersistent
                 if (itemName == "Beer")
                 {
                     GetComponent<Collider2D>().enabled = false;
-                    GameState.Instance.SetIsCollectItemGet();
+                    GameState.Instance.SetIsCollectItemGet(currentLevel);
                 }
                 else
                 {

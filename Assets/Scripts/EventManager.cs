@@ -17,6 +17,7 @@ public class EventManager : MonoBehaviour
     public event Action ActiveBossHealth;
     public event Action ActivePlayerHealth;
     public event Action ActiveNegotiationCheck;
+    public event Action ClearLevel;
 
     private void Awake()
     {
@@ -77,5 +78,10 @@ public class EventManager : MonoBehaviour
     public void TriggerActiveNegotiationCheck()
     {
         ActiveNegotiationCheck?.Invoke();
+    }
+
+    public void TriggerClearLevel()
+    {
+        ClearLevel?.Invoke();
     }
 }
