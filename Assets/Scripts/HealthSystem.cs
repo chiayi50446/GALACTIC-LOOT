@@ -48,9 +48,10 @@ public class HealthSystem : MonoBehaviour
             }
             if (CompareTag("Player"))
             {
-                if (GameState.Instance.GetISBothSurvive(currentLevel))
+                GameState.Instance.SetPlayerDeathNum(currentLevel);
+                if (GameState.Instance.GetPlayerDeathNum(currentLevel) == 2)
                 {
-                    GameState.Instance.SetIsBothSurvive(currentLevel, false);
+                    DataPersistentManager.instance.EndGame();
                 }
             }
         }

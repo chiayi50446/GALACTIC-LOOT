@@ -99,26 +99,28 @@ public class BossController : MonoBehaviour
 
     private void ResetState()
     {
-        selectTarget(true);
+        selectTarget();
         state = BossStates.Chasing;
     }
 
-    private void selectTarget(bool notCurrent)
+    private void selectTarget()
     {
         if (playerList.Count == 0) return;
 
-        GameObject newTarget;
-        do
+        int randomNum = Random.Range(0, playerList.Count);
+        GameObject newTarget = playerList[randomNum];
+        if ((GameState.Instance.GetPlayerDeathNum(GameState.Instance.GetCurrentLevel()) == 0 && newTarget == currentTarget)
+         || newTarget == null)
         {
-            newTarget = playerList[Random.Range(0, playerList.Count)];
-        } while (newTarget == currentTarget && newTarget.GetComponent<HealthSystem>().GetHealth() == 0);
+            newTarget = playerList[(randomNum + 1) % playerList.Count];
+        }
         currentTarget = newTarget;
     }
 
     private void ActiveBoss()
     {
         state = BossStates.Chasing;
-        selectTarget(false);
+        selectTarget();
     }
 
 

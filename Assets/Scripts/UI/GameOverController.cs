@@ -50,7 +50,7 @@ public class GameOverController : MonoBehaviour
             {
                 starCollect.SetActive(true);
             }
-            if (GameState.Instance.GetISBothSurvive(currentLevel))
+            if (GameState.Instance.GetPlayerDeathNum(currentLevel) == 0)
             {
                 starSurvive.SetActive(true);
             }

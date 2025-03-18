@@ -46,7 +46,7 @@ public class GameState
         {Level.Level2, 300},
     };
     private Dictionary<Level, float> clearLevelTime;
-    private Dictionary<Level, bool> isBothSurvive;
+    private Dictionary<Level, int> playerDeathNum;
 
     private GameState()
     {
@@ -89,11 +89,15 @@ public class GameState
             {Level.Level1, 0},
             {Level.Level2, 0}
         };
-        isBothSurvive = new Dictionary<Level, bool>()
+        playerDeathNum = new Dictionary<Level, int>()
         {
-            {Level.Level1, true},
-            {Level.Level2, true},
+            {Level.Level1, 0},
+            {Level.Level2, 0},
         };
+        Player1ItemLoadIndex = -1;
+        Player2ItemLoadIndex = -1;
+        Player1SelectItemIndex = 0;
+        Player2SelectItemIndex = 0;
     }
 
     public static GameState Instance
@@ -292,14 +296,14 @@ public class GameState
         return clearLevelTime[level];
     }
 
-    public void SetIsBothSurvive(Level level, bool isSurvive)
+    public void SetPlayerDeathNum(Level level)
     {
-        isBothSurvive[level] = isSurvive;
+        playerDeathNum[level]++;
     }
 
-    public bool GetISBothSurvive(Level level)
+    public int GetPlayerDeathNum(Level level)
     {
-        return isBothSurvive[level];
+        return playerDeathNum[level];
     }
 }
 
