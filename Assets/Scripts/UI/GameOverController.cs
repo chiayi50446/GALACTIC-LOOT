@@ -72,9 +72,8 @@ public class GameOverController : MonoBehaviour
 
     private void Restart()
     {
-        // int currentLevel = GameState.Instance.GetCurrentLevel();
-        // GameState.Instance.CreateNewGame();
-        // GameState.Instance.SetCurrentLevel(currentLevel);
+        var currentLevel = GameState.Instance.GetCurrentLevel();
+        GameState.Instance.ResetCurrentLevel(currentLevel);
         DataPersistentManager.instance.EntryGame();
     }
 }

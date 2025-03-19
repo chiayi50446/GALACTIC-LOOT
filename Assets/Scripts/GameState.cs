@@ -117,6 +117,20 @@ public class GameState
         instance = new GameState();
     }
 
+    public void ResetCurrentLevel(Level level)
+    {
+        currentLevel = level;
+        Player1ItemLoadIndex = -1;
+        Player2ItemLoadIndex = -1;
+        Player1SelectItemIndex = 0;
+        Player2SelectItemIndex = 0;
+        currentAlertnessLevel = 0;
+        IsCollectItemGet[level] = false;
+        isLevelClear[level] = false;
+        clearLevelTime[level] = 0;
+        playerDeathNum[level] = 0;
+    }
+
     public void SetGameState(GameState gameState)
     {
         instance = gameState;
