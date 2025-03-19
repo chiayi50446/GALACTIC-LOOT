@@ -90,12 +90,15 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     {
         if ((Input.GetKeyDown(KeyCode.C) && PlayerNum == 1) || (Input.GetKeyDown(KeyCode.N) && PlayerNum == 2))
         {
-            var index = GameState.Instance.GetPlayerSelectItem(PlayerNum);
-            ItemList[index].transform.Find("select").gameObject.SetActive(false);
-            index = (index + 1) % (GameState.Instance.GetPlayerItemLoad(PlayerNum) + 1);
-            ItemList[index].transform.Find("select").gameObject.SetActive(true);
-            GameState.Instance.SetPlayerSelectItem(PlayerNum, index);
-            ChangeItemShow(ItemList[index].transform.Find("Item").GetComponent<Image>().sprite.name, index);
+            if (GameState.Instance.GetPlayerItemLoad(PlayerNum) != -1)
+            {
+                var index = GameState.Instance.GetPlayerSelectItem(PlayerNum);
+                ItemList[index].transform.Find("select").gameObject.SetActive(false);
+                index = (index + 1) % (GameState.Instance.GetPlayerItemLoad(PlayerNum) + 1);
+                ItemList[index].transform.Find("select").gameObject.SetActive(true);
+                GameState.Instance.SetPlayerSelectItem(PlayerNum, index);
+                ChangeItemShow(ItemList[index].transform.Find("Item").GetComponent<Image>().sprite.name, index);
+            }
         }
     }
 

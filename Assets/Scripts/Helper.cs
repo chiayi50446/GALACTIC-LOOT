@@ -21,4 +21,10 @@ public class Helper
         yield return new WaitForSeconds(delayTime);
         methodName();
     }
+
+    public static IEnumerator Delay_RealTime(Action methodName, float delayTime)
+    {
+        yield return new WaitForSecondsRealtime(delayTime);
+        methodName();
+    }
 }

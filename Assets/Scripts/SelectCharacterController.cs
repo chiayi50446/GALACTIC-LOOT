@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SelectCharacterController : MenuController
@@ -42,6 +43,8 @@ public class SelectCharacterController : MenuController
         {
             MakeSureCharacter();
         }
+
+        MoveSelection();
     }
 
     public void OK()
@@ -119,5 +122,23 @@ public class SelectCharacterController : MenuController
         Charisma = player.transform.Find("Charisma");
         Load = player.transform.Find("Load");
         Panel = player.transform.Find("Panel");
+    }
+
+    private void MoveSelection()
+    {
+        Selectable current = EventSystem.current.currentSelectedGameObject?.GetComponent<Selectable>();
+        if (current != null)
+        {
+            Selectable next = null;
+            if (Input.GetKeyDown(KeyCode.L)) next = current.FindSelectableOnRight();
+            if (Input.GetKeyDown(KeyCode.J)) next = current.FindSelectableOnLeft();
+            if (Input.GetKeyDown(KeyCode.I)) next = current.FindSelectableOnUp();
+            if (Input.GetKeyDown(KeyCode.K)) next = current.FindSelectableOnDown();
+
+            if (next != null)
+            {
+                EventSystem.current.SetSelectedGameObject(next.gameObject);
+            }
+        }
     }
 }

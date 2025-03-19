@@ -26,7 +26,7 @@ public class DialogueController : MonoBehaviour
 
     void Awake()
     {
-        nextButton.onClick.AddListener(nextDialog);
+        // nextButton.onClick.AddListener(nextDialog);
         currentLevel = GameState.Instance.GetCurrentLevel();
     }
     private void OnEnable()
@@ -37,6 +37,17 @@ public class DialogueController : MonoBehaviour
     private void OnDisable()
     {
         EventManager.Instance.ActiveNegotiationCheck -= StartNigotiation;
+    }
+
+    void Update()
+    {
+        if (nextButton.IsActive())
+        {
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                nextDialog();
+            }
+        }
     }
 
     void StartNigotiation()
