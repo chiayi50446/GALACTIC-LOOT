@@ -56,8 +56,8 @@ public class GuideController : MonoBehaviour
 
         nowDisplay.SetActive(true);
         closeBtn = nowDisplay.transform.Find("CloseHint").gameObject;
-        closeBtn.SetActive(false);
-        StartCoroutine(Helper.Delay_RealTime(() => { closeBtn.SetActive(true); }, 1f));
+        // closeBtn.SetActive(false);
+        // StartCoroutine(Helper.Delay_RealTime(() => { closeBtn.SetActive(true); }, 1f));
     }
 
     private void closeGuide()
