@@ -10,7 +10,7 @@ public class ChestController : ItemController, IDataPersistent
     private Level currentLevel;
 
     // [SerializeField] public Text displayText;
-    [SerializeField] private GameObject displayGuide;
+    // [SerializeField] private GameObject displayGuide;
     public override void Start()
     {
         base.Start();
@@ -48,10 +48,10 @@ public class ChestController : ItemController, IDataPersistent
                     {
                         GetComponent<Collider2D>().enabled = false;
                         StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerUpdateInventory(itemName, 1); }, 1.3f));
-                        if (displayGuide != null)
-                        {
-                            StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerDisplayGuide(displayGuide); }, 1.4f));
-                        }
+                        // if (displayGuide != null)
+                        // {
+                        //     StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerDisplayGuide(displayGuide); }, 1.4f));
+                        // }
                     }
                     else
                     {
@@ -88,10 +88,10 @@ public class ChestController : ItemController, IDataPersistent
                     {
                         GetComponent<Collider2D>().enabled = false;
                         StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerUpdateInventory(itemName, 2); }, 1.3f));
-                        if (displayGuide != null)
-                        {
-                            StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerDisplayGuide(displayGuide); }, 1.4f));
-                        }
+                        // if (displayGuide != null)
+                        // {
+                        //     StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerDisplayGuide(displayGuide); }, 1.4f));
+                        // }
                     }
                     else
                     {

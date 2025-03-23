@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,10 +22,12 @@ public class SelectCharacterController : MenuController
     private Transform Load;
     private Transform Panel;
     private GameObject OKButton;
+    private GameObject Title;
     private CharacterType CurrentType = CharacterType.type1;
     void Awake()
     {
-        OKButton = transform.GetChild(0).Find("OK").gameObject;
+        OKButton = transform.GetChild(0).Find("ButtonGroup/OK").gameObject;
+        Title = transform.GetChild(0).Find("Title").gameObject;
         EventManager.Instance.SelectCharacterEvent += ChangeCharacterInfo;
     }
     void OnEnable()
@@ -64,7 +67,7 @@ public class SelectCharacterController : MenuController
         GameState.Instance.SetPlayer1Type(CharacterType.none);
         GameState.Instance.SetPlayer2Type(CharacterType.none);
 
-        OKButton.GetComponent<Button>().interactable = false;
+        OKButton.SetActive(false);
         startButton.GetComponent<Button>().Select();
 
         CurrentType = CharacterType.type1;
@@ -95,12 +98,16 @@ public class SelectCharacterController : MenuController
             startButton.GetComponent<Button>().Select();
             CurrentType = CharacterType.type1;
             ChangeCharacterInfo(CharacterType.type1);
+            Title.GetComponent<TMP_Text>().text = "Select Player 2";
         }
         else
         {
+            Panel.gameObject.SetActive(true);// player2 panel open
             GameState.Instance.SetPlayer2Type(CurrentType);
-            OKButton.GetComponent<Button>().interactable = true;
+
+            OKButton.SetActive(true);
             OKButton.GetComponent<Button>().Select();
+            Title.GetComponent<TMP_Text>().text = "Complete Select";
         }
     }
 

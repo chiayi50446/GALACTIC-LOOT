@@ -92,25 +92,6 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         {
             anim.SetBool("isMove", false);
         }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            holdingGun = false;
-            holdingBomb = true;
-            anim.SetInteger("Status", 1);
-            bomb.SetActive(holdingBomb);
-        }
-        // if (Input.GetKeyDown(KeyCode.F))
-        // {
-        //     holdingGun = true;
-        //     holdingBomb = false;
-        //     anim.SetInteger("Status", 2);
-        // }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            holdingGun = false;
-            holdingBomb = false;
-            anim.SetInteger("Status", 0);
-        }
     }
 
     void Run()

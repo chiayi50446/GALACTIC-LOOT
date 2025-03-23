@@ -3,7 +3,7 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private GameObject healthBar;
-    private int health;
+    private int health = 1;
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
     private Level currentLevel;
@@ -35,7 +35,8 @@ public class HealthSystem : MonoBehaviour
     {
         StartCoroutine(FlashRed());
         health -= attackPoint;
-        healthBar.GetComponent<BarController>().SetValue(health);
+        if (healthBar != null)
+            healthBar.GetComponent<BarController>().SetValue(health);
         if (health <= 0)
         {
             Destroy(gameObject);

@@ -25,10 +25,10 @@ public class GuideController : MonoBehaviour
     void Start()
     {
         displayedList = new List<string>();
-        if (alertnessLevelPanel != null)
-        {
-            openGuide(alertnessLevelPanel);
-        }
+        // if (alertnessLevelPanel != null)
+        // {
+        //     openGuide(alertnessLevelPanel);
+        // }
     }
 
     void Update()

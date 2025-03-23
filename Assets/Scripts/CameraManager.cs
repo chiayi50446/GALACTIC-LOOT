@@ -12,42 +12,52 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private GameObject player2;
     private PlayerController player1Controller;
     private PlayerController player2Controller;
+    [SerializeField] private GameObject alertnessLevelPanel;
+
     private Vector3[][] nextCameraPosition = {
-        new Vector3[]{ //Map1
+        new Vector3[]{ //Level1
+            new Vector3(100f, 0f, -10f),
+            new Vector3(0f, 0f, -10f),
             new Vector3(9.5f, 57.5f, -10f),
             new Vector3(56.5f, 53.5f, -10f)
             },
-        new Vector3[]{ //Map2
+        new Vector3[]{ //Level2
             new Vector3(0f, 20f, -10f)
             }
     };
 
     public Vector3[][] nextPlayer1Position = {
-        new Vector3[]{ //Map1
+        new Vector3[]{ //Level1
+            new Vector3(98f,-2f,0),
+            new Vector3(8.5f,-5f,0),
             new Vector3(19f,52f,0),
             new Vector3(56f,48f,0),
             },
-        new Vector3[]{ //Map2
+        new Vector3[]{ //Level2
             new Vector3(8.5f, 15f, 0)
             }
     };
 
     public Vector3[][] nextPlayer2Position = {
-        new Vector3[]{ //Map1
+        new Vector3[]{ //Level1
+            new Vector3(102f,-2f,0),
+            new Vector3(10.5f,-5f,0),
             new Vector3(21f,52f,0),
             new Vector3(58f,48f,0),
             },
-        new Vector3[]{ //Map2
+        new Vector3[]{ //Level2
             new Vector3(10f, 15f, 0)
             }
     };
 
     public Vector3[][] exitPoint = {
-        new Vector3[]{ //Map1
+        new Vector3[]{ //Level1
+            new Vector3(50f, 3.5f, 0),
+            new Vector3(100f, 3.5f, 0),
             new Vector3(-7f, 3.5f, 0),
             new Vector3(14.5f, 61.5f, 0)
             },
-        new Vector3[]{ //Map2
+        new Vector3[]{ //Level2
             new Vector3(0.45f, 6f, 0)
             }
     };
@@ -73,7 +83,7 @@ public class CameraManager : MonoBehaviour
         play2MoveY = Input.GetAxisRaw("Vertical2");
         if (player1Enter)
         {
-            if (play1MoveY < 0 && player1Controller.getFreeze())
+            if (play1MoveY < 0 && player1Controller.getFreeze() && !player2Enter)
             {
                 player1.transform.position = exitPoint[nowMapIndex - 1][nowRoomIndex - 1];
                 player1Controller.CancelFreeze();
@@ -83,7 +93,7 @@ public class CameraManager : MonoBehaviour
 
         if (player2Enter)
         {
-            if (play2MoveY < 0 && player2Controller.getFreeze())
+            if (play2MoveY < 0 && player2Controller.getFreeze() && !player1Enter)
             {
                 player2.transform.position = exitPoint[nowMapIndex - 1][nowRoomIndex - 1];
                 player2Controller.CancelFreeze();
@@ -120,11 +130,15 @@ public class CameraManager : MonoBehaviour
         yield return StartCoroutine(Fade(1));
         mainCamera.transform.position = nextCameraPosition[mapIndex - 1][roomIndex - 1];
         yield return StartCoroutine(Fade(0));
+
+        if (mapIndex == 1 && roomIndex == 2)
+        {
+            EventManager.Instance.TriggerDisplayGuide(alertnessLevelPanel);
+        }
         player1Enter = false;
         player2Enter = false;
         player1Controller.CancelFreeze();
         player2Controller.CancelFreeze();
-
 
         if (roomIndex == nextCameraPosition[mapIndex - 1].Count())
         {
