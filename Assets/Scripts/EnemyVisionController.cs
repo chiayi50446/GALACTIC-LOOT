@@ -87,7 +87,7 @@ public class EnemyVisionController : MonoBehaviour
             vertices[i + 1] = new Vector3(endPoint.x, endPoint.y, 0.01f); //確保渲染時z軸固定 避免顯示層級錯誤
 
             // Check if hit players or not
-            RaycastHit2D hitPlayer = Physics2D.Raycast(worldOrigin, directionPos, viewDistance, LayerMask.GetMask("Player"));
+            RaycastHit2D hitPlayer = Physics2D.Raycast(worldOrigin, directionPos, viewDistance, LayerMask.GetMask("Player", "Wall", "Object"));
             if (hitPlayer.collider != null)
             {
                 if (hitPlayer.collider.name == "Player1")
@@ -97,6 +97,8 @@ public class EnemyVisionController : MonoBehaviour
                 if (hitPlayer.collider.name == "Player2")
                 {
                     hitPlayer2 = true;
+                    Debug.DrawRay(worldOrigin, endPoint, Color.yellow);
+                    Debug.Log(hitWall.point);
                 }
             }
         }
