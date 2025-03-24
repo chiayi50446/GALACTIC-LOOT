@@ -715,6 +715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nowDirection: 1
+  moveDirection: 010000000200000000000000
 --- !u!60 &29677048
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -39753,7 +39754,7 @@ MonoBehaviour:
   viewDistance: 4
   viewAngle: 90
   segments: 10
-  direction: left
+  direction: 1
   type: 2
 --- !u!210 &289849314
 SortingGroup:
@@ -47286,8 +47287,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1258595893
-  m_SortingLayer: 4
+  m_SortingLayerID: -105541197
+  m_SortingLayer: 3
   m_SortingOrder: 10
   m_Sprite: {fileID: 5158599224544815305, guid: 6eedc78c635734143a7981e2f563c86b,
     type: 3}
@@ -69348,7 +69349,7 @@ MonoBehaviour:
   viewDistance: 4
   viewAngle: 90
   segments: 10
-  direction: down
+  direction: 1
   type: 1
 --- !u!1 &1741981367
 GameObject:

@@ -9,6 +9,7 @@ Shader "Unlit/UnlitVisionShader"
         Tags { "Queue" = "Overlay" }
         Pass
         {
+            ZWrite Off
             ZTest Always
             Cull Off
             Blend SrcAlpha OneMinusSrcAlpha

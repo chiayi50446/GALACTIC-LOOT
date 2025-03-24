@@ -14,7 +14,8 @@ public class ButtonController : MonoBehaviour
     {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = originalImage;
-        friend = friendItem.GetComponent<ButtonController>();
+        if (friendItem != null)
+            friend = friendItem.GetComponent<ButtonController>();
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,7 +31,7 @@ public class ButtonController : MonoBehaviour
     {
         spriteRenderer.sprite = originalImage;
         isTrigger = false;
-        if (!triggerdItem.activeSelf && !friend.isTrigger)
+        if (!triggerdItem.activeSelf && (friendItem == null || !friend.isTrigger))
         {
             triggerdItem.SetActive(true);
         }

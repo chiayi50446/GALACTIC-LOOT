@@ -1,16 +1,18 @@
 using UnityEngine;
 
+
 public class StationaryEnemyController : EnemyController
 {
     private string[] arrDirection = { "left", "down", "right", "up" };
-    [SerializeField] private int nowDirection = 0;
+    [SerializeField] private Direction nowDirection;
+    [SerializeField] private Direction[] moveDirection;
     private Animator anim;
     private bool isLeft;
 
     void Start()
     {
         anim = GetComponent<Animator>();
-        anim.SetInteger("direction", nowDirection);
+        anim.SetInteger("direction", (int)nowDirection);
         InvokeRepeating("Rotate", 0f, 5f); // Rotate every five seconds
         isLeft = true;
     }
@@ -20,23 +22,17 @@ public class StationaryEnemyController : EnemyController
         CancelInvoke("Rotate");
     }
 
-    void Update()
+    void NextDirection()
     {
-
+        if (moveDirection.Length == 0) return;
+        int index = System.Array.IndexOf(moveDirection, nowDirection);
+        nowDirection = moveDirection[(index + 1) % moveDirection.Length];
     }
     void Rotate()
     {
-        nowDirection = (nowDirection + 1) % 3;
-        anim.SetInteger("direction", nowDirection);
-        if (arrDirection[nowDirection] == "left")
-        {
-            if (!isLeft)
-            {
-                isLeft = true;
-                Flip();
-            }
-        }
-        if (arrDirection[nowDirection] == "right")
+        NextDirection();
+        anim.SetInteger("direction", (int)nowDirection);
+        if (nowDirection == Direction.right)
         {
             if (isLeft)
             {
@@ -44,7 +40,15 @@ public class StationaryEnemyController : EnemyController
                 Flip();
             }
         }
+        else
+        {
+            if (!isLeft)
+            {
+                isLeft = true;
+                Flip();
+            }
+        }
         EnemyVisionController visionController = GetComponentInChildren<EnemyVisionController>();
-        visionController.SetDirection(arrDirection[nowDirection]);
+        visionController.SetDirection(nowDirection);
     }
 }

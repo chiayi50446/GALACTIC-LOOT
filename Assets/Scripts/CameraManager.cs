@@ -22,7 +22,10 @@ public class CameraManager : MonoBehaviour
             new Vector3(56.5f, 53.5f, -10f)
             },
         new Vector3[]{ //Level2
-            new Vector3(0f, 20f, -10f)
+            new Vector3(0f, 20f, -10f),
+            new Vector3(30f, 0f, -10f),
+            new Vector3(30f, 20f, -10f),
+            new Vector3(0f, 40f, -10f)
             }
     };
 
@@ -34,7 +37,10 @@ public class CameraManager : MonoBehaviour
             new Vector3(56f,48f,0),
             },
         new Vector3[]{ //Level2
-            new Vector3(8.5f, 15f, 0)
+            new Vector3(9f, 16f, 0),
+            new Vector3(18.5f, -4f, 0),
+            new Vector3(24f, 15f, 0),
+            new Vector3(-1f, 35f, 0)
             }
     };
 
@@ -46,7 +52,10 @@ public class CameraManager : MonoBehaviour
             new Vector3(58f,48f,0),
             },
         new Vector3[]{ //Level2
-            new Vector3(10f, 15f, 0)
+            new Vector3(11f, 16f, 0),
+            new Vector3(20.5f, -4f, 0),
+            new Vector3(36f, 15f, 0),
+            new Vector3(1f, 35f, 0)
             }
     };
 
@@ -58,7 +67,10 @@ public class CameraManager : MonoBehaviour
             new Vector3(14.5f, 61.5f, 0)
             },
         new Vector3[]{ //Level2
-            new Vector3(0.45f, 6f, 0)
+            new Vector3(0.4f, 6f, 0),
+            new Vector3(2.9f, 26.4f, 0),
+            new Vector3(35.4f, 6.3f, 0),
+            new Vector3(29.4f, 26.4f, 0)
             }
     };
     private int nowMapIndex;

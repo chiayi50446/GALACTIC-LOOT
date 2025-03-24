@@ -4,19 +4,23 @@ using UnityEngine;
 public class PatrolEnemyController : EnemyController
 {
     private string[] arrDirection = { "left", "down", "right", "up" };
-    [SerializeField] private int nowDirection = 0;
+    [SerializeField] private Direction nowDirection = Direction.left;
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
     [SerializeField] private float distanceThreshold = 0.5f;
     [SerializeField] private float moveSpeed = 1f;
     private Animator anim;
-    private bool isLeft;
+    private bool isLeft = true;
     private int index = 0;
     private Vector3 destination;
     void Start()
     {
         anim = GetComponent<Animator>();
-        anim.SetInteger("direction", nowDirection);
-        isLeft = (nowDirection != 2) ? true : false;
+        anim.SetInteger("direction", (int)nowDirection);
+        if (nowDirection == Direction.right)
+        {
+            isLeft = false;
+            Flip();
+        }
         destination = waypoints[index].position;
         Rotate();
     }
@@ -36,30 +40,22 @@ public class PatrolEnemyController : EnemyController
     {
         if (destination.x - transform.position.x > 0)
         {
-            nowDirection = 2;
+            nowDirection = Direction.right;
         }
         else if (destination.x - transform.position.x < 0)
         {
-            nowDirection = 0;
+            nowDirection = Direction.left;
         }
         else if (destination.y - transform.position.y < 0)
         {
-            nowDirection = 1;
+            nowDirection = Direction.down;
         }
-        else if (destination.y - transform.position.y < 0)
+        else if (destination.y - transform.position.y > 0)
         {
-            nowDirection = 3;
+            nowDirection = Direction.up;
         }
-        anim.SetInteger("direction", nowDirection);
-        if (arrDirection[nowDirection] == "left")
-        {
-            if (!isLeft)
-            {
-                isLeft = true;
-                Flip();
-            }
-        }
-        if (arrDirection[nowDirection] == "right")
+        anim.SetInteger("direction", (int)nowDirection);
+        if (nowDirection == Direction.right)
         {
             if (isLeft)
             {
@@ -67,7 +63,15 @@ public class PatrolEnemyController : EnemyController
                 Flip();
             }
         }
+        else
+        {
+            if (!isLeft)
+            {
+                isLeft = true;
+                Flip();
+            }
+        }
         EnemyVisionController visionController = GetComponentInChildren<EnemyVisionController>();
-        visionController.SetDirection(arrDirection[nowDirection]);
+        visionController.SetDirection(nowDirection);
     }
 }

@@ -6,17 +6,17 @@ public class EnemyVisionController : MonoBehaviour
     [SerializeField] private float viewDistance = 4f;
     [SerializeField] private float viewAngle = 90f;
     [SerializeField] private int segments = 10;
-    [SerializeField] private string direction = "down";
+    [SerializeField] private Direction direction = Direction.down;
     [SerializeField] private EnemyType type = EnemyType.stationary;
     private Mesh mesh;
     private bool isHittingPlayer1;
     private bool isHittingPlayer2;
-    private Dictionary<string, float> directionRotate = new Dictionary<string, float>
+    private Dictionary<Direction, float> directionRotate = new Dictionary<Direction, float>
     {
-        {"up", 270},
-        {"left", 180},
-        {"down", 90},
-        {"right", 0},
+        {Direction.up, 270},
+        {Direction.left, 180},
+        {Direction.down, 90},
+        {Direction.right, 0},
     };
 
     private Dictionary<float, float> viewDistanceData = new Dictionary<float, float>
@@ -51,7 +51,7 @@ public class EnemyVisionController : MonoBehaviour
         UpdateMesh();
     }
 
-    public void SetDirection(string newDirection)
+    public void SetDirection(Direction newDirection)
     {
         direction = newDirection;
     }
@@ -83,7 +83,7 @@ public class EnemyVisionController : MonoBehaviour
                 endPoint = (Vector3)hitWall.point - worldOrigin;
             }
             Debug.DrawRay(worldOrigin, endPoint, Color.yellow);
-            if ((direction == "right")) endPoint.x *= -1;
+            if ((direction == Direction.right)) endPoint.x *= -1;
             vertices[i + 1] = new Vector3(endPoint.x, endPoint.y, 0.01f); //確保渲染時z軸固定 避免顯示層級錯誤
 
             // Check if hit players or not

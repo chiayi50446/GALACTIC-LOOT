@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -69,11 +70,33 @@ public class GameOverController : MonoBehaviour
             menuButton.GetComponent<Button>().Select();
         }
     }
+    void Update()
+    {
+        MoveSelection();
+    }
 
     private void Restart()
     {
         var currentLevel = GameState.Instance.GetCurrentLevel();
         GameState.Instance.ResetCurrentLevel(currentLevel);
         DataPersistentManager.instance.EntryGame();
+    }
+
+    private void MoveSelection()
+    {
+        Selectable current = EventSystem.current.currentSelectedGameObject?.GetComponent<Selectable>();
+        if (current != null)
+        {
+            Selectable next = null;
+            if (Input.GetKeyDown(KeyCode.L)) next = current.FindSelectableOnRight();
+            if (Input.GetKeyDown(KeyCode.J)) next = current.FindSelectableOnLeft();
+            if (Input.GetKeyDown(KeyCode.I)) next = current.FindSelectableOnUp();
+            if (Input.GetKeyDown(KeyCode.K)) next = current.FindSelectableOnDown();
+
+            if (next != null)
+            {
+                EventSystem.current.SetSelectedGameObject(next.gameObject);
+            }
+        }
     }
 }
