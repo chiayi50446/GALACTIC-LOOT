@@ -34,8 +34,8 @@ TagManager:
   - Object
   - Player
   - Enemy
-  - 
-  - 
+  - PushWall
+  - PushableObject
   - 
   - 
   - 

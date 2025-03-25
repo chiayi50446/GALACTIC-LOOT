@@ -386,6 +386,11 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         healthBarCanvas.GetComponent<BarController>().SetMaxAndInitValue(GameState.charactersData[playerType].Health);
     }
 
+    public PlayerSide GetPlayerSide()
+    {
+        return currentSide;
+    }
+
     public void LoadData(GameState data)
     {
         GetComponent<Animator>().runtimeAnimatorController = GameState.animatorController[playerType];

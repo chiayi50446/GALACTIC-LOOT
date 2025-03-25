@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ButtonController : MonoBehaviour
@@ -6,34 +7,42 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private GameObject friendItem;
     [SerializeField] private Sprite originalImage;
     [SerializeField] private Sprite triggeredImage;
+    [SerializeField] private bool isTriggerDisplay = false;
     public bool isTrigger;
     private SpriteRenderer spriteRenderer;
     private ButtonController friend;
+    private ArrayList arrTriggerObjects;
 
     void Start()
     {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = originalImage;
+        arrTriggerObjects = new ArrayList();
         if (friendItem != null)
             friend = friendItem.GetComponent<ButtonController>();
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
+        arrTriggerObjects.Add(collision.name);
         spriteRenderer.sprite = triggeredImage;
         isTrigger = true;
-        if (triggerdItem.activeSelf)
+        if (triggerdItem.activeSelf == !isTriggerDisplay)
         {
-            triggerdItem.SetActive(false);
+            triggerdItem.SetActive(isTriggerDisplay);
         }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        spriteRenderer.sprite = originalImage;
-        isTrigger = false;
-        if (!triggerdItem.activeSelf && (friendItem == null || !friend.isTrigger))
+        arrTriggerObjects.Remove(collision.name);
+        if (arrTriggerObjects.Count == 0)
         {
-            triggerdItem.SetActive(true);
+            isTrigger = false;
+            spriteRenderer.sprite = originalImage;
+            if (triggerdItem.activeSelf == isTriggerDisplay && (friendItem == null || !friend.isTrigger))
+            {
+                triggerdItem.SetActive(!isTriggerDisplay);
+            }
         }
     }
 }
