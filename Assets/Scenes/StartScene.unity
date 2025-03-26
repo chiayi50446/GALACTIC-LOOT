@@ -8698,6 +8698,7 @@ MonoBehaviour:
   startButton: {fileID: 1145946853}
   tutorialUI: {fileID: 1409216153}
   selectLevelUI: {fileID: 261959157}
+  selectCharacterUI: {fileID: 777774446}
 --- !u!1 &1108605076
 GameObject:
   m_ObjectHideFlags: 0

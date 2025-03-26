@@ -22,6 +22,9 @@ public class GameOverController : MonoBehaviour
     {
         menuButton.onClick.AddListener(() => SceneManager.LoadScene("StartScene"));
         restartButton.onClick.AddListener(Restart);
+        if (GameState.Instance.GetCurrentLevel() == Level.Level2)
+            nextLevelButton.gameObject.SetActive(false);
+        nextLevelButton.onClick.AddListener(NextLevel);
 
         currentLevel = GameState.Instance.GetCurrentLevel();
         bool isClear = GameState.Instance.GetIsLevelClear(currentLevel);
@@ -77,9 +80,15 @@ public class GameOverController : MonoBehaviour
 
     private void Restart()
     {
-        var currentLevel = GameState.Instance.GetCurrentLevel();
         GameState.Instance.ResetCurrentLevel(currentLevel);
         DataPersistentManager.instance.EntryGame();
+    }
+
+    private void NextLevel()
+    {
+        GameState.Instance.SetCurrentLevel(Level.Level2);
+        GameState.Instance.ResetCurrentLevel(Level.Level2);
+        SceneManager.LoadScene("StartScene");
     }
 
     private void MoveSelection()

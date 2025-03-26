@@ -6,6 +6,17 @@ public class StartMenuController : MenuController
     private GameObject tutorialUI;
     [SerializeField]
     private GameObject selectLevelUI;
+    [SerializeField]
+    private GameObject selectCharacterUI;
+
+    void Awake()
+    {
+        if (GameState.Instance.GetCurrentLevel() == Level.Level2)
+        {
+            selectCharacterUI.SetActive(true);
+            gameObject.SetActive(false);
+        }
+    }
     public void StartGame()
     {
         Debug.Log("Start Game");
