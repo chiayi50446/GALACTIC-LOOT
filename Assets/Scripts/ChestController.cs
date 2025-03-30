@@ -41,6 +41,7 @@ public class ChestController : ItemController, IDataPersistent
                 {
                     GetComponent<Collider2D>().enabled = false;
                     GameState.Instance.SetIsCollectItemGet(currentLevel);
+                    EventManager.Instance.TriggerShowCollectItem();
                 }
                 else
                 {
@@ -48,10 +49,6 @@ public class ChestController : ItemController, IDataPersistent
                     {
                         GetComponent<Collider2D>().enabled = false;
                         StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerUpdateInventory(itemName, 1); }, 1.3f));
-                        // if (displayGuide != null)
-                        // {
-                        //     StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerDisplayGuide(displayGuide); }, 1.4f));
-                        // }
                     }
                     else
                     {
@@ -81,6 +78,7 @@ public class ChestController : ItemController, IDataPersistent
                 {
                     GetComponent<Collider2D>().enabled = false;
                     GameState.Instance.SetIsCollectItemGet(currentLevel);
+                    EventManager.Instance.TriggerShowCollectItem();
                 }
                 else
                 {

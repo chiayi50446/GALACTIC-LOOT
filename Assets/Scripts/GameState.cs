@@ -19,6 +19,10 @@ public class GameState
     private int Player1SelectItemIndex = 0;
     [SerializeField]
     private int Player2SelectItemIndex = 0;
+    [SerializeField]
+    private int Player1DisguiseCount = 0;
+    [SerializeField]
+    private int Player2DisguiseCount = 0;
     private Dictionary<Level, bool> IsCollectItemGet;
     [SerializeField] private static float currentAlertnessLevel;
     public Dictionary<Level, int> BossHealth = new Dictionary<Level, int>
@@ -129,6 +133,8 @@ public class GameState
         isLevelClear[level] = false;
         clearLevelTime[level] = 0;
         playerDeathNum[level] = 0;
+        Player1DisguiseCount = 0;
+        Player2DisguiseCount = 0;
     }
 
     public void SetGameState(GameState gameState)
@@ -247,6 +253,42 @@ public class GameState
         else
         {
             return Player2SelectItemIndex;
+        }
+    }
+
+    public void SetPlayerDisguiseCount(int playerNum)
+    {
+        if (playerNum == 1)
+        {
+            Player1DisguiseCount = 3;
+        }
+        else
+        {
+            Player2DisguiseCount = 3;
+        }
+    }
+
+    public void UsePlayerDisguiseCount(int playerNum)
+    {
+        if (playerNum == 1)
+        {
+            Player1DisguiseCount--;
+        }
+        else
+        {
+            Player2DisguiseCount--;
+        }
+    }
+
+    public int GetPlayerDisguiseCount(int playerNum)
+    {
+        if (playerNum == 1)
+        {
+            return Player1DisguiseCount;
+        }
+        else
+        {
+            return Player2DisguiseCount;
         }
     }
 

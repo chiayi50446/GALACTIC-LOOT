@@ -108,7 +108,18 @@ public class EnemyVisionController : MonoBehaviour
             isHittingPlayer1 = true;
             GameState.Instance.SetLastAlertPlayerType(1);
             GameState.Instance.SetLastAlertEnemyType(type);
-            UpdateAlertnessLevel();
+            if (GameState.Instance.GetPlayerDisguiseCount(1) > 0)
+            {
+                GameState.Instance.UsePlayerDisguiseCount(1);
+                if (GameState.Instance.GetPlayerDisguiseCount(1) == 0)
+                {
+                    EventManager.Instance.TriggerRemoveInventory(1);
+                }
+            }
+            else
+            {
+                UpdateAlertnessLevel();
+            }
             // Debug.Log("Hit player1");
         }
         if (!hitPlayer1 && isHittingPlayer1)
@@ -121,7 +132,18 @@ public class EnemyVisionController : MonoBehaviour
             isHittingPlayer2 = true;
             GameState.Instance.SetLastAlertPlayerType(2);
             GameState.Instance.SetLastAlertEnemyType(type);
-            UpdateAlertnessLevel();
+            if (GameState.Instance.GetPlayerDisguiseCount(2) > 0)
+            {
+                GameState.Instance.UsePlayerDisguiseCount(2);
+                if (GameState.Instance.GetPlayerDisguiseCount(2) == 0)
+                {
+                    EventManager.Instance.TriggerRemoveInventory(2);
+                }
+            }
+            else
+            {
+                UpdateAlertnessLevel();
+            }
             // Debug.Log("Hit player2");
         }
         if (!hitPlayer2 && isHittingPlayer2)

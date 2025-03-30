@@ -6,6 +6,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     [SerializeField] private GameObject Avatar;
     [SerializeField] private GameObject[] ItemList;
     [SerializeField] private int PlayerNum;
+    [SerializeField] private GameObject CollectItem;
 
     public void LoadData(GameState data)
     {
@@ -27,12 +28,14 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     {
         EventManager.Instance.UpdateInventory += UpdateItem;
         EventManager.Instance.RemoveInventory += RemoveItem;
+        EventManager.Instance.ShowCollectItem += ShowCollectItem;
     }
 
     void OnDestroy()
     {
         EventManager.Instance.UpdateInventory -= UpdateItem;
         EventManager.Instance.RemoveInventory -= RemoveItem;
+        EventManager.Instance.ShowCollectItem -= ShowCollectItem;
     }
 
     void Update()
@@ -45,6 +48,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
         if (pNum == PlayerNum)
         {
             var index = GameState.Instance.AddPlayerItemLoad(pNum);
+            if (itemName == "WizardHat") GameState.Instance.SetPlayerDisguiseCount(pNum);
             var item = ItemList[index].transform.Find("Item");
             item.gameObject.SetActive(true);
             item.GetComponent<Image>().sprite = GameState.chestItem[itemName];
@@ -109,5 +113,10 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
         {
             EventManager.Instance.TriggerUpdateUserTakenItem(itemName, PlayerNum);
         }
+    }
+
+    void ShowCollectItem()
+    {
+        CollectItem.SetActive(true);
     }
 }
