@@ -12,19 +12,32 @@ public class BossController : MonoBehaviour
         Death
     };
 
+    public enum BossAttackState
+    {
+        normal,
+        magic
+    }
+
     [SerializeField] private BossStates state;
     [SerializeField] private List<GameObject> playerList = new List<GameObject>();
     [SerializeField] private Collider2D attackCollider;
+    [SerializeField] private GameObject magicObject;
+    [SerializeField] private Collider2D magicCollider;
     [SerializeField] private GameObject dessert;
     [SerializeField] private Animator anim;
     [SerializeField] private float distanceThreshold = 5f;
     [SerializeField] private float attackRate = 2f;
+    [SerializeField] private float triggerAttackTime = 0.4f;
+    [SerializeField] private float triggerDeathDisappearTime = 0.85f;
+    [SerializeField] private float minX, maxX, minY, maxY;
+    [SerializeField] private BossAttackState[] attackOrders;
     private bool isWalk;
     private bool isLeft;
     private Vector3 destination;
     private GameObject currentTarget;
     private float speed = 5f;
     private float nextAttackTime;
+    private int attackIndex;
 
     void OnEnable()
     {
@@ -44,6 +57,7 @@ public class BossController : MonoBehaviour
         attackCollider.enabled = false;
         isLeft = true;
         nextAttackTime = 0f;
+        attackIndex = 1;
         GetComponent<HealthSystem>().SetHealth(GameState.Instance.BossHealth[GameState.Instance.GetCurrentLevel()]);
     }
 
@@ -56,7 +70,16 @@ public class BossController : MonoBehaviour
             {
                 if (Time.time > nextAttackTime)
                 {
-                    StartAttack();
+                    BossAttackState nowAttackState = attackOrders[(attackIndex % attackOrders.Length)];
+                    if (nowAttackState == BossAttackState.normal)
+                    {
+                        StartAttack();
+                    }
+                    if (nowAttackState == BossAttackState.magic)
+                    {
+                        StartMagicAttack();
+                    }
+                    attackIndex++;
                 }
             }
             else
@@ -79,10 +102,10 @@ public class BossController : MonoBehaviour
                 }
                 destination = (currentTarget.transform.position - transform.position).normalized;
                 Vector3 temp = transform.position + destination * speed * Time.deltaTime;
-                if (temp.x > 70f) temp.x = 70f;
-                if (temp.x < 43.5f) temp.x = 43.5f;
-                if (temp.y > 61f) temp.y = 61f;
-                if (temp.y < 45f) temp.y = 45f;
+                if (temp.x > maxX) temp.x = maxX;
+                if (temp.x < minX) temp.x = minX;
+                if (temp.y > maxY) temp.y = maxY;
+                if (temp.y < minY) temp.y = minY;
                 transform.position = temp;
             }
         }
@@ -95,16 +118,33 @@ public class BossController : MonoBehaviour
         anim.Play("Attack");
         anim.SetBool("isWalk", false);
         isWalk = false;
-        Invoke(nameof(EnableAttackCollider), 0.4f);
+        Invoke(nameof(EnableAttackCollider), triggerAttackTime);
         Debug.Log($"Boss attacks {currentTarget.name}");
 
         Invoke(nameof(ResetState), 0.9f);
+    }
+
+    private void StartMagicAttack()
+    {
+        nextAttackTime = Time.time + attackRate;
+        state = BossStates.Attacking;
+        anim.SetBool("isWalk", false);
+        isWalk = false;
+        magicObject.SetActive(true);
+        Invoke(nameof(EnableMagicAttackCollider), 0.4f);
+        Debug.Log($"Boss use magic attack");
+
+        Invoke(nameof(ResetState), 1.4f);
     }
 
     private void ResetState()
     {
         selectTarget();
         state = BossStates.Chasing;
+        if (magicObject != null)
+        {
+            magicObject.SetActive(false);
+        }
     }
 
     private void selectTarget()
@@ -130,6 +170,10 @@ public class BossController : MonoBehaviour
     private void BossDead()
     {
         state = BossStates.Death;
+        if (magicObject != null)
+        {
+            magicObject.SetActive(false);
+        }
         anim.Play("Death");
         StartCoroutine(Helper.Delay_RealTime(() =>
         {
@@ -158,6 +202,26 @@ public class BossController : MonoBehaviour
         {
             attackCollider.enabled = false;
         }
+    }
+
+    public void EnableMagicAttackCollider()
+    {
+        if (magicCollider == null) return;
+        magicCollider.enabled = true;
+        Invoke(nameof(DisableMagicAttackCollider), 1.1f);
+    }
+
+    void DisableMagicAttackCollider()
+    {
+        if (magicCollider != null)
+        {
+            magicCollider.enabled = false;
+        }
+    }
+
+    void DisableMagicObject()
+    {
+        magicObject.SetActive(false);
     }
 
     void Flip()

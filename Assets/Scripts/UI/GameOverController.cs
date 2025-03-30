@@ -20,7 +20,11 @@ public class GameOverController : MonoBehaviour
 
     void Start()
     {
-        menuButton.onClick.AddListener(() => SceneManager.LoadScene("StartScene"));
+        menuButton.onClick.AddListener(() =>
+        {
+            GameState.Instance.SetCurrentLevel(Level.Level1);
+            SceneManager.LoadScene("StartScene");
+        });
         restartButton.onClick.AddListener(Restart);
         if (GameState.Instance.GetCurrentLevel() == Level.Level2)
             nextLevelButton.gameObject.SetActive(false);
@@ -87,6 +91,7 @@ public class GameOverController : MonoBehaviour
 
     private void NextLevel()
     {
+        Time.timeScale = 1;
         GameState.Instance.SetCurrentLevel(Level.Level2);
         GameState.Instance.ResetCurrentLevel(Level.Level2);
         SceneManager.LoadScene("StartScene");
