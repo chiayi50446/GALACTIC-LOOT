@@ -39,13 +39,16 @@ public class HealthSystem : MonoBehaviour
             healthBar.GetComponent<BarController>().SetValue(health);
         if (health <= 0)
         {
-            Destroy(gameObject);
+
 
             if (CompareTag("Boss"))
             {
                 GameState.Instance.SetIsLevelClear(currentLevel, true);
-                EventManager.Instance.TriggerClearLevel();
-                DataPersistentManager.instance.EndGame();
+                EventManager.Instance.TriggerBossDead();
+            }
+            else
+            {
+                Destroy(gameObject);
             }
             if (CompareTag("Player"))
             {

@@ -80,6 +80,7 @@ public class GameOverController : MonoBehaviour
 
     private void Restart()
     {
+        Time.timeScale = 1;
         GameState.Instance.ResetCurrentLevel(currentLevel);
         DataPersistentManager.instance.EntryGame();
     }

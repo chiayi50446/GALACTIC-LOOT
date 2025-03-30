@@ -8,12 +8,14 @@ public class BossController : MonoBehaviour
     {
         Idle,
         Chasing,
-        Attacking
+        Attacking,
+        Death
     };
 
     [SerializeField] private BossStates state;
     [SerializeField] private List<GameObject> playerList = new List<GameObject>();
     [SerializeField] private Collider2D attackCollider;
+    [SerializeField] private GameObject dessert;
     [SerializeField] private Animator anim;
     [SerializeField] private float distanceThreshold = 5f;
     [SerializeField] private float attackRate = 2f;
@@ -27,11 +29,13 @@ public class BossController : MonoBehaviour
     void OnEnable()
     {
         EventManager.Instance.ActiveBoss += ActiveBoss;
+        EventManager.Instance.BossDead += BossDead;
     }
 
     void OnDisable()
     {
         EventManager.Instance.ActiveBoss -= ActiveBoss;
+        EventManager.Instance.BossDead -= BossDead;
     }
 
     void Start()
@@ -121,6 +125,23 @@ public class BossController : MonoBehaviour
     {
         state = BossStates.Chasing;
         selectTarget();
+    }
+
+    private void BossDead()
+    {
+        state = BossStates.Death;
+        anim.Play("Death");
+        StartCoroutine(Helper.Delay_RealTime(() =>
+        {
+            Time.timeScale = 0;
+            transform.GetChild(0).gameObject.SetActive(false);
+            dessert.SetActive(true);
+            StartCoroutine(Helper.Delay_RealTime(() =>
+            {
+                EventManager.Instance.TriggerClearLevel();
+                DataPersistentManager.instance.EndGame();
+            }, 1.5f));
+        }, 0.85f));
     }
 
 

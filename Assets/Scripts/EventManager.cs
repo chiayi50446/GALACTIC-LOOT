@@ -18,6 +18,7 @@ public class EventManager : MonoBehaviour
     public event Action ActivePlayerHealth;
     public event Action ActiveNegotiationCheck;
     public event Action ClearLevel;
+    public event Action BossDead;
     public event Action<GameObject> DisplayGuide;
 
     private void Awake()
@@ -91,6 +92,11 @@ public class EventManager : MonoBehaviour
     public void TriggerClearLevel()
     {
         ClearLevel?.Invoke();
+    }
+
+    public void TriggerBossDead()
+    {
+        BossDead?.Invoke();
     }
 
     public void TriggerDisplayGuide(GameObject displayGuide)
