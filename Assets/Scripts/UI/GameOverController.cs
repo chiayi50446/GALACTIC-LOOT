@@ -20,6 +20,7 @@ public class GameOverController : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1;
         menuButton.onClick.AddListener(() =>
         {
             GameState.Instance.SetCurrentLevel(Level.Level1);
@@ -84,14 +85,14 @@ public class GameOverController : MonoBehaviour
 
     private void Restart()
     {
-        Time.timeScale = 1;
+        // Time.timeScale = 1;
         GameState.Instance.ResetCurrentLevel(currentLevel);
         DataPersistentManager.instance.EntryGame();
     }
 
     private void NextLevel()
     {
-        Time.timeScale = 1;
+        // Time.timeScale = 1;
         GameState.Instance.SetCurrentLevel(Level.Level2);
         GameState.Instance.ResetCurrentLevel(Level.Level2);
         SceneManager.LoadScene("StartScene");

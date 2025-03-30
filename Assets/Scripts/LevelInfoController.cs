@@ -53,6 +53,7 @@ public class LevelInfoController : MenuController
 
     public void OK()
     {
+        GameState.Instance.ResetCurrentLevel(GameState.Instance.GetCurrentLevel());
         selectCharacterUI.SetActive(true);
         gameObject.SetActive(false);
     }

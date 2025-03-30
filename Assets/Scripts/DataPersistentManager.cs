@@ -83,6 +83,15 @@ public class DataPersistentManager : MonoBehaviour
     {
         // 確保場景已加載完畢，可以安全地操作場景中的物件
         Debug.Log(scene.name + " Loaded");
+        if (GameState.Instance.GetCurrentLevel() == Level.Level1)
+        {
+            AudioManager.Instance.PlayLevel1NormalMusic();
+        }
+        else
+        {
+            AudioManager.Instance.PlayLevel2NormalMusic();
+        }
+
         this.dataPersistentObjects = FindAllDataPersistentObjects();
         foreach (IDataPersistent dataPersistent in dataPersistentObjects)
         {
