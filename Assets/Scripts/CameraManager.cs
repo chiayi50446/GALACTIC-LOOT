@@ -139,6 +139,8 @@ public class CameraManager : MonoBehaviour
 
     private IEnumerator moveCamera(int mapIndex, int roomIndex)
     {
+        PlayBossRoomBGM(mapIndex, roomIndex);
+
         yield return StartCoroutine(Fade(1));
         mainCamera.transform.position = nextCameraPosition[mapIndex - 1][roomIndex - 1];
         yield return StartCoroutine(Fade(0));
@@ -157,6 +159,21 @@ public class CameraManager : MonoBehaviour
             EventManager.Instance.TriggerActiveBoss();
             EventManager.Instance.TriggerActiveBossHealthUI();
             EventManager.Instance.TriggerActivePlayerHealthUI();
+        }
+    }
+
+    private void PlayBossRoomBGM(int mapIndex, int roomIndex)
+    {
+        if (roomIndex == nextCameraPosition[mapIndex - 1].Count())
+        {
+            if (mapIndex == 1)
+            {
+                AudioManager.Instance.PlayLevel1BossMusic();
+            }
+            else
+            {
+                AudioManager.Instance.PlayLevel2BossMusic();
+            }
         }
     }
 

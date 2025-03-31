@@ -66,7 +66,6 @@ public class SelectLevelMenuController : MenuController
     {
         Debug.Log("Select Level1");
         GameState.Instance.SetCurrentLevel(Level.Level1);
-        GameState.Instance.ResetCurrentLevel(Level.Level1);
         levelInfoUI.SetActive(true);
         gameObject.SetActive(false);
     }
@@ -74,7 +73,6 @@ public class SelectLevelMenuController : MenuController
     {
         Debug.Log("Select Level2");
         GameState.Instance.SetCurrentLevel(Level.Level2);
-        GameState.Instance.ResetCurrentLevel(Level.Level2);
         levelInfoUI.SetActive(true);
         gameObject.SetActive(false);
     }
