@@ -24,8 +24,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioClip Level2BossBGM;
     [SerializeField]
-    private AudioClip GameClearBGM;
-    [SerializeField]
     private AudioClip GameOverBGM;
 
     public static AudioManager Instance;
@@ -71,6 +69,11 @@ public class AudioManager : MonoBehaviour
     public void PlayLevel2BossMusic()
     {
         PlayMusic(Level2BossBGM);
+    }
+
+    public void PlayGameOverMusic()
+    {
+        PlayMusic(GameOverBGM);
     }
 
     private void PlayMusic(AudioClip clip)

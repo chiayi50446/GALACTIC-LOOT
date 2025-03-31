@@ -23,6 +23,7 @@ public class GameOverController : MonoBehaviour
         Time.timeScale = 1;
         menuButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.playButtonSound();
             GameState.Instance.SetCurrentLevel(Level.Level1);
             SceneManager.LoadScene("StartScene");
         });
@@ -86,6 +87,7 @@ public class GameOverController : MonoBehaviour
     private void Restart()
     {
         // Time.timeScale = 1;
+        AudioManager.Instance.playButtonSound();
         GameState.Instance.ResetCurrentLevel(currentLevel);
         DataPersistentManager.instance.EntryGame();
     }
@@ -93,6 +95,7 @@ public class GameOverController : MonoBehaviour
     private void NextLevel()
     {
         // Time.timeScale = 1;
+        AudioManager.Instance.playButtonSound();
         GameState.Instance.SetCurrentLevel(Level.Level2);
         GameState.Instance.ResetCurrentLevel(Level.Level2);
         SceneManager.LoadScene("StartScene");

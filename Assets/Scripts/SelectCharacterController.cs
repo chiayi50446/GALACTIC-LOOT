@@ -52,12 +52,14 @@ public class SelectCharacterController : MenuController
 
     public void OK()
     {
+        AudioManager.Instance.playButtonSound();
         DataPersistentManager.instance.EntryGame();
         gameObject.SetActive(false);
     }
 
     public void Quit()
     {
+        AudioManager.Instance.playButtonSound();
         startMenu.SetActive(true);
         gameObject.SetActive(false);
     }

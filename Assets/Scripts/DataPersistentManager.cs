@@ -75,14 +75,6 @@ public class DataPersistentManager : MonoBehaviour
 
     public void LoadLevel(string sceneName)
     {
-        // 加載場景
-        StartCoroutine(DisplayLoadingScreen(sceneName));
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // 確保場景已加載完畢，可以安全地操作場景中的物件
-        Debug.Log(scene.name + " Loaded");
         if (GameState.Instance.GetCurrentLevel() == Level.Level1)
         {
             AudioManager.Instance.PlayLevel1NormalMusic();
@@ -91,6 +83,14 @@ public class DataPersistentManager : MonoBehaviour
         {
             AudioManager.Instance.PlayLevel2NormalMusic();
         }
+        // 加載場景
+        StartCoroutine(DisplayLoadingScreen(sceneName));
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 確保場景已加載完畢，可以安全地操作場景中的物件
+        Debug.Log(scene.name + " Loaded");
 
         this.dataPersistentObjects = FindAllDataPersistentObjects();
         foreach (IDataPersistent dataPersistent in dataPersistentObjects)
@@ -110,6 +110,7 @@ public class DataPersistentManager : MonoBehaviour
 
     public void EndGame()
     {
+        AudioManager.Instance.PlayGameOverMusic();
         SceneManager.LoadSceneAsync("GameOverScene");
     }
 

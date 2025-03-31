@@ -8,6 +8,8 @@ public class StartMenuController : MenuController
     private GameObject selectLevelUI;
     [SerializeField]
     private GameObject selectCharacterUI;
+    [SerializeField]
+    private GameObject settingUI;
 
     void Awake()
     {
@@ -49,5 +51,12 @@ public class StartMenuController : MenuController
 #else
             Application.Quit();
 #endif
+    }
+
+    public void SettingGame()
+    {
+        AudioManager.Instance.playButtonSound();
+        settingUI.SetActive(true);
+        gameObject.SetActive(false);
     }
 }

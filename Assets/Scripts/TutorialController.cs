@@ -33,6 +33,7 @@ public class TutorialController : MonoBehaviour
     {
         if (currentPanelIndex < 2)
         {
+            AudioManager.Instance.playButtonSound();
             panel[currentPanelIndex].SetActive(false);
             currentPanelIndex++;
             panel[currentPanelIndex].SetActive(true);
@@ -42,6 +43,7 @@ public class TutorialController : MonoBehaviour
     {
         if (currentPanelIndex > 0)
         {
+            AudioManager.Instance.playButtonSound();
             panel[currentPanelIndex].SetActive(false);
             currentPanelIndex--;
             panel[currentPanelIndex].SetActive(true);
@@ -49,6 +51,7 @@ public class TutorialController : MonoBehaviour
     }
     public void OK()
     {
+        AudioManager.Instance.playButtonSound();
         panel[currentPanelIndex].SetActive(false);
         currentPanelIndex = 0;
         panel[currentPanelIndex].SetActive(true);
