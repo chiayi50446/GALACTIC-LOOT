@@ -4,6 +4,8 @@ public class SelectLevelMenuController : MenuController
 {
     [SerializeField]
     private GameObject levelInfoUI;
+    [SerializeField]
+    private GameObject startMenuUI;
     [SerializeField] private GameObject level1TimeStar;
     [SerializeField] private GameObject level1CollectStar;
     [SerializeField] private GameObject level1SurviveStar;
@@ -74,6 +76,11 @@ public class SelectLevelMenuController : MenuController
         GameState.Instance.SetCurrentLevel(Level.Level2);
         GameState.Instance.ResetCurrentLevel(Level.Level2);
         levelInfoUI.SetActive(true);
+        gameObject.SetActive(false);
+    }
+    public void QuitLevelSelect()
+    {
+        startMenuUI.SetActive(true);
         gameObject.SetActive(false);
     }
 }

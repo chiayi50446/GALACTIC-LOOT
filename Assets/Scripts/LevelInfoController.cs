@@ -7,6 +7,10 @@ public class LevelInfoController : MenuController
     private GameObject selectCharacterUI;
     [SerializeField]
     private GameObject selectLevelUI;
+
+    [SerializeField] private GameObject Level1Boss;
+
+    [SerializeField] private GameObject Level2Boss;
     [SerializeField] private GameObject levelTimeStar;
     [SerializeField] private GameObject levelCollectStar;
     [SerializeField] private GameObject levelSurviveStar;
@@ -18,6 +22,16 @@ public class LevelInfoController : MenuController
         levelTimeStar.SetActive(false);
         levelCollectStar.SetActive(false);
         levelSurviveStar.SetActive(false);
+        if (currentLevel == Level.Level1)
+        {
+            Level1Boss.SetActive(true);
+            Level2Boss.SetActive(false);
+        }
+        else
+        {
+            Level1Boss.SetActive(false);
+            Level2Boss.SetActive(true);
+        }
 
         float targetTime = GameState.clearTargetTime[currentLevel];
         int targetMinutes = Mathf.FloorToInt(targetTime / 60);

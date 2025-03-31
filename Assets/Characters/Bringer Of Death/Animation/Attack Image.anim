@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spell
+  m_Name: Attack Image
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -50,9 +50,6 @@ AnimationClip:
     - time: 0.9
       value: {fileID: 3687449107416671509, guid: 1914d95466e3d4341a618c35a56d5f82,
         type: 3}
-    - time: 1.2
-      value: {fileID: -750047184722822154, guid: 1914d95466e3d4341a618c35a56d5f82,
-        type: 3}
     attribute: m_Sprite
     path: 
     classID: 114
@@ -85,13 +82,12 @@ AnimationClip:
     - {fileID: -6766038691376649458, guid: 1914d95466e3d4341a618c35a56d5f82, type: 3}
     - {fileID: 2483782727947890954, guid: 1914d95466e3d4341a618c35a56d5f82, type: 3}
     - {fileID: 3687449107416671509, guid: 1914d95466e3d4341a618c35a56d5f82, type: 3}
-    - {fileID: -750047184722822154, guid: 1914d95466e3d4341a618c35a56d5f82, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.3000001
+    m_StopTime: 1
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
