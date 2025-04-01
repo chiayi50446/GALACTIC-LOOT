@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SelectLevelMenuController : MenuController
 {
@@ -12,6 +13,14 @@ public class SelectLevelMenuController : MenuController
     [SerializeField] private GameObject level2TimeStar;
     [SerializeField] private GameObject level2CollectStar;
     [SerializeField] private GameObject level2SurviveStar;
+    [SerializeField] private Button level2Btn;
+    [SerializeField] private bool level2Disable = false;
+
+    void Update()
+    {
+        if (level2Disable) level2Btn.interactable = false;
+        else level2Btn.interactable = true;
+    }
 
     void OnEnable()
     {
@@ -36,6 +45,10 @@ public class SelectLevelMenuController : MenuController
             {
                 level1SurviveStar.SetActive(true);
             }
+        }
+        else
+        {
+            level2Disable = true;
         }
 
         bool isLevel2Clear = GameState.Instance.GetIsLevelClear(Level.Level2);

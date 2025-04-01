@@ -1,19 +1,13 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GamePlayUIController : MonoBehaviour
 {
     [SerializeField] private TMP_Text timerText;
-    [SerializeField] private GameObject PauseMenu;
-    [SerializeField] private Button menuButton;
-    [SerializeField] private Button restartButton;
     private BarController alertnessBar;
     private Level currentLevel;
     private bool isStopRecordTime;
     private float usedTime;
-    private bool isPauseMenuOpen = false;
 
     void Awake()
     {
@@ -39,17 +33,6 @@ public class GamePlayUIController : MonoBehaviour
         currentLevel = GameState.Instance.GetCurrentLevel();
         usedTime = 0;
         isStopRecordTime = false;
-        menuButton.onClick.AddListener(BackToMenu);
-        // restartButton.onClick.AddListener(Restart);
-    }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Time.timeScale = 0;
-            isPauseMenuOpen = !isPauseMenuOpen;
-            PauseMenu.SetActive(isPauseMenuOpen);
-        }
     }
 
     void FixedUpdate()
@@ -89,19 +72,5 @@ public class GamePlayUIController : MonoBehaviour
     private void RecordClearTime()
     {
         GameState.Instance.SetClearLevelTime(currentLevel, usedTime);
-    }
-    public void Restart()
-    {
-        Debug.Log("Restart");
-        AudioManager.Instance.playButtonSound();
-        GameState.Instance.ResetCurrentLevel(currentLevel);
-        DataPersistentManager.instance.EntryGame();
-    }
-    private void BackToMenu()
-    {
-        Debug.Log("BackToMenu");
-        AudioManager.Instance.playButtonSound();
-        GameState.Instance.SetCurrentLevel(Level.Level1);
-        SceneManager.LoadScene("StartScene");
     }
 }
