@@ -260,6 +260,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         {
             if (holdingBomb)
             {
+                AudioManager.Instance.playThrowSound();
                 anim.SetTrigger("IsThrow");
                 anim.SetInteger("Status", 0);
                 SetBombExplosionPosition();
@@ -267,6 +268,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
             }
             else if (holdingGun)
             {
+                AudioManager.Instance.playShootSound();
                 flash.transform.localPosition = flash_Position_rifle[currentSide];
                 flash.transform.localRotation = Quaternion.Euler(0, 0, flash_Rotation[currentSide]);
                 flash.GetComponent<Renderer>().sortingOrder = flash_Order[currentSide];
@@ -294,6 +296,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
             }
             else
             {
+                AudioManager.Instance.playHitSound();
                 flash.transform.localPosition = flash_Position[currentSide];
                 flash.transform.localRotation = Quaternion.Euler(0, 0, flash_Rotation[currentSide]);
                 flash.GetComponent<Renderer>().sortingOrder = flash_Order[currentSide];
@@ -308,6 +311,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
 
     void ThrowBomb()
     {
+        AudioManager.Instance.playBombSound();
         bomb.GetComponent<BombController>().IsThrowing = false;
         holdingBomb = false;
         bomb_explosion.SetActive(true);

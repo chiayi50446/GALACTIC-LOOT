@@ -17,9 +17,9 @@ public class DialogueController : MonoBehaviour
     private Level currentLevel;
 
     private List<Dialogue> initialText = new List<Dialogue>(){
-        new Dialogue(DialogueType.Enemy, "Who are you?\nYou shouldn't be here!"),
-        new Dialogue(DialogueType.Player, "......\n(Try to persuade the guard!)"),
-        new Dialogue(DialogueType.Player, "Start Nigotiation!"),
+        new Dialogue(DialogueType.Enemy, "Who are you?\nYou shouldn't be here!", false),
+        new Dialogue(DialogueType.Player, "......\n(Try to persuade the guard!)", false),
+        new Dialogue(DialogueType.Player, "Start Nigotiation!", false),
     };
 
     private List<Dialogue> nigotiationText = new List<Dialogue>();
@@ -60,15 +60,15 @@ public class DialogueController : MonoBehaviour
 
         enemyDice = Random.Range(0, 60) % 6 + 1;
         playerDice = Random.Range(0, 60) % 6 + 1 + GameState.charactersData[GameState.Instance.GetLastAlertPlayerType()].Charisma;
-        nigotiationText.Add(new Dialogue(DialogueType.Enemy, "Enemy's negotiation dice is " + enemyDice + " (1D6)"));
-        nigotiationText.Add(new Dialogue(DialogueType.Player, "Player's negotiation dice is " + playerDice + " (1D6 + Charisma)"));
+        nigotiationText.Add(new Dialogue(DialogueType.Enemy, "Enemy's negotiation dice is " + enemyDice + " (1D6)", true));
+        nigotiationText.Add(new Dialogue(DialogueType.Player, "Player's negotiation dice is " + playerDice + " (1D6 + Charisma)", true));
         if (enemyDice > playerDice)
         {
-            nigotiationText.Add(new Dialogue(DialogueType.Enemy, "You are under arrest!\n(Nigotiation fail)"));
+            nigotiationText.Add(new Dialogue(DialogueType.Enemy, "You are under arrest!\n(Nigotiation fail)", false));
         }
         else
         {
-            nigotiationText.Add(new Dialogue(DialogueType.Enemy, "Don't let me catch you sneaking around again.\n(Nigotiation success)"));
+            nigotiationText.Add(new Dialogue(DialogueType.Enemy, "Don't let me catch you sneaking around again.\n(Nigotiation success)", false));
         }
         startDialogue();
     }
@@ -123,6 +123,12 @@ public class DialogueController : MonoBehaviour
 
         dialogueText.text = "";
         dialogueText.gameObject.SetActive(true);
+
+        if (dialog.isPlaySound)
+        {
+            AudioManager.Instance.playDiceSound();
+        }
+
         for (int i = 0; i < dialog.text.Length; i++)
         {
             dialogueText.text += dialog.text[i];

@@ -44,6 +44,7 @@ public class SelectCharacterController : MenuController
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            AudioManager.Instance.playButtonSound();
             MakeSureCharacter();
         }
 
@@ -146,6 +147,7 @@ public class SelectCharacterController : MenuController
 
             if (next != null)
             {
+                AudioManager.Instance.playMoveSelectSound();
                 EventSystem.current.SetSelectedGameObject(next.gameObject);
             }
         }

@@ -41,6 +41,7 @@ public class GamePlayUIController : MonoBehaviour
 
     private void UpdateAlertnessLevel()
     {
+        AudioManager.Instance.playEnemyVisionSound();
         float nowAlertnessLevel = GameState.Instance.GetAlertnessLevel();
         alertnessBar.SetValue(nowAlertnessLevel);
         EventManager.Instance.TriggerUpdateVision();

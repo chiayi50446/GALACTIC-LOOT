@@ -64,6 +64,7 @@ public class SelectLevelMenuController : MenuController
     }
     public void SelectLevel1()
     {
+        AudioManager.Instance.playButtonSound();
         Debug.Log("Select Level1");
         GameState.Instance.SetCurrentLevel(Level.Level1);
         levelInfoUI.SetActive(true);
@@ -71,6 +72,7 @@ public class SelectLevelMenuController : MenuController
     }
     public void SelectLevel2()
     {
+        AudioManager.Instance.playButtonSound();
         Debug.Log("Select Level2");
         GameState.Instance.SetCurrentLevel(Level.Level2);
         levelInfoUI.SetActive(true);
@@ -78,6 +80,7 @@ public class SelectLevelMenuController : MenuController
     }
     public void QuitLevelSelect()
     {
+        AudioManager.Instance.playButtonSound();
         startMenuUI.SetActive(true);
         gameObject.SetActive(false);
     }

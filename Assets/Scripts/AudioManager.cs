@@ -6,8 +6,6 @@ public class AudioManager : MonoBehaviour
     private AudioSource audioSourceBGM;
     [SerializeField]
     private AudioSource audioSourceSE;
-    [SerializeField]
-    private AudioClip buttonSound;
 
     [SerializeField]
     private AudioClip titleBGM;
@@ -25,6 +23,43 @@ public class AudioManager : MonoBehaviour
     private AudioClip Level2BossBGM;
     [SerializeField]
     private AudioClip GameOverBGM;
+    [SerializeField]
+    private AudioClip buttonSound;
+    [SerializeField]
+    private AudioClip moveSelectSound;
+    [SerializeField]
+    private AudioClip shootSound;
+    [SerializeField]
+    private AudioClip throwSound;
+    [SerializeField]
+    private AudioClip bombSound;
+    [SerializeField]
+    private AudioClip hitSound;
+    [SerializeField]
+    private AudioClip hurtSound;
+    [SerializeField]
+    private AudioClip enemyVisionSound;
+    [SerializeField]
+    private AudioClip diceSound;
+    [SerializeField]
+    private AudioClip equipItemSound;
+    [SerializeField]
+    private AudioClip unEquipItemSound;
+    [SerializeField]
+    private AudioClip collectibleItemSound;
+    [SerializeField]
+    private AudioClip pushSound;
+    [SerializeField]
+    private AudioClip stopSound;
+    [SerializeField]
+    private AudioClip bossNormalAttackSound;
+    [SerializeField]
+    private AudioClip bossMagicAttackSound;
+    [SerializeField]
+    private AudioClip doorSound;
+    [SerializeField]
+    private AudioClip floorButtonSound;
+
 
     public static AudioManager Instance;
 
@@ -39,11 +74,6 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    public void playButtonSound()
-    {
-        audioSourceSE.PlayOneShot(buttonSound);
     }
 
     public void PlayMainMenuMusic()
@@ -74,6 +104,66 @@ public class AudioManager : MonoBehaviour
     public void PlayGameOverMusic()
     {
         PlayMusic(GameOverBGM);
+    }
+
+    public void playButtonSound()
+    {
+        audioSourceSE.PlayOneShot(buttonSound);
+    }
+
+    public void playMoveSelectSound()
+    {
+        audioSourceSE.PlayOneShot(moveSelectSound);
+    }
+
+    public void playShootSound()
+    {
+        audioSourceSE.PlayOneShot(shootSound);
+    }
+
+    public void playThrowSound()
+    {
+        audioSourceSE.PlayOneShot(throwSound);
+    }
+
+    public void playBombSound()
+    {
+        audioSourceSE.PlayOneShot(bombSound);
+    }
+
+    public void playHitSound()
+    {
+        audioSourceSE.PlayOneShot(hitSound);
+    }
+
+    public void playHurtSound()
+    {
+        audioSourceSE.PlayOneShot(hurtSound);
+    }
+
+    public void playEnemyVisionSound()
+    {
+        audioSourceSE.PlayOneShot(enemyVisionSound);
+    }
+
+    public void playDiceSound()
+    {
+        audioSourceSE.PlayOneShot(diceSound);
+    }
+
+    public void playEquipSound()
+    {
+        audioSourceSE.PlayOneShot(equipItemSound);
+    }
+
+    public void playUnEquipSound()
+    {
+        audioSourceSE.PlayOneShot(unEquipItemSound);
+    }
+
+    public void playCollectSound()
+    {
+        audioSourceSE.PlayOneShot(collectibleItemSound);
     }
 
     private void PlayMusic(AudioClip clip)

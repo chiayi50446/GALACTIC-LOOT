@@ -39,6 +39,7 @@ public class ChestController : ItemController, IDataPersistent
                 StartCoroutine(Helper.Delay(() => { chestItem.SetActive(false); }, 1.3f));
                 if (itemName == "Beer")
                 {
+                    AudioManager.Instance.playCollectSound();
                     GetComponent<Collider2D>().enabled = false;
                     GameState.Instance.SetIsCollectItemGet(currentLevel);
                     EventManager.Instance.TriggerShowCollectItem();
@@ -47,25 +48,17 @@ public class ChestController : ItemController, IDataPersistent
                 {
                     if (!GameState.Instance.IsPlayerItemFull(1))
                     {
+                        AudioManager.Instance.playEquipSound();
                         GetComponent<Collider2D>().enabled = false;
                         StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerUpdateInventory(itemName, 1); }, 1.3f));
                     }
                     else
                     {
+                        AudioManager.Instance.playUnEquipSound();
                         isOpen = false;
                         StartCoroutine(Helper.Delay(() => { anim.SetBool("Open", false); }, 1.3f));
                     }
                 }
-                // GameState.Instance.SetChestBoxName(name);
-                // audioSource.PlayOneShot(effectSound);
-                // if (tag == "gemChest")
-                // {
-                //     UpdateGemCount();
-                // }
-                // if (tag == "runeChest")
-                // {
-                //     UpdateRuneCount();
-                // }
             }
             if (Input.GetKeyDown(KeyCode.U) && isTrigger2)
             {
@@ -76,6 +69,7 @@ public class ChestController : ItemController, IDataPersistent
 
                 if (itemName == "Beer")
                 {
+                    AudioManager.Instance.playCollectSound();
                     GetComponent<Collider2D>().enabled = false;
                     GameState.Instance.SetIsCollectItemGet(currentLevel);
                     EventManager.Instance.TriggerShowCollectItem();
@@ -84,6 +78,7 @@ public class ChestController : ItemController, IDataPersistent
                 {
                     if (!GameState.Instance.IsPlayerItemFull(2))
                     {
+                        AudioManager.Instance.playEquipSound();
                         GetComponent<Collider2D>().enabled = false;
                         StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerUpdateInventory(itemName, 2); }, 1.3f));
                         // if (displayGuide != null)
@@ -93,42 +88,17 @@ public class ChestController : ItemController, IDataPersistent
                     }
                     else
                     {
+                        AudioManager.Instance.playUnEquipSound();
                         isOpen = false;
                         StartCoroutine(Helper.Delay(() => { anim.SetBool("Open", false); }, 1.3f));
                     }
                 }
-
-
-                // GameState.Instance.SetChestBoxName(name);
-                // audioSource.PlayOneShot(effectSound);
-                // if (tag == "gemChest")
-                // {
-                //     UpdateGemCount();
-                // }
-                // if (tag == "runeChest")
-                // {
-                //     UpdateRuneCount();
-                // }
             }
         }
     }
 
     public void LoadData(GameState data)
     {
-        // if (GameState.Instance.CheckChestBoxNameExist(name))
-        // {
-        //     isOpen = true;
-        //     anim.SetBool("IsOpened", true);
-        //     GetComponent<Collider2D>().enabled = false;
-        // }
-        // if (tag == "gemChest")
-        // {
-        //     displayText.text = GameState.Instance.GetGemCount().ToString();
-        // }
-        // if (tag == "runeChest" && GameState.Instance.GetIsRuneStone())
-        // {
-        //     displayText.text = "1";
-        // }
     }
 
     public void SaveData()

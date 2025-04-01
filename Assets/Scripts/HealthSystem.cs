@@ -33,14 +33,13 @@ public class HealthSystem : MonoBehaviour
     }
     public void TakeDamege(int attackPoint)
     {
+        AudioManager.Instance.playHurtSound();
         StartCoroutine(FlashRed());
         health -= attackPoint;
         if (healthBar != null)
             healthBar.GetComponent<BarController>().SetValue(health);
         if (health <= 0)
         {
-
-
             if (CompareTag("Boss"))
             {
                 GameState.Instance.SetIsLevelClear(currentLevel, true);

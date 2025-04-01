@@ -67,12 +67,14 @@ public class LevelInfoController : MenuController
 
     public void OK()
     {
+        AudioManager.Instance.playButtonSound();
         GameState.Instance.ResetCurrentLevel(GameState.Instance.GetCurrentLevel());
         selectCharacterUI.SetActive(true);
         gameObject.SetActive(false);
     }
     public void Quit()
     {
+        AudioManager.Instance.playButtonSound();
         selectLevelUI.SetActive(true);
         gameObject.SetActive(false);
     }
