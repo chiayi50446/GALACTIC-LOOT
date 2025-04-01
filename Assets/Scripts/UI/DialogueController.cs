@@ -15,6 +15,7 @@ public class DialogueController : MonoBehaviour
     private int enemyDice;
     private int playerDice;
     private Level currentLevel;
+    private bool isSpeedUp = false;
 
     private List<Dialogue> initialText = new List<Dialogue>(){
         new Dialogue(DialogueType.Enemy, "Who are you?\nYou shouldn't be here!", false),
@@ -46,6 +47,13 @@ public class DialogueController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 nextDialog();
+            }
+        }
+        else
+        {
+            if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) && dialoguePanel.activeSelf)
+            {
+                isSpeedUp = true;
             }
         }
     }
@@ -131,6 +139,13 @@ public class DialogueController : MonoBehaviour
 
         for (int i = 0; i < dialog.text.Length; i++)
         {
+            if (isSpeedUp)
+            {
+                dialogueText.text = dialog.text;
+
+                isSpeedUp = false;
+                break;
+            }
             dialogueText.text += dialog.text[i];
 
             yield return new WaitForSecondsRealtime(typeSpeed);
