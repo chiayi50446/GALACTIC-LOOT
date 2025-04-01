@@ -353,12 +353,18 @@ public class PlayerController : MonoBehaviour, IDataPersistent
                 holdingBomb = false;
                 anim.SetInteger("Status", 2);
             }
-            if (itemName == "Bomb")
+            else if (itemName == "Bomb")
             {
                 holdingGun = false;
                 holdingBomb = true;
                 anim.SetInteger("Status", 1);
                 bomb.SetActive(holdingBomb);
+            }
+            else
+            {
+                holdingGun = false;
+                holdingBomb = false;
+                anim.SetInteger("Status", 0);
             }
         }
     }

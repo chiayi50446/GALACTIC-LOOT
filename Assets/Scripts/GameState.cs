@@ -240,7 +240,7 @@ public class GameState
         }
         else
         {
-            Player1SelectItemIndex = index;
+            Player2SelectItemIndex = index;
         }
     }
 

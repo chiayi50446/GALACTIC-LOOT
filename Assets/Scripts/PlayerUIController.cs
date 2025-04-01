@@ -62,15 +62,19 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
         {
             //Remove Current item
             GameState.Instance.ReducePlayerItemLoad(pNum);
-            GameState.Instance.SetPlayerSelectItem(pNum, 0);
-            var index = GameState.Instance.GetPlayerSelectItem(pNum);
-            var item = ItemList[index].transform.Find("Item");
-            item.gameObject.SetActive(false);
+            var currentSelectIndex = GameState.Instance.GetPlayerSelectItem(pNum);
+            ItemList[currentSelectIndex].transform.Find("select").gameObject.SetActive(false);
+            ItemList[currentSelectIndex].transform.Find("Item").gameObject.SetActive(false);
+
+            // Set selectIndex to 0
+            currentSelectIndex = 0;
+            GameState.Instance.SetPlayerSelectItem(pNum, currentSelectIndex);
+            ItemList[currentSelectIndex].transform.Find("select").gameObject.SetActive(true);
 
             //Move the other items
             for (int i = 0; i < ItemList.Length; i++)
             {
-                item = ItemList[i].transform.Find("Item");
+                var item = ItemList[i].transform.Find("Item");
                 if (!item.gameObject.activeSelf && i < ItemList.Length - 1)
                 {
                     var nextItem = ItemList[i + 1].transform.Find("Item");
@@ -79,11 +83,12 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
                         item.gameObject.SetActive(true);
                         item.GetComponent<Image>().sprite = nextItem.GetComponent<Image>().sprite;
                         nextItem.gameObject.SetActive(false);
-                        if (i == 0)
-                        {
-                            ChangeItemShow(item.GetComponent<Image>().sprite.name, 0);
-                        }
+
                     }
+                }
+                if (i == 0)
+                {
+                    ChangeItemShow(item.GetComponent<Image>().sprite.name, 0);
                 }
             }
         }
