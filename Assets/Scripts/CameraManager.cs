@@ -100,6 +100,7 @@ public class CameraManager : MonoBehaviour
                 player1.transform.position = exitPoint[nowMapIndex - 1][nowRoomIndex - 1];
                 player1Controller.CancelFreeze();
                 player1Enter = false;
+                AudioManager.Instance.playEnterDoorSound();
             }
         }
 
@@ -110,6 +111,7 @@ public class CameraManager : MonoBehaviour
                 player2.transform.position = exitPoint[nowMapIndex - 1][nowRoomIndex - 1];
                 player2Controller.CancelFreeze();
                 player2Enter = false;
+                AudioManager.Instance.playEnterDoorSound();
             }
         }
     }
@@ -118,6 +120,7 @@ public class CameraManager : MonoBehaviour
     {
         nowMapIndex = mapIndex;
         nowRoomIndex = roomIndex;
+        AudioManager.Instance.playEnterDoorSound();
         if (other.name == "Player1")
         {
             player1.transform.position = nextPlayer1Position[mapIndex - 1][roomIndex - 1];
@@ -140,6 +143,7 @@ public class CameraManager : MonoBehaviour
     private IEnumerator moveCamera(int mapIndex, int roomIndex)
     {
         PlayBossRoomBGM(mapIndex, roomIndex);
+        AudioManager.Instance.playMoveCameraSound();
 
         yield return StartCoroutine(Fade(1));
         mainCamera.transform.position = nextCameraPosition[mapIndex - 1][roomIndex - 1];

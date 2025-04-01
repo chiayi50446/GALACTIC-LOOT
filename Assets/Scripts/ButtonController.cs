@@ -28,6 +28,7 @@ public class ButtonController : MonoBehaviour
         isTrigger = true;
         if (triggerdItem.activeSelf == !isTriggerDisplay)
         {
+            AudioManager.Instance.playPressFloorButtonSound();
             triggerdItem.SetActive(isTriggerDisplay);
         }
     }
@@ -41,6 +42,7 @@ public class ButtonController : MonoBehaviour
             spriteRenderer.sprite = originalImage;
             if (triggerdItem.activeSelf == isTriggerDisplay && (friendItem == null || !friend.isTrigger))
             {
+                AudioManager.Instance.playReleaseFloorButtonSound();
                 triggerdItem.SetActive(!isTriggerDisplay);
             }
         }

@@ -86,7 +86,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
 
                     }
                 }
-                if (i == 0)
+                if (i == 0 && item.gameObject.activeSelf)
                 {
                     ChangeItemShow(item.GetComponent<Image>().sprite.name, 0);
                 }

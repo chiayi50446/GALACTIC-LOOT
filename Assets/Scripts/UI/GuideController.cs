@@ -37,6 +37,7 @@ public class GuideController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             {
+                AudioManager.Instance.playButtonSound();
                 closeGuide();
             }
         }

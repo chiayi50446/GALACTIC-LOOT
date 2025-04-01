@@ -46,6 +46,7 @@ public class DialogueController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             {
+                AudioManager.Instance.playButtonSound();
                 nextDialog();
             }
         }
@@ -147,6 +148,11 @@ public class DialogueController : MonoBehaviour
                 break;
             }
             dialogueText.text += dialog.text[i];
+
+            if (i % 3 == 0)
+            {
+                AudioManager.Instance.playDialogueSound();
+            }
 
             yield return new WaitForSecondsRealtime(typeSpeed);
         }

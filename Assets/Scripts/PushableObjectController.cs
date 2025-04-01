@@ -100,6 +100,7 @@ public class PushableObjectController : MonoBehaviour
         {
             isSliding = false;
             rb.linearVelocity = Vector2.zero;
+            AudioManager.Instance.playStopSound();
         }
     }
 
@@ -120,6 +121,7 @@ public class PushableObjectController : MonoBehaviour
         {
             moveDirection = direction.normalized;
             isSliding = true;
+            AudioManager.Instance.playPushSound();
         }
     }
 }

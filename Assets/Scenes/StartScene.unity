@@ -3636,6 +3636,8 @@ MonoBehaviour:
   level2TimeStar: {fileID: 1441529304}
   level2CollectStar: {fileID: 1762398625}
   level2SurviveStar: {fileID: 1715956445}
+  level2Btn: {fileID: 1330803227}
+  level2Disable: 0
 --- !u!1 &274129199
 GameObject:
   m_ObjectHideFlags: 0
@@ -4567,7 +4569,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3c522dfe25a7896468abb57f4bf0f186, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7052e60c8bb7f2649b6989953591b28f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5844,7 +5846,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7052e60c8bb7f2649b6989953591b28f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 89d2edbd6f141c541ab45091673e5a9d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12380,9 +12382,19 @@ MonoBehaviour:
   unEquipItemSound: {fileID: 8300000, guid: 78ad99fd0a0a5144280b07bbdba84815, type: 3}
   collectibleItemSound: {fileID: 8300000, guid: 8773868887102484fb629c2d87575142,
     type: 3}
-  pushSound: {fileID: 0}
-  bossNormalAttackSound: {fileID: 0}
-  bossMagicAttackSound: {fileID: 0}
+  pushSound: {fileID: 8300000, guid: e1e2d06fe0d78194b9c7c8cc88414d0d, type: 3}
+  stopSound: {fileID: 8300000, guid: 023ea3ddeaa8dd146b7633a0800e5a0e, type: 3}
+  bossNormalAttackSound: {fileID: 8300000, guid: a652877b012108e41871f867ada9f176,
+    type: 3}
+  bossMagicAttackSound: {fileID: 8300000, guid: f1cb5d83282f2904a85f73111d068616,
+    type: 3}
+  enterDoorSound: {fileID: 8300000, guid: eaae8fe8d600e1f459f34aa5757fa3b8, type: 3}
+  moveCameraSound: {fileID: 8300000, guid: 8ff2a2d7e79f81c40ac447512f879374, type: 3}
+  pressFloorButtonSound: {fileID: 8300000, guid: 7bef0064f8567430cac22499c6b93d4f,
+    type: 3}
+  releaseFloorButtonSound: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2,
+    type: 3}
+  dialogueSound: {fileID: 8300000, guid: d319dc46910bd564587449c6c55fba9f, type: 3}
 --- !u!1 &1309320136
 GameObject:
   m_ObjectHideFlags: 0
@@ -14261,7 +14273,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3c522dfe25a7896468abb57f4bf0f186, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 89d2edbd6f141c541ab45091673e5a9d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

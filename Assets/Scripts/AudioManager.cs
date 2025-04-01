@@ -56,9 +56,15 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioClip bossMagicAttackSound;
     [SerializeField]
-    private AudioClip doorSound;
+    private AudioClip enterDoorSound;
     [SerializeField]
-    private AudioClip floorButtonSound;
+    private AudioClip moveCameraSound;
+    [SerializeField]
+    private AudioClip pressFloorButtonSound;
+    [SerializeField]
+    private AudioClip releaseFloorButtonSound;
+    [SerializeField]
+    private AudioClip dialogueSound;
 
 
     public static AudioManager Instance;
@@ -164,6 +170,51 @@ public class AudioManager : MonoBehaviour
     public void playCollectSound()
     {
         audioSourceSE.PlayOneShot(collectibleItemSound);
+    }
+
+    public void playPushSound()
+    {
+        audioSourceSE.PlayOneShot(pushSound);
+    }
+
+    public void playStopSound()
+    {
+        audioSourceSE.PlayOneShot(stopSound);
+    }
+
+    public void playBossNormalAttackSound()
+    {
+        audioSourceSE.PlayOneShot(bossNormalAttackSound);
+    }
+
+    public void playBossMagicAttackSound()
+    {
+        audioSourceSE.PlayOneShot(bossMagicAttackSound);
+    }
+
+    public void playEnterDoorSound()
+    {
+        audioSourceSE.PlayOneShot(enterDoorSound);
+    }
+
+    public void playMoveCameraSound()
+    {
+        audioSourceSE.PlayOneShot(moveCameraSound);
+    }
+
+    public void playPressFloorButtonSound()
+    {
+        audioSourceSE.PlayOneShot(pressFloorButtonSound);
+    }
+
+    public void playReleaseFloorButtonSound()
+    {
+        audioSourceSE.PlayOneShot(releaseFloorButtonSound);
+    }
+
+    public void playDialogueSound()
+    {
+        audioSourceSE.PlayOneShot(dialogueSound);
     }
 
     private void PlayMusic(AudioClip clip)
