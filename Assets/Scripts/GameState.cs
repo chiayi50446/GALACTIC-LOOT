@@ -47,7 +47,7 @@ public class GameState
     public Dictionary<Level, bool> isLevelClear;
     public static Dictionary<Level, float> clearTargetTime = new Dictionary<Level, float>(){
         {Level.Level1, 120},
-        {Level.Level2, 300},
+        {Level.Level2, 180},
     };
     private Dictionary<Level, float> clearLevelTime;
     private Dictionary<Level, int> playerDeathNum;
