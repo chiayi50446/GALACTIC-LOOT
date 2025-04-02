@@ -111,6 +111,7 @@ public class EnemyVisionController : MonoBehaviour
             if (GameState.Instance.GetPlayerDisguiseCount(1) > 0)
             {
                 GameState.Instance.UsePlayerDisguiseCount(1);
+                EventManager.Instance.TriggerUpdateDisguiseCount(1);
                 if (GameState.Instance.GetPlayerDisguiseCount(1) == 0)
                 {
                     EventManager.Instance.TriggerRemoveInventory(1);
@@ -135,6 +136,7 @@ public class EnemyVisionController : MonoBehaviour
             if (GameState.Instance.GetPlayerDisguiseCount(2) > 0)
             {
                 GameState.Instance.UsePlayerDisguiseCount(2);
+                EventManager.Instance.TriggerUpdateDisguiseCount(2);
                 if (GameState.Instance.GetPlayerDisguiseCount(2) == 0)
                 {
                     EventManager.Instance.TriggerRemoveInventory(2);

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +30,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
         EventManager.Instance.UpdateInventory += UpdateItem;
         EventManager.Instance.RemoveInventory += RemoveItem;
         EventManager.Instance.ShowCollectItem += ShowCollectItem;
+        EventManager.Instance.UpdateDisguiseCount += UpdateDisguiseCount;
     }
 
     void OnDestroy()
@@ -36,6 +38,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
         EventManager.Instance.UpdateInventory -= UpdateItem;
         EventManager.Instance.RemoveInventory -= RemoveItem;
         EventManager.Instance.ShowCollectItem -= ShowCollectItem;
+        EventManager.Instance.UpdateDisguiseCount -= UpdateDisguiseCount;
     }
 
     void Update()
@@ -48,7 +51,13 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
         if (pNum == PlayerNum)
         {
             var index = GameState.Instance.AddPlayerItemLoad(pNum);
-            if (itemName == "WizardHat") GameState.Instance.SetPlayerDisguiseCount(pNum);
+            if (itemName == "WizardHat")
+            {
+                GameState.Instance.SetPlayerDisguiseCount(pNum);
+                var count = ItemList[index].transform.Find("Count");
+                count.gameObject.SetActive(true);
+                count.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = "3";
+            }
             var item = ItemList[index].transform.Find("Item");
             item.gameObject.SetActive(true);
             item.GetComponent<Image>().sprite = GameState.chestItem[itemName];
@@ -123,5 +132,31 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     void ShowCollectItem()
     {
         CollectItem.SetActive(true);
+    }
+
+    void UpdateDisguiseCount(int pNum)
+    {
+        if (pNum == PlayerNum)
+        {
+            for (int i = 0; i < ItemList.Length; i++)
+            {
+                var item = ItemList[i].transform.Find("Item");
+                if (item.gameObject.activeSelf)
+                {
+                    var spriteName = item.GetComponent<Image>().sprite.name;
+                    if (spriteName == "WizardHat")
+                    {
+                        int num = GameState.Instance.GetPlayerDisguiseCount(pNum);
+                        var count = ItemList[i].transform.Find("Count");
+                        count.gameObject.SetActive(true);
+                        count.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = num.ToString();
+                        if (num == 0)
+                        {
+                            count.gameObject.SetActive(false);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

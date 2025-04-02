@@ -20,6 +20,7 @@ public class EventManager : MonoBehaviour
     public event Action ClearLevel;
     public event Action BossDead;
     public event Action ShowCollectItem;
+    public event Action<int> UpdateDisguiseCount;
     public event Action<GameObject> DisplayGuide;
 
     private void Awake()
@@ -108,5 +109,10 @@ public class EventManager : MonoBehaviour
     public void TriggerDisplayGuide(GameObject displayGuide)
     {
         DisplayGuide?.Invoke(displayGuide);
+    }
+
+    public void TriggerUpdateDisguiseCount(int pNum)
+    {
+        UpdateDisguiseCount?.Invoke(pNum);
     }
 }
