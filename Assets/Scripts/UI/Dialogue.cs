@@ -2,12 +2,14 @@ public class Dialogue
 {
     public DialogueType type;
     public string text;
-    public bool isPlaySound;
+    public bool isDice;
+    public int dicePoint;
 
-    public Dialogue(DialogueType dialogueType, string dialogueText, bool dialogueIsPlaySound)
+    public Dialogue(DialogueType dialogueType, string dialogueText, bool dialogueIsDice, int dialogueDicePoint = 0)
     {
         type = dialogueType;
         text = dialogueText;
-        isPlaySound = dialogueIsPlaySound;
+        isDice = dialogueIsDice;
+        dicePoint = dialogueDicePoint;
     }
 }
