@@ -7,6 +7,9 @@ public class ButtonOutlineToggle : MonoBehaviour, ISelectHandler, IDeselectHandl
     private Outline outline;
     [SerializeField]
     private CharacterType type;
+    private Animator animator;
+    private Image img;
+    private Sprite originalSprite;
 
     void Awake()
     {
@@ -15,6 +18,15 @@ public class ButtonOutlineToggle : MonoBehaviour, ISelectHandler, IDeselectHandl
         {
             outline.enabled = false; // 預設隱藏
         }
+
+        animator = GetComponent<Animator>();
+        if (animator != null && type != CharacterType.type1)
+        {
+            animator.enabled = false;
+        }
+
+        img = GetComponent<Image>();
+        originalSprite = img.sprite;
     }
 
     public void OnSelect(BaseEventData eventData)
@@ -24,6 +36,10 @@ public class ButtonOutlineToggle : MonoBehaviour, ISelectHandler, IDeselectHandl
         {
             outline.enabled = true; // 選擇時顯示
         }
+        if (animator != null)
+        {
+            animator.enabled = true;
+        }
     }
 
     public void OnDeselect(BaseEventData eventData)
@@ -31,6 +47,11 @@ public class ButtonOutlineToggle : MonoBehaviour, ISelectHandler, IDeselectHandl
         if (outline != null)
         {
             outline.enabled = false; // 取消選擇時隱藏
+        }
+        if (animator != null)
+        {
+            animator.enabled = false;
+            img.sprite = originalSprite;
         }
     }
 }
