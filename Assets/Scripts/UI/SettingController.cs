@@ -20,6 +20,10 @@ public class SettingController : MonoBehaviour
 
     void Start()
     {
+        if (bgm == null)
+            bgm = AudioManager.Instance.GetBgmAudioSource();
+        if (se == null)
+            se = AudioManager.Instance.GetBgmAudioSource();
         bgmButton.onClick.AddListener(() => { ToggleMute(bgm, bgmButton); });
         seButton.onClick.AddListener(() => { ToggleMute(se, seButton); });
     }

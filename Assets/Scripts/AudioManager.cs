@@ -82,6 +82,16 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public AudioSource GetBgmAudioSource()
+    {
+        return transform.Find("BGM").GetComponent<AudioSource>();
+    }
+
+    public AudioSource GetSEAudioSource()
+    {
+        return transform.Find("SE").GetComponent<AudioSource>();
+    }
+
     public void PlayMainMenuMusic()
     {
         PlayMusic(titleBGM);
