@@ -21,7 +21,19 @@ public class PauseMenuController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPauseMenuOpen = !isPauseMenuOpen;
-            Time.timeScale = isPauseMenuOpen ? 0 : 1;
+            if (isPauseMenuOpen)
+            {
+                GameState.Instance.AddGameStatus(GameStatus.Pause);
+                Time.timeScale = 0;
+            }
+            if (!isPauseMenuOpen)
+            {
+                GameState.Instance.RemoveGameStatus(GameStatus.Pause);
+                if (GameState.Instance.GetGameStatus() == GameStatus.Normal)
+                {
+                    Time.timeScale = 1;
+                }
+            }
             PauseMenu.SetActive(isPauseMenuOpen);
         }
     }

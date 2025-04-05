@@ -33,7 +33,7 @@ public class LevelInfoController : MenuController
             Level2Boss.SetActive(true);
         }
 
-        float targetTime = GameState.clearTargetTime[currentLevel];
+        float targetTime = GameState.ClearTargetTime[currentLevel];
         int targetMinutes = Mathf.FloorToInt(targetTime / 60);
         int targetSeconds = Mathf.FloorToInt(targetTime % 60);
         targetTimeText.text = string.Format("{0:00}:{1:00}", targetMinutes, targetSeconds);

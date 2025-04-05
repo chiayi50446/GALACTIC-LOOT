@@ -50,19 +50,22 @@ public class DialogueController : MonoBehaviour
 
     void Update()
     {
-        if (nextButton.IsActive())
+        if ((GameState.Instance.GetGameStatus() & GameStatus.Pause) == 0)
         {
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            if (nextButton.IsActive())
             {
-                AudioManager.Instance.playButtonSound();
-                nextDialog();
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                {
+                    AudioManager.Instance.playButtonSound();
+                    nextDialog();
+                }
             }
-        }
-        else
-        {
-            if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) && dialoguePanel.activeSelf)
+            else
             {
-                isSpeedUp = true;
+                if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) && dialoguePanel.activeSelf)
+                {
+                    isSpeedUp = true;
+                }
             }
         }
     }
@@ -70,12 +73,13 @@ public class DialogueController : MonoBehaviour
     void StartNegotiation()
     {
         dialoguePanel.SetActive(true);
+        GameState.Instance.AddGameStatus(GameStatus.Negotiate);
         Time.timeScale = 0;
         dialogueIndex = 0;
         nextButton.gameObject.SetActive(false);
         negotiationText.AddRange(initialText);
 
-        var charisma = GameState.charactersData[GameState.Instance.GetLastAlertPlayerType()].Charisma;
+        var charisma = GameState.CharactersData[GameState.Instance.GetLastAlertPlayerType()].Charisma;
         enemyDice = Random.Range(0, 60) % 6 + 1;
         playerDice = Random.Range(0, 60) % 6 + 1 + charisma;
         negotiationText.Add(new Dialogue(DialogueType.Enemy, "Enemy's negotiation dice is " + enemyDice + " (1D6)", true, enemyDice));
@@ -140,6 +144,7 @@ public class DialogueController : MonoBehaviour
     {
         negotiationText.Clear();
         dialoguePanel.SetActive(false);
+        GameState.Instance.RemoveGameStatus(GameStatus.Negotiate);
         Time.timeScale = 1;
     }
 
@@ -147,11 +152,11 @@ public class DialogueController : MonoBehaviour
     {
         if (dialog.type == DialogueType.Enemy)
         {
-            dialogueAvatar.sprite = GameState.enemyAvatar[GameState.Instance.GetLastAlertEnemyType()];
+            dialogueAvatar.sprite = GameState.EnemyAvatar[GameState.Instance.GetLastAlertEnemyType()];
         }
         else if (dialog.type == DialogueType.Player)
         {
-            dialogueAvatar.sprite = GameState.characterAvatar[GameState.Instance.GetLastAlertPlayerType()];
+            dialogueAvatar.sprite = GameState.CharacterAvatar[GameState.Instance.GetLastAlertPlayerType()];
         }
 
         dialogueText.text = "";

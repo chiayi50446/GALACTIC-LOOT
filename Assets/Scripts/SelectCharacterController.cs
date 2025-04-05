@@ -117,7 +117,7 @@ public class SelectCharacterController : MenuController
     private void SetCharacterData(CharacterType type)
     {
         Avatar.gameObject.GetComponent<Image>().sprite = characterAva[(int)type - 1];
-        var data = GameState.charactersData[type];
+        var data = GameState.CharactersData[type];
         Attack.gameObject.GetComponent<BarController>().SetValue(data.Attack);
         Health.gameObject.GetComponent<BarController>().SetValue(data.Health);
         Charisma.gameObject.GetComponent<BarController>().SetValue(data.Charisma);

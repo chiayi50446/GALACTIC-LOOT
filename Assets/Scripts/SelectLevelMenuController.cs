@@ -31,7 +31,7 @@ public class SelectLevelMenuController : MenuController
         if (isLevel1Clear)
         {
             float usedTime = GameState.Instance.GetClearLevelTime(Level.Level1);
-            float targetTime = GameState.clearTargetTime[Level.Level1];
+            float targetTime = GameState.ClearTargetTime[Level.Level1];
             if (usedTime <= targetTime)
             {
                 level1TimeStar.SetActive(true);
@@ -59,7 +59,7 @@ public class SelectLevelMenuController : MenuController
         if (isLevel2Clear)
         {
             float usedTime = GameState.Instance.GetClearLevelTime(Level.Level2);
-            float targetTime = GameState.clearTargetTime[Level.Level2];
+            float targetTime = GameState.ClearTargetTime[Level.Level2];
             if (usedTime <= targetTime)
             {
                 level2TimeStar.SetActive(true);
@@ -78,7 +78,6 @@ public class SelectLevelMenuController : MenuController
     public void SelectLevel1()
     {
         AudioManager.Instance.playButtonSound();
-        Debug.Log("Select Level1");
         GameState.Instance.SetCurrentLevel(Level.Level1);
         levelInfoUI.SetActive(true);
         gameObject.SetActive(false);
@@ -86,7 +85,6 @@ public class SelectLevelMenuController : MenuController
     public void SelectLevel2()
     {
         AudioManager.Instance.playButtonSound();
-        Debug.Log("Select Level2");
         GameState.Instance.SetCurrentLevel(Level.Level2);
         levelInfoUI.SetActive(true);
         gameObject.SetActive(false);

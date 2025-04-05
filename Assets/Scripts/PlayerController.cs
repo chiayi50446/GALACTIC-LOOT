@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
         EventManager.Instance.ActivePlayerHealth += OpenHealthUI;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        GetComponent<HealthSystem>().SetHealth(GameState.charactersData[playerType].Health);
+        GetComponent<HealthSystem>().SetHealth(GameState.CharactersData[playerType].Health);
     }
 
     void OnDestroy()
@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
                 flash.GetComponent<Renderer>().sortingOrder = flash_Order[currentSide];
                 flash.SetActive(true);
                 flash.GetComponent<PunchController>().isUsingGun = false;
-                flash.GetComponent<PunchController>().damage = GameState.charactersData[playerType].Attack;
+                flash.GetComponent<PunchController>().damage = GameState.CharactersData[playerType].Attack;
                 StartCoroutine(Helper.Delay(() => { flash.SetActive(false); }, 0.2f));
             }
             nextAttackTime = Time.time + attackRate;
@@ -371,7 +371,6 @@ public class PlayerController : MonoBehaviour, IDataPersistent
 
     public void SetFreeze()
     {
-        Debug.Log(this.name + "Freeze");
         isFreeze = true;
         anim.SetBool("isUp", false);
         anim.SetBool("isSide", false);
@@ -385,7 +384,6 @@ public class PlayerController : MonoBehaviour, IDataPersistent
 
     public void CancelFreeze()
     {
-        Debug.Log(this.name + "cancel Freeze");
         isFreeze = false;
     }
 
@@ -393,7 +391,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
     {
         var healthBarCanvas = transform.Find("HealthBarCanvas").gameObject;
         healthBarCanvas.SetActive(true);
-        healthBarCanvas.GetComponent<BarController>().SetMaxAndInitValue(GameState.charactersData[playerType].Health);
+        healthBarCanvas.GetComponent<BarController>().SetMaxAndInitValue(GameState.CharactersData[playerType].Health);
     }
 
     public PlayerSide GetPlayerSide()
@@ -403,7 +401,7 @@ public class PlayerController : MonoBehaviour, IDataPersistent
 
     public void LoadData(GameState data)
     {
-        GetComponent<Animator>().runtimeAnimatorController = GameState.animatorController[playerType];
+        GetComponent<Animator>().runtimeAnimatorController = GameState.AnimatorController[playerType];
     }
 
     public void SaveData()

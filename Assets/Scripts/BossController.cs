@@ -120,7 +120,6 @@ public class BossController : MonoBehaviour
         isWalk = false;
         AudioManager.Instance.playBossNormalAttackSound();
         Invoke(nameof(EnableAttackCollider), triggerAttackTime);
-        Debug.Log($"Boss attacks {currentTarget.name}");
 
         Invoke(nameof(ResetState), 0.9f);
     }
@@ -134,7 +133,6 @@ public class BossController : MonoBehaviour
         magicObject.SetActive(true);
         AudioManager.Instance.playBossMagicAttackSound();
         Invoke(nameof(EnableMagicAttackCollider), 0.4f);
-        Debug.Log($"Boss use magic attack");
 
         Invoke(nameof(ResetState), 1.4f);
     }

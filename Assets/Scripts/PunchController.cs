@@ -22,7 +22,6 @@ public class PunchController : MonoBehaviour
         {
             if (enemyLayer == (enemyLayer | (1 << other.gameObject.layer))) // 如果碰到敵人
             {
-                Debug.Log("Attack Enemy");
                 var healthSystem = other.GetComponent<HealthSystem>();
                 if (healthSystem != null)
                 {

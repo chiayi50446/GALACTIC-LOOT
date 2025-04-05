@@ -98,7 +98,6 @@ public class EnemyVisionController : MonoBehaviour
                 {
                     hitPlayer2 = true;
                     Debug.DrawRay(worldOrigin, endPoint, Color.yellow);
-                    Debug.Log(hitWall.point);
                 }
             }
         }
@@ -121,12 +120,10 @@ public class EnemyVisionController : MonoBehaviour
             {
                 UpdateAlertnessLevel();
             }
-            // Debug.Log("Hit player1");
         }
         if (!hitPlayer1 && isHittingPlayer1)
         {
             isHittingPlayer1 = false;
-            // Debug.Log("Hit leave player1");
         }
         if (hitPlayer2 && !isHittingPlayer2)
         {
@@ -146,12 +143,10 @@ public class EnemyVisionController : MonoBehaviour
             {
                 UpdateAlertnessLevel();
             }
-            // Debug.Log("Hit player2");
         }
         if (!hitPlayer2 && isHittingPlayer2)
         {
             isHittingPlayer2 = false;
-            // Debug.Log("Hit leave player2");
         }
 
         // draw triangles

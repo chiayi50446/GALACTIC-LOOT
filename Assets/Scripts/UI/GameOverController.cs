@@ -43,7 +43,7 @@ public class GameOverController : MonoBehaviour
             starList.SetActive(true);
 
             float usedTime = GameState.Instance.GetClearLevelTime(currentLevel);
-            float targetTime = GameState.clearTargetTime[currentLevel];
+            float targetTime = GameState.ClearTargetTime[currentLevel];
             if (usedTime <= targetTime)
             {
                 starUsedTime.SetActive(true);

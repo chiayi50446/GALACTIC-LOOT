@@ -12,8 +12,8 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
     public void LoadData(GameState data)
     {
         var playerType = data.GetPlayerType(PlayerNum);
-        Avatar.GetComponent<Image>().sprite = GameState.characterAvatar[playerType];
-        var characterProperty = GameState.charactersData[playerType];
+        Avatar.GetComponent<Image>().sprite = GameState.CharacterAvatar[playerType];
+        var characterProperty = GameState.CharactersData[playerType];
         if (characterProperty.Load == 3)
         {
             ItemList[1].SetActive(true);
@@ -60,7 +60,7 @@ public class PlayerUIController : MonoBehaviour, IDataPersistent
             }
             var item = ItemList[index].transform.Find("Item");
             item.gameObject.SetActive(true);
-            item.GetComponent<Image>().sprite = GameState.chestItem[itemName];
+            item.GetComponent<Image>().sprite = GameState.ChestItem[itemName];
             ChangeItemShow(itemName, index);
         }
     }

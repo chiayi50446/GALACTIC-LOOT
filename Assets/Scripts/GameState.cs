@@ -5,8 +5,9 @@ using UnityEngine;
 public class GameState
 {
     private static GameState instance = null;
+    private GameStatus GameStatus = GameStatus.Normal;
     [SerializeField]
-    private Level currentLevel;
+    private Level CurrentLevel;
     [SerializeField]
     private CharacterType Player1Type = CharacterType.none;
     [SerializeField]
@@ -24,55 +25,55 @@ public class GameState
     [SerializeField]
     private int Player2DisguiseCount = 0;
     private Dictionary<Level, bool> IsCollectItemGet;
-    [SerializeField] private static float currentAlertnessLevel;
+    [SerializeField] private static float CurrentAlertnessLevel;
     public Dictionary<Level, int> BossHealth = new Dictionary<Level, int>
     {
         {Level.Level1, 5},
         {Level.Level2, 10},
     };
 
-    public static Dictionary<CharacterType, CharacterProperty> charactersData = new Dictionary<CharacterType, CharacterProperty>
+    public static Dictionary<CharacterType, CharacterProperty> CharactersData = new Dictionary<CharacterType, CharacterProperty>
     {
         {CharacterType.type1, new CharacterProperty(){Attack = 2, Health=3, Charisma =0, Load=1 }},
         {CharacterType.type2, new CharacterProperty(){Attack = 1, Health=5, Charisma =0, Load=1 }},
         {CharacterType.type3, new CharacterProperty(){Attack = 1, Health=3, Charisma =1, Load=1 }},
         {CharacterType.type4, new CharacterProperty(){Attack = 1, Health=3, Charisma =0, Load=3 }}
     };
-    public static Dictionary<CharacterType, RuntimeAnimatorController> animatorController;
-    public static Dictionary<CharacterType, Sprite> characterAvatar;
-    public static Dictionary<string, Sprite> chestItem;
-    public static Dictionary<EnemyType, Sprite> enemyAvatar;
-    public EnemyType lastAlertEnemyType;
-    public CharacterType lastAlertPlayerType;
-    public Dictionary<Level, bool> isLevelClear;
-    public static Dictionary<Level, float> clearTargetTime = new Dictionary<Level, float>(){
+    public static Dictionary<CharacterType, RuntimeAnimatorController> AnimatorController;
+    public static Dictionary<CharacterType, Sprite> CharacterAvatar;
+    public static Dictionary<string, Sprite> ChestItem;
+    public static Dictionary<EnemyType, Sprite> EnemyAvatar;
+    public EnemyType LastAlertEnemyType;
+    public CharacterType LastAlertPlayerType;
+    public Dictionary<Level, bool> IsLevelClear;
+    public static Dictionary<Level, float> ClearTargetTime = new Dictionary<Level, float>(){
         {Level.Level1, 120},
         {Level.Level2, 180},
     };
-    private Dictionary<Level, float> clearLevelTime;
-    private Dictionary<Level, int> playerDeathNum;
+    private Dictionary<Level, float> ClearLevelTime;
+    private Dictionary<Level, int> PlayerDeathNum;
 
     private GameState()
     {
-        animatorController = new Dictionary<CharacterType, RuntimeAnimatorController>(){
+        AnimatorController = new Dictionary<CharacterType, RuntimeAnimatorController>(){
             {CharacterType.type1, (RuntimeAnimatorController)Resources.Load("Animations/PlayerAnimator_1", typeof(RuntimeAnimatorController ))},
             {CharacterType.type2, (RuntimeAnimatorController)Resources.Load("Animations/PlayerAnimator_2", typeof(RuntimeAnimatorController ))},
             {CharacterType.type3, (RuntimeAnimatorController)Resources.Load("Animations/PlayerAnimator_3", typeof(RuntimeAnimatorController ))},
             {CharacterType.type4, (RuntimeAnimatorController)Resources.Load("Animations/PlayerAnimator_4", typeof(RuntimeAnimatorController ))}
         };
-        characterAvatar = new Dictionary<CharacterType, Sprite>()
+        CharacterAvatar = new Dictionary<CharacterType, Sprite>()
         {
             {CharacterType.type1, (Sprite)Resources.Load("Avatars/ava_1", typeof(Sprite))},
             {CharacterType.type2, (Sprite)Resources.Load("Avatars/ava_2", typeof(Sprite))},
             {CharacterType.type3, (Sprite)Resources.Load("Avatars/ava_3", typeof(Sprite))},
             {CharacterType.type4, (Sprite)Resources.Load("Avatars/ava_4", typeof(Sprite))}
         };
-        enemyAvatar = new Dictionary<EnemyType, Sprite>()
+        EnemyAvatar = new Dictionary<EnemyType, Sprite>()
         {
             {EnemyType.stationary, (Sprite)Resources.Load("Avatars/guard_1", typeof(Sprite))},
             {EnemyType.patrol, (Sprite)Resources.Load("Avatars/guard_2", typeof(Sprite))}
         };
-        chestItem = new Dictionary<string, Sprite>()
+        ChestItem = new Dictionary<string, Sprite>()
         {
             {"Bomb", (Sprite)Resources.Load("ChestItems/Bomb", typeof(Sprite))},
             {"Rifle", (Sprite)Resources.Load("ChestItems/Rifle", typeof(Sprite))},
@@ -83,17 +84,17 @@ public class GameState
             {Level.Level1, false},
             {Level.Level2, false}
         };
-        currentLevel = Level.Level1;
-        currentAlertnessLevel = 0;
-        isLevelClear = new Dictionary<Level, bool>(){
+        CurrentLevel = Level.Level1;
+        CurrentAlertnessLevel = 0;
+        IsLevelClear = new Dictionary<Level, bool>(){
             {Level.Level1, false},
             {Level.Level2, false}
         };
-        clearLevelTime = new Dictionary<Level, float>(){
+        ClearLevelTime = new Dictionary<Level, float>(){
             {Level.Level1, 0},
             {Level.Level2, 0}
         };
-        playerDeathNum = new Dictionary<Level, int>()
+        PlayerDeathNum = new Dictionary<Level, int>()
         {
             {Level.Level1, 0},
             {Level.Level2, 0},
@@ -123,16 +124,16 @@ public class GameState
 
     public void ResetCurrentLevel(Level level)
     {
-        currentLevel = level;
+        CurrentLevel = level;
         Player1ItemLoadIndex = -1;
         Player2ItemLoadIndex = -1;
         Player1SelectItemIndex = 0;
         Player2SelectItemIndex = 0;
-        currentAlertnessLevel = 0;
+        CurrentAlertnessLevel = 0;
         IsCollectItemGet[level] = false;
-        isLevelClear[level] = false;
-        clearLevelTime[level] = 0;
-        playerDeathNum[level] = 0;
+        IsLevelClear[level] = false;
+        ClearLevelTime[level] = 0;
+        PlayerDeathNum[level] = 0;
         Player1DisguiseCount = 0;
         Player2DisguiseCount = 0;
     }
@@ -144,15 +145,15 @@ public class GameState
 
     public void SetCurrentLevel(Level level)
     {
-        currentLevel = level;
+        CurrentLevel = level;
     }
     public Level GetCurrentLevel()
     {
-        return currentLevel;
+        return CurrentLevel;
     }
     public string GetCurrentLoadScene()
     {
-        return currentLevel == Level.Level1 ? "Level1Scene" : "Level2Scene";
+        return CurrentLevel == Level.Level1 ? "Level1Scene" : "Level2Scene";
     }
 
     public CharacterType GetPlayerType(int pNum)
@@ -177,12 +178,12 @@ public class GameState
     {
         if (playerNum == 1)
         {
-            var play1MaxLoad = charactersData[Player1Type].Load;
+            var play1MaxLoad = CharactersData[Player1Type].Load;
             return Player1ItemLoadIndex == play1MaxLoad - 1;
         }
         else
         {
-            var play2MaxLoad = charactersData[Player2Type].Load;
+            var play2MaxLoad = CharactersData[Player2Type].Load;
             return Player2ItemLoadIndex == play2MaxLoad - 1;
         }
     }
@@ -191,7 +192,7 @@ public class GameState
     {
         if (playerNum == 1)
         {
-            var play1MaxLoad = charactersData[Player1Type].Load;
+            var play1MaxLoad = CharactersData[Player1Type].Load;
             if (Player1ItemLoadIndex < play1MaxLoad - 1)
             {
                 Player1ItemLoadIndex++;
@@ -200,7 +201,7 @@ public class GameState
         }
         else
         {
-            var play2MaxLoad = charactersData[Player2Type].Load;
+            var play2MaxLoad = CharactersData[Player2Type].Load;
             if (Player2ItemLoadIndex < play2MaxLoad - 1)
             {
                 Player2ItemLoadIndex++;
@@ -304,62 +305,77 @@ public class GameState
     public void SetAlertnessLevel(float newAlertnessLevel)
     {
         newAlertnessLevel = (newAlertnessLevel > 3) ? 3 : newAlertnessLevel;
-        currentAlertnessLevel = newAlertnessLevel;
+        CurrentAlertnessLevel = newAlertnessLevel;
     }
 
     public float GetAlertnessLevel()
     {
-        return currentAlertnessLevel;
+        return CurrentAlertnessLevel;
     }
 
     public void SetLastAlertEnemyType(EnemyType type)
     {
-        lastAlertEnemyType = type;
+        LastAlertEnemyType = type;
     }
 
     public EnemyType GetLastAlertEnemyType()
     {
-        return lastAlertEnemyType;
+        return LastAlertEnemyType;
     }
 
     public void SetLastAlertPlayerType(int playerNum)
     {
-        lastAlertPlayerType = GetPlayerType(playerNum);
+        LastAlertPlayerType = GetPlayerType(playerNum);
     }
 
     public CharacterType GetLastAlertPlayerType()
     {
-        return lastAlertPlayerType;
+        return LastAlertPlayerType;
     }
 
     public void SetIsLevelClear(Level level, bool isClear)
     {
-        isLevelClear[level] = isClear;
+        IsLevelClear[level] = isClear;
     }
 
     public bool GetIsLevelClear(Level level)
     {
-        return isLevelClear[level];
+        return IsLevelClear[level];
     }
 
     public void SetClearLevelTime(Level level, float usedTime)
     {
-        clearLevelTime[level] = usedTime;
+        ClearLevelTime[level] = usedTime;
     }
 
     public float GetClearLevelTime(Level level)
     {
-        return clearLevelTime[level];
+        return ClearLevelTime[level];
     }
 
     public void SetPlayerDeathNum(Level level)
     {
-        playerDeathNum[level]++;
+        PlayerDeathNum[level]++;
     }
 
     public int GetPlayerDeathNum(Level level)
     {
-        return playerDeathNum[level];
+        return PlayerDeathNum[level];
+    }
+
+    public void AddGameStatus(GameStatus gameStatus)
+    {
+        GameStatus |= gameStatus;
+    }
+
+    public void RemoveGameStatus(GameStatus gameStatus)
+    {
+        GameStatus &= ~gameStatus;
+    }
+
+    public GameStatus GetGameStatus()
+    {
+        return GameStatus;
     }
 }
 
@@ -390,4 +406,11 @@ public enum Level
 {
     Level1 = 1,
     Level2 = 2
+}
+
+public enum GameStatus
+{
+    Normal = 0,
+    Negotiate = 1 << 0,  // 0001
+    Pause = 1 << 1,  // 0010
 }
