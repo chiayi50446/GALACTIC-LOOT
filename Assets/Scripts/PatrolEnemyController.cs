@@ -14,6 +14,7 @@ public class PatrolEnemyController : EnemyController
     private Vector3 destination;
     void Start()
     {
+        type = EnemyType.patrol;
         anim = GetComponent<Animator>();
         anim.SetInteger("direction", (int)nowDirection);
         if (nowDirection == Direction.right)

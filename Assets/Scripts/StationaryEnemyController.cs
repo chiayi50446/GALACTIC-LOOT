@@ -11,6 +11,7 @@ public class StationaryEnemyController : EnemyController
 
     void Start()
     {
+        type = EnemyType.stationary;
         anim = GetComponent<Animator>();
         anim.SetInteger("direction", (int)nowDirection);
         InvokeRepeating("Rotate", 0f, 5f); // Rotate every five seconds

@@ -398,6 +398,7 @@ public enum CharacterType
 
 public enum EnemyType
 {
+    none = 0,
     stationary = 1,
     patrol = 2,
 }
