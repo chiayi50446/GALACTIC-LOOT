@@ -16,18 +16,6 @@ public class ItemController : MonoBehaviour
         isTrigger2 = false;
     }
 
-    // Update is called once per frame
-    public virtual void Update()
-    {
-        // if (isTrigger)
-        // {
-        //     if (Input.GetKeyDown(KeyCode.F))
-        //     {
-        //         hint.SetActive(false);
-        //     }
-        // }
-    }
-
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
@@ -43,9 +31,12 @@ public class ItemController : MonoBehaviour
 
     protected void OnTriggerExit2D(Collider2D other)
     {
-        hint.SetActive(false);
-        isTrigger1 = false;
-        isTrigger2 = false;
+        if (other.tag == "Player")
+        {
+            hint.SetActive(false);
+            isTrigger1 = false;
+            isTrigger2 = false;
+        }
     }
 
     protected GameObject findChildByTag(Transform parent, string inputTag)

@@ -9,8 +9,6 @@ public class ChestController : ItemController, IDataPersistent
     private GameObject chestItem;
     private Level currentLevel;
 
-    // [SerializeField] public Text displayText;
-    // [SerializeField] private GameObject displayGuide;
     public override void Start()
     {
         base.Start();
@@ -25,11 +23,10 @@ public class ChestController : ItemController, IDataPersistent
     }
 
     // Update is called once per frame
-    public override void Update()
+    public void Update()
     {
         if (!isOpen)
         {
-            base.Update();
             var itemName = chestItem.transform.GetChild(0).name;
             if (Input.GetKeyDown(KeyCode.E) && isTrigger1)
             {
@@ -81,10 +78,6 @@ public class ChestController : ItemController, IDataPersistent
                         AudioManager.Instance.playEquipSound();
                         GetComponent<Collider2D>().enabled = false;
                         StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerUpdateInventory(itemName, 2); }, 1.3f));
-                        // if (displayGuide != null)
-                        // {
-                        //     StartCoroutine(Helper.Delay(() => { EventManager.Instance.TriggerDisplayGuide(displayGuide); }, 1.4f));
-                        // }
                     }
                     else
                     {
