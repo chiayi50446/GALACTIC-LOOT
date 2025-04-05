@@ -899,18 +899,23 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.2288022, y: 1.1467502}
-      - {x: -0.3941908, y: 0.9428103}
-      - {x: -0.3950982, y: 0.41154027}
-      - {x: -0.5211868, y: 0.13924766}
-      - {x: -0.5153494, y: -0.4512061}
-      - {x: -0.4375, y: -1.069353}
-      - {x: 0.3193531, y: -1.0762063}
-      - {x: 0.44709492, y: -0.875}
-      - {x: 0.4623394, y: 0.14779878}
-      - {x: 0.33664465, y: 0.3508644}
-      - {x: 0.34960032, y: 0.93120265}
-      - {x: 0.15606737, y: 1.1483018}
+    - - {x: 0.1514492, y: 1.1418495}
+      - {x: -0.17080784, y: 1.1464016}
+      - {x: -0.3751583, y: 0.98371005}
+      - {x: -0.31610775, y: 0.34027457}
+      - {x: -0.4596343, y: 0.14917731}
+      - {x: -0.4518094, y: -0.42737865}
+      - {x: -0.36520672, y: -0.55884576}
+      - {x: -0.3474903, y: -0.9550065}
+      - {x: 0.29058266, y: -0.94774914}
+      - {x: 0.30875158, y: -0.82459044}
+      - {x: 0.26377726, y: -0.7099892}
+      - {x: 0.2733426, y: -0.46924162}
+      - {x: 0.43014956, y: -0.47914064}
+      - {x: 0.39323568, y: 0.16322541}
+      - {x: 0.31484985, y: 0.24815512}
+      - {x: 0.23541403, y: 0.3699553}
+      - {x: 0.345479, y: 0.9585004}
   m_UseDelaunayMesh: 0
 --- !u!114 &29677050
 MonoBehaviour:
@@ -46422,8 +46427,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 29677044}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &644176579
-PolygonCollider2D:
+--- !u!61 &644176579
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -46456,31 +46461,18 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.03176999, y: -0.28990072}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 3}
-    newSize: {x: 2, y: 3}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.2219491, y: 1.0987782}
-      - {x: -0.35307217, y: 0.94281006}
-      - {x: -0.36768532, y: 0.39783406}
-      - {x: -0.48006773, y: 0.12554121}
-      - {x: -0.4810834, y: -0.4512061}
-      - {x: -0.4169407, y: -1.0282341}
-      - {x: 0.3125, y: -1.0213811}
-      - {x: 0.4128294, y: -0.875}
-      - {x: 0.41436768, y: 0.14094567}
-      - {x: 0.29552555, y: 0.37142396}
-      - {x: 0.294775, y: 0.93120265}
-      - {x: 0.14921427, y: 1.1003299}
-  m_UseDelaunayMesh: 0
+  m_Size: {x: 0.57110643, y: 1.2462167}
+  m_EdgeRadius: 0
 --- !u!1 &647342635
 GameObject:
   m_ObjectHideFlags: 0
@@ -74660,7 +74652,7 @@ Transform:
   m_GameObject: {fileID: 2050085978}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.059999943, y: -1.29, z: 0.058276463}
+  m_LocalPosition: {x: 0.059999943, y: -1.5, z: 0.058276463}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
